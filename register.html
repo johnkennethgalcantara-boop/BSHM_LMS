@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Account – ACES Polytechnic College, Inc.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="register.css">
+</head>
+<body>
+<i class="orb orb-a"></i><i class="orb orb-b"></i><i class="orb orb-c"></i><i class="orb orb-d"></i><i class="orb orb-e"></i>
+
+<main class="page">
+  <div class="shell">
+
+    <a href="login-page.html?role=student" class="back" id="backLink">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></span>
+      Back to Sign In
+    </a>
+
+    <section class="card" aria-labelledby="regTitle">
+
+      <!-- Brand panel -->
+      <aside class="aside">
+  <div class="aside-dots" aria-hidden="true"></div>
+  <div class="aside-art" aria-hidden="true"><img src="assets/hero.jpg" alt=""></div>
+        <div class="aside-top">
+          <svg class="cap" viewBox="0 0 90 80" aria-hidden="true">
+            <path d="M45 4 2 25l43 21 43-21z" fill="#fff"/>
+            <path d="M18 38v17c0 8 12 15 27 15s27-7 27-15V38L45 51z" fill="#fff" fill-opacity=".7"/>
+            <path d="M84 27v22" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="84" cy="52" r="4.5" fill="#fff"/>
+          </svg>
+          <div class="brand">
+            <b>ACES POLYTECHNIC COLLEGE, INC.</b>
+            <span>Hospitality Management Department</span>
+          </div>
+        </div>
+
+        <div class="aside-mid">
+          <p class="tagline">Your journey in <em>Hospitality</em> starts here.</p>
+          <ul class="points">
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Access course materials anytime</li>
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Submit activities online</li>
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Track your progress</li>
+          </ul>
+        </div>
+
+        <p class="aside-foot">Learn • Serve • Lead</p>
+      </aside>
+
+      <!-- Form panel -->
+      <div class="main">
+        <div class="head">
+          <h1 class="title" id="regTitle">Create Your Account</h1>
+          <p class="sub">Register for your ACES BSHM LMS account.</p>
+        </div>
+
+        <form id="regForm" novalidate>
+          <div class="group" data-field="sid">
+            <label class="field">
+              <span class="fi"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2" class="cut-f"/><path d="M5 16.2c.4-1.7 1.8-2.5 3.5-2.5s3.1.8 3.5 2.5z" class="cut-f"/><path d="M14.5 10h5M14.5 13.5h4" class="cut-s"/></svg></span>
+              <input type="text" id="sid" placeholder="Student ID (e.g. 2026-00001)" aria-label="Student ID" autocomplete="username" aria-describedby="sid-msg">
+            </label>
+            <p class="msg" id="sid-msg" data-hint="" aria-live="polite"></p>
+          </div>
+
+          <div class="row">
+            <div class="group" data-field="first">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5z"/></svg></span>
+                <input type="text" id="first" placeholder="First Name" aria-label="First Name" autocomplete="given-name" aria-describedby="first-msg">
+              </label>
+              <p class="msg" id="first-msg" data-hint="" aria-live="polite"></p>
+            </div>
+            <div class="group" data-field="middle">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5z"/></svg></span>
+                <input type="text" id="middle" placeholder="Middle (optional)" aria-label="Middle Name (optional)" autocomplete="additional-name" aria-describedby="middle-msg">
+              </label>
+              <p class="msg" id="middle-msg" data-hint="" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="group" data-field="last">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5z"/></svg></span>
+                <input type="text" id="last" placeholder="Last Name" aria-label="Last Name" autocomplete="family-name" aria-describedby="last-msg">
+              </label>
+              <p class="msg" id="last-msg" data-hint="" aria-live="polite"></p>
+            </div>
+            <div class="group" data-field="email">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="m4 7.5 8 6 8-6" class="cut-s"/></svg></span>
+                <input type="email" id="email" placeholder="Email Address" aria-label="Email Address" autocomplete="email" aria-describedby="email-msg">
+              </label>
+              <p class="msg" id="email-msg" data-hint="" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="group" data-field="pass">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" class="lock-s"/><circle cx="12" cy="15.5" r="1.6" class="hole"/></svg></span>
+                <input type="password" id="pass" placeholder="Create Password" aria-label="Create Password" autocomplete="new-password" aria-describedby="pass-msg reqs">
+                <button type="button" class="eye" data-target="pass" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3.5 3.5l17 17"/></svg></button>
+              </label>
+              <p class="msg" id="pass-msg" data-hint="" aria-live="polite"></p>
+            </div>
+            <div class="group" data-field="confirm">
+              <label class="field">
+                <span class="fi"><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" class="lock-s"/><circle cx="12" cy="15.5" r="1.6" class="hole"/></svg></span>
+                <input type="password" id="confirm" placeholder="Confirm Password" aria-label="Confirm Password" autocomplete="new-password" aria-describedby="confirm-msg">
+                <button type="button" class="eye" data-target="confirm" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3.5 3.5l17 17"/></svg></button>
+              </label>
+              <p class="msg" id="confirm-msg" data-hint="" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="pw-extra" id="strength" data-level="0" aria-live="polite">
+            <div class="pw-head"><span>Password strength</span><span class="track"><i class="fill"></i></span><span class="strength-lbl" id="strengthLbl"></span></div>
+            <div class="reqs-title">Password requirements</div>
+            <ul class="reqs" id="reqs" aria-label="Password requirements">
+              <li data-req="len"><span class="ri"><svg viewBox="0 0 24 24"><path class="tick" d="m6 12.5 4 4 8-9"/><path class="x" d="m8 8 8 8M16 8l-8 8"/></svg></span>At least 8 characters</li>
+              <li data-req="upper"><span class="ri"><svg viewBox="0 0 24 24"><path class="tick" d="m6 12.5 4 4 8-9"/><path class="x" d="m8 8 8 8M16 8l-8 8"/></svg></span>One uppercase letter</li>
+              <li data-req="num"><span class="ri"><svg viewBox="0 0 24 24"><path class="tick" d="m6 12.5 4 4 8-9"/><path class="x" d="m8 8 8 8M16 8l-8 8"/></svg></span>One number</li>
+              <li data-req="special"><span class="ri"><svg viewBox="0 0 24 24"><path class="tick" d="m6 12.5 4 4 8-9"/><path class="x" d="m8 8 8 8M16 8l-8 8"/></svg></span>One special character</li>
+            </ul>
+          </div>
+
+          <div class="terms">
+            <label class="check registration-checkbox">
+              <input type="checkbox" id="terms" aria-describedby="terms-msg">
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+              <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms and Conditions</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+            </label>
+            <p class="msg" id="terms-msg" aria-live="polite"></p>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submit"><span class="lbl">Create Account</span>
+            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M14 5l7 7-7 7"/></svg><i class="spin"></i>
+          </button>
+        </form>
+
+        <p class="signin-link" id="mainSignin">Already have an account? <a href="login-page.html?role=student" id="signinLink">Sign In</a></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="aces-store.js"></script>
+<script src="register.js"></script>
+<script src="prefs.js"></script>
+</body>
+</html>

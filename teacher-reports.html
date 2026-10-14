@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><link rel="stylesheet" href="student.css"><link rel="stylesheet" href="teacher.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css"><title>Reports · BSHM LMS</title>
+<style>
+/* ---------- Toolbar ---------- */
+.tb{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.tb select{font:600 14px Inter,sans-serif;border:1px solid #ECEBF5;border-radius:12px;padding:10px 14px;background:#fff;min-height:44px;color:var(--ink);box-shadow:0 1px 3px rgba(79,53,210,.05)}
+.tb .note{font-size:12.5px;color:var(--mute)}
+.pb{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #E1DAFB;background:#F0EDFF;color:#6D3FEA;font:600 14px Inter,sans-serif;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+.pb:hover{background:#6D3FEA;color:#fff;box-shadow:0 6px 16px rgba(79,53,210,.25)}
+
+/* ---------- KPI cards ---------- */
+.kp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kc{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid #ECEBF5;border-radius:18px;padding:18px 20px;box-shadow:0 4px 14px rgba(79,53,210,.07);transition:transform .18s,box-shadow .18s,border-color .18s}
+.kc:hover{transform:translateY(-3px);border-color:#D9D2F7;box-shadow:0 14px 32px rgba(79,53,210,.16)}
+.kc .ki{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;flex:none}
+.kc .ki svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kc span{display:block;font-size:12.5px;color:var(--mute)}
+.kc b{display:block;font-size:28px;font-weight:800;line-height:1.15;color:#171B6B;letter-spacing:-.02em}
+.kc small{font-size:12px;color:var(--mute)}
+.c-v{background:#EEEAFE;color:#4F35D2}.c-g{background:#E3F5EC;color:#14724C}.c-b{background:#E4EEFF;color:#2F62C8}.c-r{background:#FDECEC;color:#B42318}
+
+/* ---------- Panels ---------- */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pn{background:#fff;border:1px solid #ECEBF5;border-radius:20px;padding:24px;box-shadow:0 4px 14px rgba(79,53,210,.07)}
+.pn h2{margin:0 0 4px;font-size:17px;font-weight:700;color:#171B6B;letter-spacing:-.005em}
+.pn .sb{margin:0 0 14px;font-size:12.5px;color:var(--mute)}
+
+/* ---------- Bars ---------- */
+.rb{display:grid;grid-template-columns:104px minmax(0,1fr) 44px;gap:10px;align-items:center;margin:12px 0;font-size:13px;color:var(--ink)}
+.rb i{position:relative;display:block;height:12px;border-radius:999px;background:#EEEDF8}
+.rb u{display:block;height:100%;border-radius:999px;text-decoration:none;transition:width .5s}
+.rb.tk i::after{content:"";position:absolute;left:75%;top:-3px;bottom:-3px;width:2px;background:#6D3FEA;opacity:.5}
+.rb b{text-align:right}
+.lg{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--mute)}
+.lg s{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;text-decoration:none}
+
+/* ---------- Struggling students ---------- */
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.sh h2{margin:0}
+.cnt{padding:4px 12px;border-radius:999px;background:#FDECEC;color:#B42318;font-size:12.5px;font-weight:700}.cnt.z{background:#E3F5EC;color:#14724C}
+.who{display:flex;gap:10px;align-items:center}
+.av2{width:34px;height:34px;border-radius:50%;background:#EEEAFE;color:#4F35D2;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.pl{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
+.pl.r{background:#FDECEC;color:#B42318}.pl.g{background:#E3F5EC;color:#14724C}.pl.a{background:#FFF4E0;color:#B26A00}.pl.n{background:#EEF0F6;color:#4A5572}
+.tg{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+.tg.r{background:#FDECEC;color:#B42318}.tg.a{background:#FFF4E0;color:#B26A00}
+th{background:#F8F7FF}
+.em{text-align:center;padding:26px;color:var(--mute);font-size:13.5px}
+
+/* ---------- Responsive + print ---------- */
+@media(max-width:900px){.kp{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+@media(max-width:520px){.kp{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.kc{transition:none}.kc:hover{transform:none}}
+@media print{header.topnav,.pb,.tb select{display:none!important}.pg{padding:0!important}}
+
+/* =====================================================================
+   MOBILE CARD SIZING (Reports & Analytics)
+   ===================================================================== */
+@media(max-width:700px){
+  /* toolbar: full width, naka-stack */
+  .tb{gap:10px}
+  .tb > div{width:100%;gap:8px!important}
+  .tb select{width:100%;min-height:42px;font-size:13.5px;padding:8px 12px}
+  .tb .note{font-size:11.5px}
+  .pb{width:100%;justify-content:center;min-height:42px;font-size:13.5px}
+
+  /* KPI cards: 2 columns, compact, icon sa taas */
+  .kp{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+  .kc{flex-direction:column;align-items:flex-start;gap:8px;padding:12px 14px;border-radius:16px}
+  .kc:hover{transform:none}
+  .kc .ki{width:34px;height:34px;border-radius:10px}
+  .kc .ki svg{width:18px;height:18px}
+  .kc span{font-size:11.5px}
+  .kc b{font-size:22px}
+  .kc small{font-size:11px;line-height:1.3;display:block}
+
+  /* panels */
+  .g2{gap:12px}
+  .pn{padding:16px 14px;border-radius:16px}
+  .pn h2{font-size:15px}
+  .pn .sb{font-size:11.5px;margin-bottom:10px}
+
+  /* bars: mas maliit na label column */
+  .rb{grid-template-columns:78px minmax(0,1fr) 32px;gap:8px;margin:10px 0;font-size:12px}
+  .rb i{height:10px}
+  .lg{gap:10px;font-size:11px}
+
+  /* struggling students */
+  .cnt{font-size:11.5px;padding:3px 10px}
+  .av2{width:28px;height:28px;font-size:11px}
+  .who{gap:8px}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tw table{min-width:460px;font-size:12.5px}
+  .pl{font-size:11.5px;padding:2px 8px}
+  .tg{font-size:11px;padding:2px 8px}
+  .em{padding:18px 10px;font-size:12.5px}
+}
+
+/* napakaliit na phones */
+@media(max-width:360px){
+  .kp{grid-template-columns:minmax(0,1fr)!important}
+  .kc{flex-direction:row;align-items:center}
+}
+</style></head>
+<body data-role="teacher" data-page="reports" data-title="Reports"><script src="auth-guard.js"></script><div class="app"><main class="pg"><section class="vw" style="gap:18px">
+<div class="ph"><h1>Reports &amp; Analytics</h1><p>Class performance, attendance, grades, and students who need help.</p></div>
+<div class="tb"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><select id="cls" aria-label="Class"></select><span class="note">Passing grade 75 · Attendance target 80%</span></div><button type="button" class="pb" id="pr">🖨 Print report</button></div>
+<div class="kp" id="kp"></div>
+<div class="g2"><section class="pn"><h2>Average score by category</h2><p class="sb">The violet tick marks the passing line (75)</p><div id="cat"></div><div class="lg"><span><s style="background:#E5484D"></s>Below 75</span><span><s style="background:#F5A524"></s>75–84</span><span><s style="background:#17A673"></s>85 and up</span></div></section>
+<section class="pn"><h2>Grade distribution</h2><p class="sb" id="dsb"></p><div id="dist"></div></section></div>
+<section class="pn"><div class="sh"><h2>Struggling students</h2><span class="cnt" id="cn"></span></div><div class="tw"><table><thead><tr><th>Student</th><th>Final grade</th><th>Attendance</th><th>Why flagged</th></tr></thead><tbody id="st"></tbody></table></div></section>
+</section></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  $('cls').innerHTML=TLS_CLASSES.map(function(c){return '<option value="'+c[0]+'">'+tesc(c[0]+' · '+c[1])+'</option>'}).join('');
+  var avg=function(a){a=a.filter(function(x){return x!=null});return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length):null};
+  var col=function(v){return v==null?'#C9CEDB':v<75?'#E5484D':v<85?'#F5A524':'#17A673'};
+  var bar=function(l,v,c,tk){return '<div class="rb'+(tk?' tk':'')+'"><span>'+l+'</span><i><u style="width:'+(v||0)+'%;background:'+c+'"></u></i><b>'+(v==null?'–':v)+'</b></div>'};
+  var ic={star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',chk:'<path d="M5 12l4 4 10-10"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',al:'<path d="M12 3l10 18H2zM12 10v5M12 18v.5"/>'};
+  var kc=function(i,c,l,v,s){return '<div class="kc"><span class="ki '+c+'"><svg viewBox="0 0 24 24">'+ic[i]+'</svg></span><div><span>'+l+'</span><b>'+v+'</b><small>'+s+'</small></div></div>'};
+  function draw(){
+    var S=tlsStudentStats($('cls').value),fin=S.map(function(s){return s.final}).filter(function(x){return x!=null}),pass=fin.filter(function(f){return f>=75}).length;
+    var a=avg(fin),att=avg(S.map(function(s){return s.att}));
+    var flag=S.map(function(s){var w=[];if(s.final!=null&&s.final<75)w.push(['r','Failing grade']);if(s.att!=null&&s.att<80)w.push(['a','Low attendance']);if(s.restricted)w.push(['r',s.restricted+' restricted attempt'+(s.restricted>1?'s':'')]);return {s:s,w:w}}).filter(function(x){return x.w.length});
+    $('kp').innerHTML=kc('star',a==null||a>=75?'c-v':'c-r','Class average',a==null?'–':a,fin.length+' of '+S.length+' students graded')+
+      kc('chk','c-g','Pass rate',fin.length?Math.round(pass/fin.length*100)+'%':'–',pass+' passed')+
+      kc('cal','c-b','Attendance rate',att==null?'–':att+'%',att==null?'No attendance saved yet':'Average across the class')+
+      kc('al',flag.length?'c-r':'c-g','Need attention',flag.length,flag.length?'Students flagged below':'All students on track');
+    $('cat').innerHTML=bar('Quizzes',avg(S.map(function(s){return s.q})),col(avg(S.map(function(s){return s.q}))),1)+bar('Exams',avg(S.map(function(s){return s.e})),col(avg(S.map(function(s){return s.e}))),1)+bar('POS Training',avg(S.map(function(s){return s.p})),col(avg(S.map(function(s){return s.p}))),1)+bar('Attendance',att,att==null?'#C9CEDB':att<80?'#E5484D':'#17A673',0);
+    var b=[['Below 75',0,'#E5484D'],['75–84',0,'#F5A524'],['85–94',0,'#17A673'],['95–100',0,'#2F62C8']];fin.forEach(function(f){b[f<75?0:f<85?1:f<95?2:3][1]++});
+    $('dsb').textContent='Number of students per grade range · '+(S.length-fin.length)+' incomplete';
+    $('dist').innerHTML=b.map(function(x){return bar(x[0],Math.round(x[1]/Math.max(1,S.length)*100),x[2],0).replace(/<b>\d+<\/b>/,'<b>'+x[1]+'</b>')}).join('');
+    $('cn').textContent=flag.length?flag.length+' flagged':'None flagged';$('cn').className='cnt'+(flag.length?'':' z');
+    var ini=function(n){return n.split(' ').map(function(p){return p[0]}).slice(0,2).join('')};
+    $('st').innerHTML=flag.length?flag.map(function(x){var s=x.s;return '<tr><td><div class="who"><span class="av2">'+tesc(ini(s.name))+'</span><b>'+tesc(s.name)+'</b></div></td><td>'+(s.final==null?'<span class="pl n">–</span>':'<span class="pl '+(s.final<75?'r':'g')+'">'+s.final+'</span>')+'</td><td>'+(s.att==null?'<span class="pl n">–</span>':'<span class="pl '+(s.att<80?'a':'g')+'">'+s.att+'%</span>')+'</td><td>'+x.w.map(function(w){return '<span class="tg '+w[0]+'">'+tesc(w[1])+'</span>'}).join('')+'</td></tr>'}).join(''):'<tr><td colspan="4" class="em">🎉 No struggling students. Flags appear when grades or attendance drop.</td></tr>';
+  }
+  $('cls').onchange=draw;$('pr').onclick=function(){window.print()};window.addEventListener('storage',draw);draw();
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script> <script src="teacher-prefs.js"></script></body></html>

@@ -1,0 +1,204 @@
+/* My Courses – extends student.css (same design system) */
+
+/* ---------- Page container: fill the space between sidebar and right edge ---------- */
+main.pg{
+  display:flex;flex-direction:column;gap:14px;
+  width:auto;max-width:none;min-width:0;
+  flex:1 1 0;            /* fills a flex parent  */
+  justify-self:stretch;  /* fills a grid parent  */
+  align-self:stretch;
+  box-sizing:border-box;
+  padding:28px 32px;
+  /* student.css appears to shrink-wrap children (align-items / justify-items: start).
+     Reset both so every row stretches to the full container width. */
+  align-items:stretch;justify-items:stretch;align-content:normal;
+}
+/* Belt and braces: each block fills the row no matter what the parent says */
+main.pg > *{width:100%;max-width:none;min-width:0;box-sizing:border-box;align-self:stretch;justify-self:stretch}
+body > .app{width:100%;max-width:none;min-width:0}
+
+/* ---------- Header ---------- */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ph h1{font-size:clamp(21px,2.3vw,26px);font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-.01em}
+.ph p{font-size:13px;color:var(--mute);margin-top:4px}
+.sf{position:relative;width:320px;max-width:100%;flex:none}
+.sf svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mute);width:16px;height:16px;pointer-events:none}
+.sf input{width:100%;height:40px;padding:0 12px 0 36px;border:1px solid var(--bd);border-radius:10px;background:#fff;font:inherit;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.sf input::placeholder{color:#98A0B3}
+.sf input:focus{outline:0;border-color:var(--sec);box-shadow:0 0 0 3px rgba(107,78,240,.14)}
+
+/* ---------- Header actions: search + Join Course ---------- */
+.pa{display:flex;align-items:center;gap:10px;width:auto;flex:none}
+main.pg > .ph > .pa{width:auto}
+.jb,.bp{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 16px;border:0;border-radius:10px;background:var(--pri);color:#fff;font:600 13.5px Inter,"Segoe UI",system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:background .15s,box-shadow .15s}
+.jb:hover,.bp:hover{background:#4329BF}
+.jb:focus-visible,.bp:focus-visible,.bs:focus-visible,.mx:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(107,78,240,.25)}
+.jb svg{width:16px;height:16px;flex:none}
+.bs{height:40px;padding:0 16px;border:1px solid var(--bd);border-radius:10px;background:#fff;color:var(--body);font:600 13.5px Inter,"Segoe UI",system-ui,sans-serif;cursor:pointer;transition:background .15s}
+.bs:hover{background:var(--tile)}
+
+/* ---------- Summary: compact segmented bar ---------- */
+.sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh)}
+.sum div{display:flex;align-items:baseline;gap:8px;padding:11px 20px;border-left:1px solid var(--bd)}
+.sum div:first-child{border-left:0}
+.sum b{font-size:18px;font-weight:700;color:var(--ink);line-height:1.2}
+.sum span{font-size:13px;color:var(--mute)}
+
+/* ---------- Filter bar: one cohesive control group ---------- */
+.tb{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;flex-wrap:wrap}
+.flt{display:flex;gap:2px;flex-wrap:wrap;padding:3px;background:#ECEEF6;border-radius:9px}
+.flt button{height:32px;padding:0 14px;border:0;border-radius:7px;background:transparent;font:500 13px Inter,"Segoe UI",system-ui,sans-serif;color:var(--body);cursor:pointer;transition:background .15s,color .15s}
+.flt button:hover{color:var(--ink)}
+.flt button.on{background:#fff;color:var(--pri);font-weight:600;box-shadow:0 1px 2px rgba(21,26,58,.08)}
+.flt em{font-style:normal;margin-left:6px;font-size:12px;color:var(--mute)}
+.flt .on em{color:var(--pri)}
+.so{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mute);margin-left:auto}
+.so select{height:36px;padding:0 32px 0 12px;border:1px solid var(--bd);border-radius:9px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/14px;-webkit-appearance:none;appearance:none;font:500 13px Inter,"Segoe UI",system-ui,sans-serif;color:var(--ink);cursor:pointer}
+.so select:focus{outline:0;border-color:var(--sec);box-shadow:0 0 0 3px rgba(107,78,240,.14)}
+.rc{font-size:12.5px;color:var(--mute);margin:-4px 0 -2px}
+
+/* ---------- Course grid: 3 / 2 / 1 columns, equal-height rows ---------- */
+.cg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+
+.cc{
+  position:relative;display:flex;flex-direction:column;gap:12px;
+  padding:18px 20px;min-height:300px;
+  background:#fff;border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);
+  transition:border-color .15s,box-shadow .15s,transform .15s;
+}
+.cc:hover{border-color:#CFC6F5;box-shadow:0 4px 12px rgba(21,26,58,.06);transform:translateY(-1px)}
+
+/* top row: small code + subtle status */
+.cc .tp{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cc .cd{font-size:12px;font-weight:600;color:var(--mute);letter-spacing:.04em}
+.sb{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;font-size:11.5px;font-weight:500;white-space:nowrap}
+.sb::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.sb.prog{background:#F1EEFD;color:#5B43D6}
+.sb.done{background:#EAF6EF;color:#217A4D}
+.sb.attn{background:#FEF3DF;color:#92600A}
+
+/* icon + title + instructor */
+.cc .mn{display:flex;align-items:center;gap:14px;min-width:0}
+.cc .img{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;flex:none;background:#EEEBFD;color:#4F35D2}
+.cc .img svg{width:24px;height:24px}
+.cc .mn > div{min-width:0}
+.cc h3{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.005em;overflow-wrap:anywhere}
+.cc .ins{font-size:13px;color:var(--mute);margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* progress */
+.pg-row{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--mute);margin-bottom:7px}
+.pg-row b{font-size:13px;font-weight:600;color:var(--ink)}
+.cc .bar{height:6px;background:#E8E7F4}
+
+/* next activity: subtle tinted strip, pinned to the bottom block */
+.na{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;background:var(--tile);border:1px solid #EEF0F6;border-radius:10px;margin-top:auto}
+.na > div{min-width:0}
+.na small{display:block;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.na b{display:block;font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.na time{font-size:12.5px;font-weight:500;color:var(--body);white-space:nowrap;text-align:right}
+.na time.nd{color:#98A0B3;font-weight:400}
+
+/* continue button: light, 44px */
+.go{display:flex;align-items:center;justify-content:center;height:44px;border:1px solid #D9D2F7;border-radius:10px;color:var(--pri);font-size:14px;font-weight:600;background:#F7F5FE;transition:background .15s,border-color .15s,color .15s}
+.go:hover{background:#ECE7FD;border-color:#B8AAF0}
+
+/* empty + toast */
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:48px 16px;background:#fff;border:1px dashed #D5D8E8;border-radius:var(--rad)}
+.empty[hidden]{display:none}
+.empty svg{width:28px;height:28px;color:var(--pri);margin-bottom:8px}
+.empty b{font-size:16px;color:var(--ink);font-weight:600}.empty p{font-size:13px;color:var(--mute)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:120;max-width:min(420px,calc(100vw - 32px));padding:12px 16px;border-radius:10px;background:var(--navy);color:#fff;font-size:13px;line-height:1.45;box-shadow:0 8px 24px rgba(21,26,58,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast b{display:block;font-weight:600}
+
+/* ---------- Join Course modal ---------- */
+.md{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(21,26,58,.45);animation:mdin .18s ease}
+.md[hidden]{display:none}
+@keyframes mdin{from{opacity:0}to{opacity:1}}
+body.md-open{overflow:hidden}
+.mc{width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow:auto;padding:22px 24px 20px;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(21,26,58,.25)}
+.mh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.mh h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.005em}
+.mx{display:grid;place-items:center;width:32px;height:32px;margin-right:-6px;border:0;border-radius:8px;background:transparent;color:var(--mute);cursor:pointer;transition:background .15s,color .15s}
+.mx:hover{background:var(--tile);color:var(--ink)}
+.mx svg{width:18px;height:18px}
+.mp{font-size:13.5px;color:var(--mute);line-height:1.5;margin-bottom:16px}
+.ml{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.mi{width:100%;box-sizing:border-box;height:42px;padding:0 12px;border:1px solid var(--bd);border-radius:10px;background:#fff;font:inherit;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;transition:border-color .15s,box-shadow .15s}
+.mi::placeholder{text-transform:none;letter-spacing:0;color:#98A0B3}
+.mi:focus{outline:0;border-color:var(--sec);box-shadow:0 0 0 3px rgba(107,78,240,.14)}
+.mi[aria-invalid="true"]{border-color:#D9534F;box-shadow:0 0 0 3px rgba(217,83,79,.12)}
+.mhint{font-size:12px;color:var(--mute);margin-top:6px}
+.je{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;border:1px solid #F3CFCB;border-radius:10px;background:#FDF1F0;color:#A3332E;font-size:13px;line-height:1.45}
+.je[hidden]{display:none}
+.je svg{width:18px;height:18px;flex:none;margin-top:1px}
+.je b{display:block;font-weight:600}
+.je b[hidden]{display:none}
+.ma{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1050px){
+  .cg{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* Narrow: 1 column */
+@media (max-width:700px){
+  .cg{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (max-width:999px){
+  .toast{bottom:84px}
+}
+
+/* ===== Modern containers ===== */
+
+/* Summary: 4 separate stat cards with icon tiles */
+.sum{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;
+  background:none;border:0;box-shadow:none;border-radius:0;
+}
+.sum div{
+  display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:auto auto;
+  column-gap:14px;row-gap:2px;align-items:center;
+  padding:18px 20px;border-left:0;
+  background:#fff;border:1px solid #ECEBF5;border-radius:16px;
+  box-shadow:0 2px 8px rgba(79,53,210,.06);
+  transition:transform .18s,box-shadow .18s;
+}
+.sum div:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(79,53,210,.12)}
+.sum div::before{
+  content:"";grid-column:1;grid-row:1/3;width:48px;height:48px;border-radius:14px;
+  background:var(--tile) var(--ico) center/22px no-repeat;
+}
+.sum span{grid-column:2;grid-row:1;font-size:13px;font-weight:500;color:#667085}
+.sum b{grid-column:2;grid-row:2;font-size:28px;font-weight:700;color:#171B6B;line-height:1.1}
+.sum div:nth-child(1){--tile:#EEF4FF;--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z'/%3E%3C/svg%3E")}
+.sum div:nth-child(2){--tile:#F0EDFF;--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236D3FEA' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E")}
+.sum div:nth-child(3){--tile:#FFF6DD;--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v6M12 16.5v.5'/%3E%3C/svg%3E")}
+.sum div:nth-child(4){--tile:#EAF7F1;--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E")}
+
+/* Filter bar */
+.flt{padding:4px;background:#fff;border:1px solid #ECEBF5;border-radius:12px;box-shadow:0 1px 3px rgba(79,53,210,.05)}
+.flt button{height:34px;border-radius:9px}
+.flt button.on{background:#F0EDFF;color:#6D3FEA;box-shadow:none}
+.so select{border-radius:12px;border-color:#ECEBF5;box-shadow:0 1px 3px rgba(79,53,210,.05)}
+
+/* Course cards */
+.cc{
+  border:1px solid #ECEBF5;border-radius:20px;padding:22px;
+  box-shadow:0 4px 14px rgba(79,53,210,.07);overflow:hidden;
+}
+.cc::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:4px;
+  background:linear-gradient(90deg,#6D3FEA,#9B7BFF);
+}
+.cc:hover{border-color:#D9D2F7;box-shadow:0 14px 32px rgba(79,53,210,.16);transform:translateY(-3px)}
+.cc .img{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#F0EDFF,#E2DBFF);color:#6D3FEA}
+.sb{height:24px;padding:0 10px;font-weight:600}
+.cc .bar{height:8px;border-radius:999px;background:#EEEDF8;overflow:hidden}
+.cc .bar i,.cc .bar span,.cc .bar > *{border-radius:999px;background:linear-gradient(90deg,#6D3FEA,#9B7BFF)}
+.na{background:#F8F7FF;border:1px solid #ECE8FF;border-radius:14px}
+.go{height:46px;border:0;border-radius:14px;color:#fff;background:linear-gradient(135deg,#6D3FEA,#4F35D2);box-shadow:0 6px 16px rgba(79,53,210,.28)}
+.go:hover{background:linear-gradient(135deg,#7A4DF5,#5A3FE0);border:0}
+
+@media (max-width:1050px){.sum{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.sum{gap:12px}.sum div{padding:14px}.sum b{font-size:24px}}

@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><link rel="stylesheet" href="student.css"><link rel="stylesheet" href="teacher.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css"><title>Gradebook · BSHM LMS</title>
+<style>
+.fbar{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.fbar label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.fbar select,.fbar input{font:14px Inter,system-ui,sans-serif;border:1px solid var(--bd);border-radius:10px;padding:8px 10px;background:#fff;color:var(--ink);min-height:40px}
+.fbar input{width:90px}
+.fbar input.wbad{border-color:#E5484D;background:#FFF5F5}
+.pl{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}.ok{background:#E3F5EC;color:#14724C}.bad{background:#FDECEC;color:#B42318}.inc{background:#EEF0F6;color:#4A5572}
+.hp{font-size:12.5px;color:var(--mute);margin-top:8px}
+.tt{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:120}.tt.on{opacity:1}
+
+/* weights */
+#wt{padding-bottom:6px}
+.gwc{display:inline-block;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700}
+.gwc.ok{background:#E3F5EC;color:#14724C}.gwc.bad{background:#FDECEC;color:#B42318}
+.gwn{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;border-radius:12px;background:#FFF6E8;color:#9A5B07;font-size:13px}
+.gwn[hidden]{display:none}
+
+/* summary cards */
+.gst{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.gc{padding:14px 16px;border:1px solid #ECE8FF;border-radius:14px;background:#FBFAFF}
+.gc span{display:block;font-size:12.5px;color:var(--mute);font-weight:600}
+.gc b{display:block;margin:4px 0 2px;font-size:26px;font-weight:700;color:var(--ink);line-height:1.1}
+.gc small{font-size:12px;color:var(--mute)}
+.gc.g b{color:#14724C}.gc.r b{color:#B42318}.gc.n b{color:#4A5572}
+
+/* toolbar */
+.gtool{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.gtool #q{flex:1 1 220px;max-width:340px;height:42px;border:1.5px solid #E4DDFB;border-radius:10px;padding:0 14px;font:14px Inter,system-ui,sans-serif;color:var(--ink);background:#fff}
+.gtool #q:focus{outline:0;border-color:#6D3FEA;box-shadow:0 0 0 3px rgba(109,63,234,.18)}
+.gsp{flex:1}
+.gsv{font-size:12.5px;font-weight:600;color:#14724C;opacity:0;transition:opacity .2s}.gsv.on{opacity:1}
+.gbt{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;border:1px solid #D9D2F7;background:#F7F5FE;color:var(--pri);font:600 13.5px Inter,system-ui,sans-serif;cursor:pointer}
+.gbt:hover{background:#EEE9FE}.gbt.s{height:32px;padding:0 12px;font-size:12.5px}
+
+/* table */
+.gtw{max-height:min(70vh,640px);overflow:auto}
+.gtw thead th{position:sticky;top:0;z-index:2;background:#F6F5FF}
+.gtw td{vertical-align:middle}
+.gsb{border:0;background:none;padding:0;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.gsb::after{content:"\2195";font-size:11px;opacity:.35}
+.gsb.on.asc::after{content:"\2191";opacity:1}.gsb.on.desc::after{content:"\2193";opacity:1}
+.gsb:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px;border-radius:4px}
+body[data-page="gradebook"] .gi{width:92px;min-height:42px;border:1.5px solid #C9BEF2;background:#fff;border-radius:10px;padding:8px 10px;text-align:center;font:600 14px Inter,system-ui,sans-serif;color:var(--ink)}
+body[data-page="gradebook"] .gi::placeholder{color:#A6A2C4;font-weight:500}
+body[data-page="gradebook"] .gi:focus{outline:0;border-color:#6D3FEA;box-shadow:0 0 0 3px rgba(109,63,234,.18)}
+body[data-page="gradebook"] .gi.au{background:#F1EEFF;border-color:#CFC2F7}
+body[data-page="gradebook"] .gi.gx{border-color:#E5484D;background:#FFF5F5}
+.fg{color:#14724C}.fb{color:#B42318}
+.gnone{text-align:center;color:var(--mute);font-size:13px;padding:24px}
+
+@media(max-width:767px){.gst{grid-template-columns:repeat(2,minmax(0,1fr))}.gtool #q{max-width:none}}
+</style></head>
+<body data-role="teacher" data-page="gradebook" data-title="Gradebook"><script src="auth-guard.js"></script><div class="app"><main class="pg"><section class="vw">
+<div class="ph"><h1>Gradebook</h1><p>Enter scores per category. Final grade is weighted automatically. Passing grade is 75.</p></div>
+<section class="card" style="padding:20px">
+<div class="fbar"><div><label for="cls">Class</label><select id="cls"></select></div>
+<div><label for="wq">Quizzes %</label><input id="wq" type="number" min="0" max="100"></div><div><label for="we">Exams %</label><input id="we" type="number" min="0" max="100"></div><div><label for="wp">POS %</label><input id="wp" type="number" min="0" max="100"></div><div id="wt"></div></div>
+<div class="gwn" id="wn" hidden></div>
+
+<div class="gst" id="sm"></div>
+
+<div class="gtool">
+  <input id="q" type="search" placeholder="Search student" aria-label="Search student">
+  <span class="gsp"></span>
+  <span class="gsv" id="sv" role="status"></span>
+  <button type="button" class="gbt" id="ex">Export CSV</button>
+</div>
+
+<div class="tw gtw"><table><thead><tr>
+  <th><button type="button" class="gsb" data-s="name">Student</button></th>
+  <th><button type="button" class="gsb" data-s="q">Quizzes</button></th>
+  <th><button type="button" class="gsb" data-s="e">Exams</button></th>
+  <th><button type="button" class="gsb" data-s="p">POS Training</button></th>
+  <th><button type="button" class="gsb" data-s="f">Final grade</button></th>
+  <th>Remarks</th></tr></thead><tbody id="tbd"></tbody></table></div>
+<p class="hp">Scores are 0–100. Purple boxes are recorded automatically when a student finishes a quiz, exam or POS training, and this page updates by itself. Type over one to override it; clear it to go back to automatic. Press Enter to move down a column, Tab to move across. Changes save automatically.</p></section>
+</section></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var toast=function(m){if(window.ttoast)return window.ttoast(m);var t=$('tt');t.textContent=m;t.className='tt on';setTimeout(function(){t.className='tt'},2400)};
+  var C=[['BSHM 101','Food & Beverage Services'],['BSHM 103','Tourism Management'],['BSHM 104','Housekeeping Operations']];
+  var BASE=['Juan Dela Cruz','Ana Reyes','Mark Lim','Rica Cruz','Paolo Garcia','Jenny Tan','Carlo Mendoza','Bea Aquino'],NM=BASE.slice(),RS={H:[],P:[]};
+  var W=tlsGet('bshm.gb.w')||{q:30,e:40,p:30},G={},S={q:'',k:'name',d:1},SIG='';
+  $('cls').innerHTML=C.map(function(c){return '<option value="'+c[0]+'">'+tesc(c[0]+' · '+c[1])+'</option>'}).join('');
+  var lc=function(s){return String(s==null?'':s).trim().toLowerCase()};
+  function num(v){return v===''||v==null||isNaN(+v)?null:Math.max(0,Math.min(100,+v))}
+  function avg(a){return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length):null}
+
+  /* ---------- tolerant readers for POS records ---------- */
+  function pick(o,keys){
+    if(!o)return null;
+    for(var i=0;i<keys.length;i++){var v=o[keys[i]];if(v!=null&&v!=='')return v}
+    return null;
+  }
+  function posName(r){return pick(r,['student','student_id','studentName','student_name','name','user','username'])}
+  function posScore(r){
+    var s=pick(r,['score','percentage','percent','result','total','grade']);
+    if(s==null)return null;
+    var mx=pick(r,['max','maxScore','max_score','outOf','total_items']);
+    if(mx!=null&&+mx>0&&+mx!==100&&!isNaN(+s))s=(+s/+mx)*100;
+    return num(s);
+  }
+
+  /* ---------- data: auto-record from student results ---------- */
+  function auto(n){
+    var key=lc(n),best={};
+    RS.H.forEach(function(r){if(lc(r.student_id)!==key||r.percentage==null)return;var k=r.exam_id;if(!best[k]||r.attempt_number>=best[k].attempt_number)best[k]=r});
+    var q=[],e=[];Object.keys(best).forEach(function(k){var r=best[k];(/quiz/i.test(r.exam_id+' '+r.exam_title)?q:e).push(r.percentage)});
+    var pm={};
+(RS.P||[]).forEach(function(r){
+  if(lc(posName(r))!==key)return;
+  var s=posScore(r);if(s==null)return;
+  var k=r.activity_id||r.id;
+  if(!pm[k]||(+r.attempt_number||0)>=(+pm[k].n||0))pm[k]={n:r.attempt_number,s:s};
+});
+var p=Object.keys(pm).map(function(k){return pm[k].s});
+    return {q:avg(q),e:avg(e),p:avg(p)};
+  }
+  function eff(n){var m=G[n]||{},a=auto(n);return {q:m.q!=null?m.q:a.q,e:m.e!=null?m.e:a.e,p:m.p!=null?m.p:a.p,am:{q:m.q==null&&a.q!=null,e:m.e==null&&a.e!=null,p:m.p==null&&a.p!=null}}}
+  function calc(r){if(r.q==null||r.e==null||r.p==null)return null;var t=W.q+W.e+W.p;return t?Math.round((r.q*W.q+r.e*W.e+r.p*W.p)/t*10)/10:null}
+  function load(){
+    G=tlsGet('bshm.gb.'+$('cls').value)||{};RS=tlsResults()||{};RS.H=RS.H||[];RS.P=RS.P||[];NM=BASE.slice();
+    var seen=NM.map(lc);
+    RS.H.map(function(r){return r.student_id}).concat(RS.P.map(posName)).forEach(function(n){if(n&&seen.indexOf(lc(n))<0){seen.push(lc(n));NM.push(n)}});
+    try{SIG=JSON.stringify([RS.H,RS.P])}catch(_){SIG=''}
+  }
+  function rowData(i){var n=NM[i],r=eff(n);return {n:n,r:r,f:calc(r)}}
+
+  /* ---------- helpers ---------- */
+  function chip(f){return f==null?'<span class="pl inc">Incomplete</span>':f>=75?'<span class="pl ok">Passed</span>':'<span class="pl bad">Failed</span>'}
+  function fin(f){return f==null?'–':'<b class="'+(f>=75?'fg':'fb')+'">'+f+'</b>'}
+  function inp(i,k,d){
+    var a=d.r.am[k],lab={q:'Quizzes',e:'Exams',p:'POS Training'}[k];
+    return '<input class="gi'+(a?' au':'')+'" type="number" inputmode="decimal" min="0" max="100" step="any" placeholder="0–100" data-n="'+i+'" data-k="'+k+'" value="'+(d.r[k]==null?'':d.r[k])+'"'+(a?' title="Auto-recorded from student results"':'')+' aria-label="'+tesc(d.n+' · '+lab)+'">';
+  }
+  function rowHTML(i){
+    var d=rowData(i);
+    return '<tr data-r="'+i+'"><td><b>'+tesc(d.n)+'</b></td><td>'+inp(i,'q',d)+'</td><td>'+inp(i,'e',d)+'</td><td>'+inp(i,'p',d)+'</td><td class="gf">'+fin(d.f)+'</td><td class="gm">'+chip(d.f)+'</td></tr>';
+  }
+  function order(){
+    var ix=NM.map(function(_,i){return i}).filter(function(i){return !S.q||lc(NM[i]).indexOf(S.q)>-1});
+    var v=function(i){var d=rowData(i);return S.k==='name'?lc(d.n):S.k==='f'?d.f:d.r[S.k]};
+    ix.sort(function(a,b){
+      var x=v(a),y=v(b);
+      if(S.k==='name')return x<y?-S.d:x>y?S.d:0;
+      if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
+      return (x-y)*S.d;
+    });
+    return ix;
+  }
+  function saved(){
+    var s=$('sv');s.textContent='\u2713 Saved '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    s.className='gsv on';
+  }
+
+  /* ---------- drawing ---------- */
+  function drawTop(){
+    $('wq').value=W.q;$('we').value=W.e;$('wp').value=W.p;
+    var t=W.q+W.e+W.p;
+    $('wt').innerHTML='<span class="gwc '+(t===100?'ok':'bad')+'">Total '+t+'%</span>';
+    ['wq','we','wp'].forEach(function(id){$(id).classList.toggle('wbad',t!==100)});
+    var wn=$('wn');wn.hidden=t===100;
+    if(t!==100)wn.innerHTML='<span>Weights add up to '+t+'%, not 100%. Final grades are scaled to the total until you fix this.</span><button type="button" class="gbt s" id="wfix">Reset to 30 / 40 / 30</button>';
+  }
+  function heads(){
+    [].forEach.call(document.querySelectorAll('.gsb'),function(b){
+      var on=b.getAttribute('data-s')===S.k;
+      b.classList.toggle('on',on);b.classList.toggle('asc',on&&S.d===1);b.classList.toggle('desc',on&&S.d===-1);
+    });
+  }
+  function drawTable(){
+    var ix=order();
+    $('tbd').innerHTML=ix.length?ix.map(rowHTML).join(''):'<tr><td colspan="6"><div class="gnone">'+(S.q?'No students match your search.':'No students in this class.')+'</div></td></tr>';
+    heads();
+  }
+  function summary(){
+    var f=[],pass=0;
+    NM.forEach(function(n,i){var v=rowData(i).f;if(v!=null){f.push(v);if(v>=75)pass++}});
+    var a=f.length?Math.round(f.reduce(function(x,y){return x+y},0)/f.length*10)/10:null,
+        pct=f.length?Math.round(pass/f.length*100)+'% pass rate':'No grades yet';
+    function card(cls,k,v,s){return '<div class="gc '+cls+'"><span>'+k+'</span><b>'+v+'</b><small>'+s+'</small></div>'}
+    $('sm').innerHTML=
+      card(a==null?'n':a>=75?'g':'r','Class average',a==null?'–':a,f.length+' of '+NM.length+' graded')+
+      card('g','Passed',pass,pct)+
+      card('r','Failed',f.length-pass,'Below 75')+
+      card('n','Incomplete',NM.length-f.length,'Missing a score');
+  }
+  function draw(){drawTop();drawTable();summary()}
+
+  /* update one row in place so the cursor never jumps */
+  function rowUpdate(i,force){
+    var tr=$('tbd').querySelector('tr[data-r="'+i+'"]');if(!tr)return;
+    var d=rowData(i);
+    ['q','e','p'].forEach(function(k){
+      var el=tr.querySelector('[data-k="'+k+'"]'),v=d.r[k]==null?'':String(d.r[k]);
+      if(force||el!==document.activeElement)el.value=v;
+      el.classList.toggle('au',!!d.r.am[k]);el.classList.remove('gx');
+      if(d.r.am[k])el.title='Auto-recorded from student results';else el.removeAttribute('title');
+    });
+    tr.querySelector('.gf').innerHTML=fin(d.f);tr.querySelector('.gm').innerHTML=chip(d.f);
+  }
+
+  /* ---------- live auto-refresh when a student finishes an activity ---------- */
+  function refresh(notify){
+    var oldSig=SIG,oldLen=NM.length;
+    load();
+    if(SIG===oldSig&&NM.length===oldLen)return;          // nothing new
+    if(NM.length!==oldLen){draw()}                       // new student appeared
+    else{NM.forEach(function(_,i){rowUpdate(i)});summary()}
+    if(notify)toast('New student results recorded.');
+  }
+  window.addEventListener('storage',function(){refresh(true)});
+  window.addEventListener('focus',function(){refresh(true)});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)refresh(true)});
+  setInterval(function(){if(!document.hidden)refresh(true)},4000);   // same-tab / same-device fallback
+
+  /* ---------- events ---------- */
+  function badVal(raw){return raw!==''&&(isNaN(+raw)||+raw<0||+raw>100)}
+  $('tbd').addEventListener('input',function(e){
+    var el=e.target;if(el.getAttribute('data-k')===null)return;
+    el.classList.toggle('gx',badVal(el.value.trim()));
+  });
+  $('tbd').addEventListener('change',function(e){
+    var el=e.target,i=el.getAttribute('data-n');if(i===null)return;i=+i;
+    var k=el.getAttribute('data-k'),raw=el.value.trim();
+    if(badVal(raw)){toast('Scores must be between 0 and 100.');rowUpdate(i,true);return}
+    var n=NM[i];G[n]=G[n]||{};G[n][k]=num(raw);
+    tlsSet('bshm.gb.'+$('cls').value,G);
+    rowUpdate(i);summary();saved();
+  });
+  $('tbd').addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    var el=e.target,k=el.getAttribute('data-k');if(k===null)return;
+    e.preventDefault();
+    var all=[].slice.call($('tbd').querySelectorAll('input[data-k="'+k+'"]')),nx=all[all.indexOf(el)+1];
+    if(nx){nx.focus();nx.select()}else el.blur();
+  });
+  document.querySelector('thead').addEventListener('click',function(e){
+    var b=e.target.closest('[data-s]');if(!b)return;
+    var s=b.getAttribute('data-s');
+    if(S.k===s)S.d=-S.d;else{S.k=s;S.d=1}
+    drawTable();
+  });
+  $('q').addEventListener('input',function(){S.q=lc(this.value);drawTable()});
+
+  ['wq','we','wp'].forEach(function(id){$(id).onchange=function(){
+    W={q:Math.max(0,+$('wq').value||0),e:Math.max(0,+$('we').value||0),p:Math.max(0,+$('wp').value||0)};
+    tlsSet('bshm.gb.w',W);draw();saved();
+  }});
+  $('wn').onclick=function(e){
+    if(e.target.id==='wfix'){W={q:30,e:40,p:30};tlsSet('bshm.gb.w',W);draw();saved();toast('Weights reset to 30 / 40 / 30.')}
+  };
+  $('cls').onchange=function(){load();draw()};
+
+  /* ---------- export CSV (all students in this class) ---------- */
+  function cs(v){
+    v=String(v==null?'':v);
+    if(/^[=+\-@]/.test(v))v="'"+v;
+    return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;
+  }
+  $('ex').onclick=function(){
+    var rows=[['Student','Quizzes','Exams','POS Training','Final grade','Remarks']];
+    NM.forEach(function(n,i){
+      var d=rowData(i);
+      rows.push([d.n,d.r.q,d.r.e,d.r.p,d.f==null?'':d.f,d.f==null?'Incomplete':d.f>=75?'Passed':'Failed']);
+    });
+    var csv='\ufeff'+rows.map(function(r){return r.map(cs).join(',')}).join('\r\n');
+    var b=new Blob([csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download='gradebook-'+$('cls').value.replace(/\s+/g,'')+'.csv';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(u)},1000);
+    toast('CSV downloaded.');
+  };
+
+  load();draw();
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script></body></html>

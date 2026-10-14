@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>POS Training · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="pos-training.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+</head>
+<body class="pos-page" data-role="student" data-nav="activities.html"><script src="auth-guard.js"></script>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z"/></symbol>
+<symbol id="task" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h6"/></symbol>
+<symbol id="mega" viewBox="0 0 24 24"><path d="M3 11v3a1 1 0 0 0 1 1h3l8 4V6L7 10H4a1 1 0 0 0-1 1zM19 9a4 4 0 0 1 0 6"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+<symbol id="out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></symbol>
+<symbol id="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></symbol>
+</defs></svg>
+
+<div class="app">
+<main class="pg">
+
+  <!-- POS SIMULATOR -->
+  <section id="v-sim" class="vw">
+    <div class="simbar">
+      <div><h2>POS Training<small id="actTitle"></small></h2></div>
+      <div class="tm">Time <b id="clock">00:00</b><span id="limit">/ 15:00</span><button class="pbtn sm" id="exitBtn">Exit Training</button></div>
+    </div>
+    <div class="sim">
+      <!-- LEFT: training progress -->
+            <div class="card tp">
+        <h4>Training Steps</h4>
+        <ol id="stepList"></ol>
+        <div class="prog"><div class="pr"><span>Progress</span><b id="progTxt">0 / 7 Steps Completed</b></div><div class="pbar"><i id="progBar" style="width:0"></i></div></div>
+      </div>
+
+      <!-- CENTER: actual POS -->
+      <div class="card term">
+        <div class="thead"><b><i class="fa-solid fa-cash-register"></i> POS TERMINAL</b><span>Register #01</span><span class="ready"><i></i>Ready for Training</span></div>
+        <div class="toolbar">
+          <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="pq" placeholder="Search products..."></div>
+          <select id="psort"><option value="name">Sort: Name A-Z</option><option value="price">Price: Low to High</option><option value="priceD">Price: High to Low</option><option value="stock">Stock: Low first</option></select>
+        </div>
+        <div class="chips" id="chips"></div>
+        <div class="products" id="plist"></div>
+        <div class="selbar" id="selbar"></div>
+      </div>
+
+      <!-- RIGHT: guidance + current order -->
+      <div class="side">
+        <div class="card guide" id="guide"></div>
+        <div class="card cart" id="cartBox"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="v-result" class="vw" hidden></section>
+  <!-- REVIEW (read-only) -->
+  <section id="v-review" class="vw" hidden></section>
+</main>
+</div>
+<div id="modalRoot"></div>
+<div class="toasts" id="toasts"></div>
+<script src="pos-activities-data.js"></script>
+<script src="pos-training.js"></script>
+<script src="shell.js"></script>
+<link rel="stylesheet" href="courses-polish.css">
+  <script src="chat.js"></script>
+  <script src="prefs.js"></script>
+</body></html>

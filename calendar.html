@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendar · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="calendar.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+</head>
+<body data-role="student" data-nav="calendar.html"><script src="auth-guard.js"></script>
+
+<!-- Icons used by this page only. shell.js adds the navbar icons (home, book, task, cal, bell, search, user, gear, file, out...) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</defs></svg>
+
+<div class="app">
+<!-- shell.js inserts <header class="topnav"> here -->
+<main class="pg cx-page">
+
+  <div class="cx-head">
+    <h1>Calendar</h1>
+    <p>View your class schedule, important dates, and upcoming activities.</p>
+  </div>
+
+  <div class="cx-layout">
+
+    <!-- LEFT: controls + calendar -->
+    <div class="cx-main">
+      <div class="cx-bar">
+        <div class="cx-nav">
+          <button type="button" id="cx-prev" aria-label="Previous month"><svg class="i cx-ic"><use href="#chev"/></svg></button>
+          <span class="cx-label" id="cx-label" aria-live="polite"></span>
+          <button type="button" id="cx-next" aria-label="Next month"><svg class="i cx-ic"><use href="#chev"/></svg></button>
+        </div>
+        <div class="cx-right">
+          <div class="cx-seg" id="cx-seg" role="group" aria-label="Calendar view">
+            <button type="button" class="on" data-v="month" aria-pressed="true">Month</button>
+            <button type="button" data-v="week" aria-pressed="false">Week</button>
+            <button type="button" data-v="day" aria-pressed="false">Day</button>
+          </div>
+          <button type="button" class="cx-btn" id="cx-today">Today</button>
+        </div>
+      </div>
+
+      <section class="cx-cal cx-m" id="cx-cal" aria-label="Calendar">
+        <ul class="cx-legend" aria-label="Event categories">
+          <li class="cx-c-lecture"><i></i>Lecture</li>
+          <li class="cx-c-practical"><i></i>Practical</li>
+          <li class="cx-c-quiz"><i></i>Quiz</li>
+          <li class="cx-c-assignment"><i></i>Assignment</li>
+          <li class="cx-c-exam"><i></i>Exam</li>
+          <li class="cx-c-general"><i></i>General Event</li>
+        </ul>
+        <div class="cx-scroll"><div class="cx-board" id="cx-board"></div></div>
+      </section>
+    </div>
+
+    <!-- RIGHT: today + upcoming -->
+    <div class="cx-side">
+      <section class="cx-card" aria-labelledby="cx-ts-h">
+        <h2 id="cx-ts-h"><svg class="i cx-ic"><use href="#cal"/></svg>Today's Schedule</h2>
+        <p class="cx-sd"><b id="cx-t-date"></b><span id="cx-t-day"></span></p>
+        <ul class="cx-ts" id="cx-ts"></ul>
+        <button type="button" class="cx-vl" id="cx-full">View Full Schedule <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section class="cx-card" aria-labelledby="cx-ue-h">
+        <h2 id="cx-ue-h"><svg class="i cx-ic"><use href="#cal"/></svg>Upcoming Events</h2>
+        <ul class="cx-ue" id="cx-upc"></ul>
+        <button type="button" class="cx-vl" id="cx-all">View All <span aria-hidden="true">→</span></button>
+      </section>
+    </div><!-- /cx-side -->
+
+  </div><!-- /cx-layout -->
+</main>
+</div><!-- /app -->
+
+<!-- Event detail modal -->
+<div class="cx-modal" id="cx-modal" hidden>
+  <div class="cx-dialog" role="dialog" aria-modal="true" aria-labelledby="cx-m-title">
+    <div class="cx-mh">
+      <h2 id="cx-m-title"></h2>
+      <button type="button" class="cx-mx" id="cx-m-x" aria-label="Close"><svg class="i cx-ic"><use href="#x"/></svg></button>
+    </div>
+    <dl class="cx-dl">
+      <dt>Category</dt><dd><span class="cx-cdot" id="cx-m-dot"></span><span id="cx-m-cat"></span></dd>
+      <dt>Course</dt><dd id="cx-m-co"></dd>
+      <dt>Date</dt><dd id="cx-m-d"></dd>
+      <dt>Time</dt><dd id="cx-m-t"></dd>
+      <dt>Location</dt><dd id="cx-m-l"></dd>
+      <dt>Description</dt><dd id="cx-m-ds"></dd>
+    </dl>
+    <div class="cx-ma"><button type="button" class="cx-btn" id="cx-m-c">Close</button></div>
+  </div>
+</div>
+
+<script src="calendar.js"></script>
+  <script src="chat.js"></script>
+<script src="shell.js"></script>  
+<script src="prefs.js"></script>
+</body></html>

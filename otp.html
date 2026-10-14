@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify Your Account – ACES Polytechnic College, Inc.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="register.css">
+<link rel="stylesheet" href="otp.css">
+</head>
+<body>
+<i class="orb orb-a"></i><i class="orb orb-b"></i><i class="orb orb-c"></i><i class="orb orb-d"></i><i class="orb orb-e"></i>
+
+<main class="page">
+  <div class="shell">
+
+    <a href="#" class="back" id="backLink">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 5l-7 7 7 7"/></svg></span>
+      Back
+    </a>
+
+    <section class="card" id="card">
+
+      <!-- Brand panel -->
+        <aside class="aside">
+  <div class="aside-dots" aria-hidden="true"></div>
+  <div class="aside-art" aria-hidden="true"><img src="assets/hero.jpg" alt=""></div>
+        <div class="aside-top">
+          <svg class="cap" viewBox="0 0 90 80" aria-hidden="true">
+            <path d="M45 4 2 25l43 21 43-21z" fill="#fff"/>
+            <path d="M18 38v17c0 8 12 15 27 15s27-7 27-15V38L45 51z" fill="#fff" fill-opacity=".7"/>
+            <path d="M84 27v22" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="84" cy="52" r="4.5" fill="#fff"/>
+          </svg>
+          <div class="brand">
+            <b>ACES POLYTECHNIC COLLEGE, INC.</b>
+            <span>Hospitality Management Department</span>
+          </div>
+        </div>
+
+        <div class="aside-mid">
+          <p class="tagline">Keep your account <em>secure</em>.</p>
+          <ul class="points">
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Code sent to your registered email</li>
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Never share your code with anyone</li>
+            <li><span class="pi"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Request a new code if it doesn't arrive</li>
+          </ul>
+        </div>
+
+        <p class="aside-foot">Learn • Serve • Lead</p>
+      </aside>
+
+      <!-- Form panel -->
+      <div class="main">
+
+        <!-- ===== Verification form ===== -->
+        <div id="verifyView">
+          <span class="shield" aria-hidden="true">
+            <svg viewBox="0 0 48 52">
+              <path d="M24 2 4 9.5v14.5c0 12 8.5 20.5 20 25.5 11.5-5 20-13.5 20-25.5V9.5z" fill="#fff"/>
+              <path d="M24 2 4 9.5v14.5c0 12 8.5 20.5 20 25.5z" fill="#2c2bb0" opacity=".12"/>
+              <rect x="15.5" y="22" width="17" height="13" rx="3" fill="#4535c9"/>
+              <path d="M18.5 22v-3.5a5.5 5.5 0 0 1 11 0V22" fill="none" stroke="#4535c9" stroke-width="2.6" stroke-linecap="round"/>
+              <circle cx="24" cy="28.5" r="2" fill="#fff"/>
+            </svg>
+          </span>
+          <h1 class="title">Verify Your Account</h1>
+          <p class="sub">We've sent a 6-digit verification code to your registered email address.</p>
+          <p class="sent">Code sent to <b id="maskedEmail">&nbsp;</b></p>
+          <p class="notice demo" id="demoNote"><b>Prototype mode:</b> no email is sent. Demo code: <strong id="demoCode">------</strong></p>
+
+          <form id="otpForm" novalidate>
+            <div class="otp" id="otp" role="group" aria-label="6-digit verification code">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Digit 2">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Digit 3">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Digit 4">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Digit 5">
+              <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Digit 6">
+            </div>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+
+            <button type="submit" class="btn-primary" id="verifyBtn" disabled><span class="lbl">Verify Code</span>
+              <svg class="arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 5l7 7-7 7"/></svg><i class="spin"></i>
+            </button>
+          </form>
+
+          <div class="help">
+            <p class="aux">Didn't receive the code?
+              <button type="button" class="link" id="resend" disabled>Resend Code in <span id="timer">00:59</span></button>
+            </p>
+            <p class="aux">Wrong email address? <a href="register.html" class="link" id="changeEmail">Change Email</a></p>
+          </div>
+        </div>
+
+        <!-- ===== Success state ===== -->
+        <div id="successView" class="success" hidden>
+          <span class="ok-ring"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <h1 class="title">Verification Successful</h1>
+          <p class="sub">Your account has been verified successfully.</p>
+          <button type="button" class="btn-primary" id="continueBtn"><span class="lbl">Continue</span>
+            <svg class="arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="aces-store.js"></script>
+<script src="otp.js"></script>
+</body>
+</html>

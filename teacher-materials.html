@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+  <html lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Learning Materials · BSHM LMS (Teacher)</title>
+  <meta name="color-scheme" content="light">
+  <link rel="stylesheet" href="student.css"><link rel="stylesheet" href="shell.css">
+  <style>
+
+    /* =====================================================================
+   MOBILE CARD SIZING (Learning Materials)
+   ===================================================================== */
+@media(max-width:700px){
+  .app > main.lm{padding:16px 14px 40px!important;gap:14px!important}
+  .lm h1{font-size:20px}
+  .lm .sub{font-size:13px}
+  .lm .lmbar{gap:10px}
+  .lm .lmbar .lmbtn{width:100%;justify-content:center}
+
+  /* summary cards: 2 columns, compact */
+  .lmcards{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+  .lmc{min-height:0;padding:12px 14px 12px;border-radius:16px}
+  .lmc-h{font-size:12.5px;gap:7px}
+  .lmc-h svg{width:16px;height:16px}
+  .lmc-n{margin-top:8px;font-size:24px}
+  .lmc-s{font-size:11px;line-height:1.35}
+  .lmbar2{height:5px;margin-top:6px}
+  .lmc:nth-child(4){grid-column:1/-1}   /* Storage used: full width */
+
+  /* panels */
+  .lm .lmpanel{padding:14px;border-radius:16px}
+  .lmph{margin-bottom:10px}
+  .lmph h2{font-size:16px}
+  .lmph p{font-size:12px}
+  .lm form{gap:10px}
+  .lm label,.lm .lbl{font-size:12.5px}
+  .lm input,.lm select,.lm textarea{font-size:14px;min-height:40px;padding:8px 11px}
+  .lmtypes{gap:6px}
+  .lmtypes button{padding:8px 2px;font-size:12px}
+  .lmtypes button small{font-size:10.5px}
+  .lm .lmdz{min-height:90px;padding:12px;font-size:13px}
+  .lm .lmdz svg{width:22px;height:22px}
+
+  /* toolbar */
+  .lmtools{gap:8px}
+  .lmtools input[type=search],.lmtools select{flex:1 1 100%;width:100%;max-width:none}
+  .lmseg{width:100%}
+  .lmseg button{flex:1;padding:0 8px;font-size:12.5px}
+  .lmchip{padding:5px 11px;font-size:12px}
+
+  /* material list items */
+  .lmmats{gap:8px}
+  .lmmats li{padding:12px;gap:10px;border-radius:12px}
+  .lmtb{width:38px;height:38px;border-radius:10px;font-size:10.5px}
+  .lmmats b{font-size:14px}
+  .lmmats small{font-size:11.5px}
+  .lmmats p{font-size:12px}
+  .lmst{font-size:11px;padding:2px 8px}
+  .lmacts{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;justify-content:stretch}
+  .lmacts button,.lmacts a{justify-content:center;min-height:32px;padding:0 8px;font-size:12px}
+
+  .lmempty{padding:26px 14px;font-size:13px}
+  .lmempty b{font-size:15px}
+}
+
+/* napakaliit na phones */
+@media(max-width:380px){
+  .lmcards{grid-template-columns:minmax(0,1fr)!important}
+  .lmtypes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lmc-n{font-size:22px}
+}
+.app{display:flex!important;justify-content:center!important;width:100%!important;padding-left:0!important;padding-right:0!important}
+.app > main.lm{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-content:start;
+  gap:18px;
+  flex:0 1 1240px!important;
+  width:100%!important;
+  max-width:1240px!important;
+  margin:0 auto!important;
+  padding:24px 24px 48px!important;
+  position:static!important;
+  float:none!important;
+  left:auto!important;
+}
+  .lm h1{margin:0;font-size:24px;font-weight:700;color:var(--ink)}
+  .lm .sub{margin:4px 0 0;color:var(--mute);font-size:14px}
+  .lm .lmbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+  .lm .lmbtn{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 18px;border:0;border-radius:10px;background:var(--pri);color:#fff;font:600 14px inherit;font-family:inherit;cursor:pointer;box-shadow:0 6px 14px -8px rgba(79,63,208,.7)}
+  .lm .lmbtn:hover{filter:brightness(1.06)}
+  .lm .lmbtn:disabled{opacity:.6;cursor:wait}
+  .lm .lmbtn.ghost{background:#F7F5FE;color:var(--pri);border:1px solid #D9D2F7;box-shadow:none}
+  .lm .lmbtn.s{min-height:34px;padding:0 14px;font-size:13px}
+  .lm .lmbtn:focus-visible,.lmchip:focus-visible,.lmseg button:focus-visible,.lmacts button:focus-visible,.lmacts a:focus-visible,.lmtypes button:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+
+  /* summary cards */
+  .lmcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .lmc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:132px;padding:18px 20px 16px;background:#fff;border:1px solid #ECE8FF;border-radius:20px;box-shadow:0 8px 24px -16px rgba(79,63,208,.35);overflow:hidden}
+  .lmc::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--acc),transparent 70%)}
+  .lmc:nth-child(1){--acc:#2563EB}.lmc:nth-child(2){--acc:#16A34A}.lmc:nth-child(3){--acc:#64748B}.lmc:nth-child(4){--acc:#6D3FEA}
+  .lmc.warn{--acc:#DC2626}
+  .lmc-h{display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;color:var(--ink)}
+  .lmc-h svg{width:20px;height:20px;flex:none;color:var(--acc);stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .lmc-n{display:inline-block;margin-top:14px;font-size:clamp(32px,3.4vw,44px);font-weight:600;line-height:1.05;letter-spacing:-.02em;background:linear-gradient(90deg,#1B1B5E,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .lmc-s{display:block;margin-top:4px;font-size:12.5px;color:var(--mute)}
+  .lmbar2{height:6px;margin-top:8px;border-radius:6px;background:#EEEAFE;overflow:hidden}
+  .lmbar2 i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#7C4DFF,#4F3FD0)}
+  .lmc.warn .lmbar2 i{background:#DC2626}
+
+  /* panels */
+  .lm .lmpanel{background:#fff;border:1px solid #ECE8FF;border-radius:20px;padding:20px 22px;box-shadow:0 8px 24px -18px rgba(79,63,208,.35)}
+  .lm .lmpanel[hidden]{display:none}
+  .lmph{margin-bottom:14px}.lmph h2{margin:0;font-size:18px;font-weight:650;color:var(--ink)}.lmph p{margin:3px 0 0;font-size:13px;color:var(--mute)}
+  .lm form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .lm form .full{grid-column:1/-1}
+  .lm form .full[hidden]{display:none}
+  .lm label,.lm .lbl{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--ink)}
+  .lm .lbl{display:block;margin-bottom:6px}
+  .lm input,.lm select,.lm textarea{font:400 14px inherit;font-family:inherit;padding:10px 12px;border:1px solid #D9DEEC;border-radius:10px;background:#fff;color:var(--ink);min-height:42px;width:100%;box-sizing:border-box}
+  .lm textarea{min-height:76px;resize:vertical}
+  .lm input:focus,.lm select:focus,.lm textarea:focus{outline:0;border-color:#6D3FEA;box-shadow:0 0 0 3px rgba(109,63,234,.18)}
+  .lm .hint{font-weight:400;color:var(--mute);font-size:12.5px}
+  .lmdc{justify-self:end;font-weight:500}
+
+  /* type picker */
+  .lmtypes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  .lmtypes button{display:grid;gap:2px;justify-items:center;padding:10px 4px;border:1px solid #D9DEEC;border-top:3px solid var(--tc,#999);border-radius:10px;background:#fff;font:600 13px inherit;font-family:inherit;color:var(--ink);cursor:pointer}
+  .lmtypes button small{font-weight:400;color:var(--mute);font-size:11.5px}
+  .lmtypes button[aria-pressed=true]{border-color:var(--tc);box-shadow:inset 0 0 0 1px var(--tc);background:#FBFAFF}
+  .c-pdf{--tc:#C8452F}.c-ppt{--tc:#D17A1B}.c-doc{--tc:#2F62C8}.c-video{--tc:#7A3FC0}.c-module{--tc:#1F8A63}.c-link{--tc:#4A5572}
+
+  /* dropzone */
+  .lm .lmdz{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:110px;padding:16px;border:2px dashed #CFC6F5;border-radius:14px;background:#FBFAFF;text-align:center;font-weight:600;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+  .lm .lmdz svg{width:26px;height:26px;stroke:#6D3FEA;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .lm .lmdz.over,.lm .lmdz:focus-within{background:#F1EEFF;border-color:#6D3FEA}
+  .lm .lmdz input{position:absolute;inset:0;width:100%;height:100%;min-height:0;padding:0;border:0;opacity:0;cursor:pointer;box-shadow:none}
+  .lmfile{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;padding:10px 12px;border:1px solid #E4DDFB;border-radius:12px;background:#fff;font-size:13px}
+  .lmfile[hidden]{display:none}
+  .lmfile b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+  .lmfile span{color:var(--mute);flex:none}
+  .lmfile button{border:0;background:#F3F1FD;color:#4A4A7A;border-radius:8px;height:28px;padding:0 10px;font:600 12px inherit;font-family:inherit;cursor:pointer}
+  .lmfile.big{background:#FFF6E8;border-color:#F3D9A8}
+  .lmwarn{margin:6px 0 0;font-size:12.5px;color:#9A5B07;flex-basis:100%}
+  .lmcur{padding:12px 14px;border-radius:12px;background:#F6F5FF;font-size:13px;color:var(--ink);margin-bottom:10px}
+
+  /* toolbar */
+  .lmtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .lmtools input[type=search]{flex:1 1 220px;max-width:320px}
+  .lmtools select{width:auto;min-width:150px}
+  .lmcount{margin-left:auto;font-size:12.5px;color:var(--mute)}
+  .lmseg{display:inline-flex;padding:3px;gap:3px;border-radius:999px;background:#F3F1FD}
+  .lmseg button{height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;font:600 13px inherit;font-family:inherit;color:#6B6B9A;cursor:pointer}
+  .lmseg button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(75,59,214,.18)}
+  .lmrow2{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 14px}
+  .lmchip{border:1px solid #D9DEEC;background:#fff;border-radius:999px;padding:6px 14px;font:600 13px inherit;font-family:inherit;color:var(--ink);cursor:pointer}
+  .lmchip i{font-style:normal;opacity:.65;margin-left:6px;font-weight:700}
+  .lmchip[aria-pressed=true]{background:var(--pri);border-color:var(--pri);color:#fff}
+
+  /* list */
+  .lmmats{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .lmmats li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px;border:1px solid #ECE8FF;border-radius:14px;background:#fff;transition:border-color .15s,box-shadow .15s}
+  .lmmats li:hover{border-color:#CFC6F5;box-shadow:0 6px 16px -12px rgba(79,63,208,.5)}
+  .lmtb{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font:700 12px inherit;font-family:inherit;color:#fff}
+  .t-pdf{background:#C8452F}.t-ppt{background:#D17A1B}.t-doc{background:#2F62C8}.t-video{background:#7A3FC0}.t-module{background:#1F8A63}.t-link{background:#4A5572}
+  .lmmats b{display:block;color:var(--ink);font-size:15px;overflow-wrap:anywhere}
+  .lmmats small{color:var(--mute);font-size:12.5px;overflow-wrap:anywhere}
+  .lmmats p{margin:4px 0 0;color:var(--ink);font-size:13px}
+  .lmacts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+  .lmacts button,.lmacts a{min-height:34px;padding:0 12px;border:1px solid #E4DDFB;border-radius:8px;background:#F7F5FE;color:var(--pri);font:600 12.5px inherit;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+  .lmacts button:hover,.lmacts a:hover{background:#EEE9FE}
+  .lmacts .del{color:#B3261E;background:#fff}.lmacts .del:hover{background:#FDECEC}
+  .lmst{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .lmst.pub{background:#E3F5EC;color:#14724C}.lmst.dr{background:#EEF0F6;color:#4A5572}
+  .lmempty{padding:36px 20px;text-align:center;color:var(--mute);font-size:14px;display:block;border:1px dashed #D9D2F7;border-radius:14px;background:#FBFAFF}
+  .lmempty svg{width:34px;height:34px;stroke:#8B6CF0;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .lmempty b{display:block;margin:8px 0 4px;font-size:16px;color:var(--ink)}
+  .lmempty .lmbtn{margin-top:12px}
+  .tt{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:#1B2340;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:90vw;text-align:center}
+  .tt.on{opacity:1;transform:translate(-50%,0)}
+  @media(max-width:900px){.lmcards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:700px){.lm form{grid-template-columns:1fr}.lmtypes{grid-template-columns:repeat(3,minmax(0,1fr))}.lmmats li{grid-template-columns:auto minmax(0,1fr)}.lmacts{grid-column:1/-1;justify-content:flex-start}.lmtools input[type=search]{max-width:none}.lmcount{margin-left:0;width:100%}}
+  @media(max-width:480px){.lmcards{grid-template-columns:minmax(0,1fr)}}
+  @media(prefers-reduced-motion:reduce){.tt,.lmmats li,.lm .lmdz{transition:none}}
+  </style>
+  </head>
+  <body data-role="teacher" data-page="materials" data-title="Learning Materials"><script src="auth-guard.js"></script>
+  <div class="app">
+  <main class="lm">
+    <div class="lmbar">
+      <div><h1>Learning Materials</h1><p class="sub">Upload files and links for your classes. Published materials show up for students.</p></div>
+      <button class="lmbtn" id="toggleForm" aria-expanded="false" aria-controls="formPanel">+ Add material</button>
+    </div>
+
+    <div class="lmcards" id="stats"></div>
+
+    <section class="lmpanel" id="formPanel" hidden>
+      <div class="lmph"><h2 id="fh">Add material</h2><p id="fp">Pick a type, add a title and a file or link, then save.</p></div>
+      <form id="f" novalidate>
+        <div class="full" id="typeWrap"><span class="lbl" id="tl">Material type</span>
+          <div class="lmtypes" role="group" aria-labelledby="tl" id="types"></div></div>
+        <label class="full">Title<input id="title" required maxlength="120" placeholder="e.g. Table Service Standards"></label>
+        <label>Class<select id="course"></select></label>
+        <label>Week or topic<input id="topic" maxlength="60" placeholder="e.g. Week 3"></label>
+        <div class="full" id="srcWrap"></div>
+        <label class="full">Description <span class="hint">(optional)</span><textarea id="desc" maxlength="300" placeholder="What should students do with this?"></textarea><span class="hint lmdc" id="dc">0 / 300</span></label>
+        <label>Visibility<select id="vis"><option value="pub">Published (students can see it)</option><option value="dr">Draft (only you)</option></select></label>
+        <div class="full" style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="lmbtn ghost" id="cancel">Cancel</button><button type="submit" class="lmbtn" id="save">Save material</button></div>
+      </form>
+    </section>
+
+    <section class="lmpanel">
+      <div class="lmtools">
+        <input type="search" id="q" placeholder="Search materials" aria-label="Search materials">
+        <select id="fc" aria-label="Filter by class"></select>
+        <div class="lmseg" id="fs" role="group" aria-label="Filter by status"><button type="button" data-s="all" aria-pressed="true">All</button><button type="button" data-s="pub" aria-pressed="false">Published</button><button type="button" data-s="dr" aria-pressed="false">Drafts</button></div>
+        <select id="so" aria-label="Sort materials"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="az">Title A–Z</option></select>
+        <span class="lmcount" id="cnt"></span>
+      </div>
+      <div id="chips" class="lmrow2" role="group" aria-label="Filter by type"></div>
+      <ul class="lmmats" id="list"></ul>
+    </section>
+  </main>
+  </div>
+  <div class="tt" id="tt" role="status" aria-live="polite"></div>
+  <script src="teacher-shell.js"></script>
+  <script src="shell.js"></script>
+  <script>
+  (function(){
+    /* Small files (up to 1.5 MB) are stored inside bshm.materials as before (m.data),
+       so the student page keeps working unchanged.
+       Bigger files (up to 200 MB) are stored in the browser's file database (IndexedDB
+       'bshm-files', store 'f', key = material id) and flagged with m.idb = true. */
+    var KEY='bshm.materials', MAX=1500000, BIG=200*1024*1024, LIMIT=5000000;
+    var TYPES={
+      pdf:{n:'PDF',s:'.pdf',acc:'.pdf,application/pdf'},
+      ppt:{n:'PPT',s:'.ppt, .pptx',acc:'.ppt,.pptx'},
+      doc:{n:'DOC',s:'.doc, .docx',acc:'.doc,.docx'},
+      video:{n:'Video',s:'.mp4, .webm',acc:'video/*'},
+      module:{n:'Module',s:'PDF / ZIP',acc:'.pdf,.zip,.doc,.docx'},
+      link:{n:'Link',s:'External URL'}
+    };
+    var COURSES=['BSHM 101 · Food & Beverage Services','BSHM 102','BSHM 103','BSHM 104','BSHM 105'];
+    var cur='pdf', file=null, editId=null, busy=false, S={q:'',type:'all',course:'all',status:'all',sort:'new'};
+    var $=function(i){return document.getElementById(i)};
+    var L=tlsGet(KEY)||[];
+    var IC={
+      stack:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 16.5l9 5 9-5"/></svg>',
+      eye:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>',
+      file:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5h9l5 5V20.5H5z"/><path d="M14 3.5V9h5"/></svg>',
+      db:'<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>',
+      up:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 17v3h16v-3"/></svg>'
+    };
+
+    /* ---------- file database (IndexedDB) ---------- */
+    var DB=null;
+    function idb(){
+      if(!window.indexedDB)return Promise.reject(new Error('IndexedDB unavailable'));
+      if(DB)return DB;
+      DB=new Promise(function(res,rej){
+        var r=indexedDB.open('bshm-files',1);
+        r.onupgradeneeded=function(){r.result.createObjectStore('f')};
+        r.onsuccess=function(){res(r.result)};
+        r.onerror=function(){DB=null;rej(r.error)};
+      });
+      return DB;
+    }
+    function idbDo(mode,fn){
+      return idb().then(function(db){
+        return new Promise(function(res,rej){
+          var t=db.transaction('f',mode),q=fn(t.objectStore('f'));
+          t.oncomplete=function(){res(q&&q.result)};
+          t.onerror=t.onabort=function(){rej(t.error)};
+        });
+      });
+    }
+    var fput=function(id,b){return idbDo('readwrite',function(s){return s.put(b,id)})};
+    var fget=function(id){return idbDo('readonly',function(s){return s.get(id)})};
+    var fdel=function(id){return idbDo('readwrite',function(s){return s.delete(id)}).catch(function(){})};
+
+    function save(){
+      try{localStorage.setItem(KEY,JSON.stringify(L));return true}
+      catch(e){ttoast('Storage is full. Remove a material or use a link instead.');return false}
+    }
+    function bytes(n){return n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB'}
+    function pre(c){return String(c||'').split(' · ')[0]}
+    function idx(id){return L.findIndex(function(m){return m.id===id})}
+    function okUrl(u){return /^https?:\/\/.+\..+/i.test(u)}
+    function dstr(s){var d=new Date(s+'T00:00');return isNaN(d)?s:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}
+    function setBusy(b){busy=b;var s=$('save');s.disabled=b;s.textContent=b?'Saving…':(editId?'Save changes':'Save material')}
+
+    /* ---------- summary cards ---------- */
+    function stats(){
+      var pub=L.filter(function(m){return m.vis==='pub'}).length,used=JSON.stringify(L).length,pct=Math.min(100,Math.round(used/LIMIT*100));
+      function c(cls,ic,t,n,s,extra){return '<div class="lmc '+cls+'"><div><div class="lmc-h">'+IC[ic]+'<span>'+t+'</span></div><span class="lmc-n">'+n+'</span></div><div><span class="lmc-s">'+s+'</span>'+(extra||'')+'</div></div>'}
+      $('stats').innerHTML=
+        c('','stack','Total materials',L.length,'In all your classes')+
+        c('','eye','Published',pub,'Visible to students')+
+        c('','file','Drafts',L.length-pub,'Only you can see these')+
+        c(pct>=80?'warn':'','db','Storage used',bytes(used),pct+'% of about 5 MB (large files are stored separately)','<div class="lmbar2" aria-hidden="true"><i style="width:'+Math.max(2,pct)+'%"></i></div>');
+    }
+
+    /* ---------- type picker + source ---------- */
+    function drawTypes(m){
+      $('types').innerHTML=Object.keys(TYPES).map(function(k){
+        return '<button type="button" class="c-'+k+'" data-k="'+k+'" aria-pressed="'+(k===cur)+'">'+TYPES[k].n+'<small>'+TYPES[k].s+'</small></button>'}).join('');
+      drawSrc(m);
+    }
+    function dropHTML(label){
+      return '<label class="lmdz" id="dz">'+IC.up+'<span>'+label+'</span><span class="hint">Accepted: '+TYPES[cur].s+'</span><input id="file" type="file" accept="'+TYPES[cur].acc+'" aria-label="Choose file"></label>'+
+        '<div class="lmfile" id="fi" hidden></div><span class="hint">Up to 200 MB. Files over 1.5 MB are kept in this browser. For very large videos, a YouTube or Google Drive link is still the safest option.</span>';
+    }
+    function wireDrop(){
+      var fi=$('file'),dz=$('dz');if(!fi||!dz)return;
+      fi.onchange=function(){setFile(fi.files[0]||null)};
+      dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over')});
+      dz.addEventListener('dragleave',function(){dz.classList.remove('over')});
+      dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');setFile(e.dataTransfer.files[0]||null)});
+    }
+    function drawSrc(m){
+      file=null;var w=$('srcWrap');
+      if(cur==='link'){
+        w.innerHTML='<label>Link URL<input id="url" type="url" placeholder="https://" required value="'+(m&&m.url?tesc(m.url):'')+'"></label>';
+      }else if(m){
+        var where=m.data?'':(m.idb?' (stored in this browser)':(m.big?' (file was too large before and was not saved)':''));
+        w.innerHTML='<span class="lbl">File</span><div class="lmcur">Current file: <b>'+tesc(m.fname||'None')+'</b>'+(m.size?' ('+bytes(m.size)+')':'')+tesc(where)+'. Choose a new file below to replace it, or leave it empty to keep it.</div>'+dropHTML('Drag a new file here or click to browse');
+        wireDrop();
+      }else{
+        w.innerHTML='<span class="lbl">File</span>'+dropHTML('Drag a file here or click to browse');
+        wireDrop();
+      }
+    }
+    function typeOk(f){
+      if(cur==='video')return /^video\//.test(f.type)||/\.(mp4|webm)$/i.test(f.name);
+      var ex=TYPES[cur].acc.split(',').filter(function(x){return x.charAt(0)==='.'});
+      return ex.some(function(x){return f.name.toLowerCase().slice(-x.length)===x});
+    }
+    function setFile(f){
+      var fi=$('fi'),inp=$('file');
+      if(!f){file=null;if(inp)inp.value='';fi.hidden=true;return}
+      if(!typeOk(f)){ttoast('That file does not match '+TYPES[cur].n+'. Accepted: '+TYPES[cur].s+'.');if(inp)inp.value='';return}
+      if(f.size>BIG){ttoast('That file is over 200 MB. Please share it as a link instead.');if(inp)inp.value='';return}
+      file=f;var big=f.size>MAX;
+      fi.hidden=false;fi.className='lmfile'+(big?' big':'');
+      fi.innerHTML='<b>'+tesc(f.name)+'</b><span>'+bytes(f.size)+'</span><button type="button" id="rmf">Remove</button>'+
+        (big?'<div class="lmwarn">Over 1.5 MB: this file will be saved in this browser\u2019s file storage.</div>':'');
+      $('rmf').onclick=function(){setFile(null)};
+    }
+    $('types').onclick=function(e){var b=e.target.closest('button');if(!b)return;cur=b.dataset.k;drawTypes()};
+
+    /* ---------- form open / close / edit ---------- */
+    function countDesc(){$('dc').textContent=$('desc').value.length+' / 300'}
+    $('desc').oninput=countDesc;
+    function openForm(o){
+      $('formPanel').hidden=!o;$('toggleForm').setAttribute('aria-expanded',o);
+      $('fh').textContent=editId?'Edit material':'Add material';
+      $('fp').textContent=editId?'Change the details. You can also replace the file.':'Pick a type, add a title and a file or link, then save.';
+      $('save').textContent=editId?'Save changes':'Save material';
+      $('typeWrap').hidden=!!editId;
+      if(o){$('title').focus();$('formPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}
+    }
+    function closeForm(){$('f').reset();cur='pdf';editId=null;file=null;drawTypes();countDesc();openForm(false)}
+    $('toggleForm').onclick=function(){if($('formPanel').hidden){editId=null;$('f').reset();cur='pdf';drawTypes();countDesc();openForm(true)}else closeForm()};
+    $('cancel').onclick=closeForm;
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('formPanel').hidden&&!busy)closeForm()});
+    function startEdit(id){
+      var i=idx(id);if(i<0)return;var m=L[i];
+      editId=id;cur=m.type;$('f').reset();drawTypes(m);
+      $('title').value=m.title;$('course').value=m.course;$('topic').value=m.topic||'';$('desc').value=m.desc||'';$('vis').value=m.vis;
+      countDesc();openForm(true);
+    }
+
+    /* Puts the chosen file on material m (small: data URL inside m, big: IndexedDB). Returns a Promise. */
+    function storeFile(m){
+      m.fname=file.name;m.size=file.size;
+      if(file.size<=MAX){
+        return new Promise(function(res,rej){
+          var r=new FileReader();
+          r.onload=function(){m.data=r.result;delete m.idb;delete m.big;res()};
+          r.onerror=function(){rej('read')};
+          r.readAsDataURL(file);
+        }).then(function(){return fdel(m.id)});          /* drop any older big copy */
+      }
+      return fput(m.id,file).then(function(){m.idb=true;delete m.data;delete m.big},function(){throw 'idb'});
+    }
+
+    $('f').onsubmit=function(e){
+      e.preventDefault();
+      if(busy)return;
+      var title=$('title').value.trim();
+      if(!title){ttoast('Add a title first.');$('title').focus();return}
+      var base={title:title,course:$('course').value,topic:$('topic').value.trim(),desc:$('desc').value.trim(),vis:$('vis').value};
+      var i=editId?idx(editId):-1,prev=null,m,p;
+
+      if(editId){
+        if(i<0){closeForm();return}
+        prev=L[i];m=Object.assign({},prev,base);
+      }else{
+        m=Object.assign({id:Date.now(),type:cur,added:new Date().toISOString().slice(0,10)},base);
+      }
+
+      if(cur==='link'){
+        var u=$('url').value.trim();
+        if(!okUrl(u)){ttoast('Enter a full link starting with https://');$('url').focus();return}
+        m.url=u;p=Promise.resolve();
+      }else if(file){
+        p=storeFile(m);
+      }else if(editId){
+        p=Promise.resolve();                     /* keep the current file */
+      }else{
+        ttoast('Choose a file to upload.');return;
+      }
+
+      setBusy(true);
+      p.then(function(){
+        if(editId)L[i]=m;else L.unshift(m);
+        if(!save()){
+          if(editId)L[i]=prev;else L.shift();
+          if(!editId&&m.idb)fdel(m.id);
+          return;
+        }
+        var wasEdit=!!editId;
+        closeForm();draw();
+        ttoast(wasEdit?'Changes saved.':(m.vis==='pub'?'Material published.':'Saved as draft.'));
+      },function(err){
+        ttoast(err==='read'?'Could not read that file. Try choosing it again.':
+               err==='idb'?'Could not store this file in your browser (storage may be full or blocked, for example in a private window). Try a smaller file or use a link.':
+               'Something went wrong while saving. Please try again.');
+      }).then(function(){setBusy(false)});
+    };
+
+    /* ---------- filters ---------- */
+    function drawFilters(){
+      $('fc').innerHTML='<option value="all">All classes</option>'+COURSES.map(function(c){return '<option value="'+tesc(pre(c))+'">'+tesc(c)+'</option>'}).join('');
+      $('fc').value=S.course;
+      $('course').innerHTML=COURSES.map(function(c){return '<option>'+tesc(c)+'</option>'}).join('');
+    }
+    function drawChips(){
+      var ks=['all'].concat(Object.keys(TYPES));
+      $('chips').innerHTML=ks.map(function(k){
+        var n=k==='all'?L.length:L.filter(function(m){return m.type===k}).length;
+        return '<button type="button" class="lmchip" data-k="'+k+'" aria-pressed="'+(k===S.type)+'">'+(k==='all'?'All':TYPES[k].n)+'<i>'+n+'</i></button>'}).join('');
+    }
+    $('chips').onclick=function(e){var b=e.target.closest('button');if(!b)return;S.type=b.dataset.k;drawChips();draw()};
+    $('fs').onclick=function(e){var b=e.target.closest('button');if(!b)return;S.status=b.dataset.s;[].forEach.call($('fs').children,function(x){x.setAttribute('aria-pressed',x===b)});draw()};
+    $('fc').onchange=function(){S.course=this.value;draw()};
+    $('so').onchange=function(){S.sort=this.value;draw()};
+    $('q').oninput=function(){S.q=this.value.trim().toLowerCase();draw()};
+    function clearFilters(){
+      S={q:'',type:'all',course:'all',status:'all',sort:S.sort};
+      $('q').value='';$('fc').value='all';
+      [].forEach.call($('fs').children,function(x){x.setAttribute('aria-pressed',x.dataset.s==='all')});
+      drawChips();draw();
+    }
+
+    /* ---------- list ---------- */
+    function rows(){
+      var r=L.filter(function(m){
+        return (S.type==='all'||m.type===S.type)&&(S.course==='all'||pre(m.course)===S.course)&&(S.status==='all'||m.vis===S.status)&&
+          (!S.q||(m.title+' '+(m.topic||'')+' '+m.course+' '+(m.fname||'')).toLowerCase().indexOf(S.q)>-1)});
+      r.sort(function(a,b){return S.sort==='old'?a.id-b.id:S.sort==='az'?a.title.localeCompare(b.title):b.id-a.id});
+      return r;
+    }
+    function draw(){
+      stats();drawChips();
+      var r=rows();
+      $('cnt').textContent=L.length?'Showing '+r.length+' of '+L.length:'';
+      if(!r.length){
+        $('list').innerHTML=L.length
+          ?'<li class="lmempty"><b>No materials match your filters</b>Try a different search or class.<br><button type="button" class="lmbtn ghost s" data-act="clear">Clear filters</button></li>'
+          :'<li class="lmempty">'+IC.file+'<b>No materials yet</b>Upload your first PDF, slides, video or link for your students.<br><button type="button" class="lmbtn" data-act="add">+ Add your first material</button></li>';
+        return;
+      }
+      $('list').innerHTML=r.map(function(m){
+        var meta=[pre(m.course),m.topic,m.fname?m.fname+' ('+bytes(m.size)+')':'',m.added?'Added '+dstr(m.added):''].filter(Boolean).map(tesc).join(' · ');
+        var open=m.type==='link'?'<a href="'+tesc(m.url)+'" target="_blank" rel="noopener noreferrer">Open link</a>'
+          :m.data?'<a href="'+m.data+'" download="'+tesc(m.fname)+'">Download</a>'
+          :m.idb?'<button type="button" data-a="dl" data-id="'+m.id+'">Download</button>':'';
+        return '<li><span class="lmtb t-'+m.type+'" aria-hidden="true">'+TYPES[m.type].n+'</span>'+
+        '<div><b>'+tesc(m.title)+'</b><small><span class="lmst '+m.vis+'">'+(m.vis==='pub'?'Published':'Draft')+'</span>'+meta+'</small>'+
+        (m.desc?'<p>'+tesc(m.desc)+'</p>':'')+
+        (m.big&&!m.idb&&!m.data?'<small>This file was too large for the old uploader and was not saved. Click Edit and choose the file again.</small>':'')+'</div>'+
+        '<div class="lmacts">'+open+'<button type="button" data-a="edit" data-id="'+m.id+'">Edit</button><button type="button" data-a="vis" data-id="'+m.id+'">'+(m.vis==='pub'?'Unpublish':'Publish')+'</button><button type="button" class="del" data-a="del" data-id="'+m.id+'">Delete</button></div></li>'}).join('');
+    }
+    $('list').onclick=function(e){
+      var act=e.target.closest('[data-act]');
+      if(act){if(act.dataset.act==='add')$('toggleForm').click();else clearFilters();return}
+      var b=e.target.closest('button[data-a]');if(!b)return;
+      var id=+b.dataset.id,i=idx(id);if(i<0)return;
+      if(b.dataset.a==='edit'){startEdit(id)}
+      else if(b.dataset.a==='dl'){
+        fget(id).then(function(blob){
+          if(!blob){ttoast('That file is no longer stored in this browser.');return}
+          var u=URL.createObjectURL(blob),a=document.createElement('a');
+          a.href=u;a.download=L[i].fname||'file';document.body.appendChild(a);a.click();a.remove();
+          setTimeout(function(){URL.revokeObjectURL(u)},1000);
+        },function(){ttoast('Could not read the stored file.')});
+      }
+      else if(b.dataset.a==='del'){
+        if(!confirm('Delete "'+L[i].title+'"? Students will no longer see it.'))return;
+        if(L[i].idb)fdel(id);
+        L.splice(i,1);save();draw();ttoast('Material deleted.');
+      }else{
+        L[i].vis=L[i].vis==='pub'?'dr':'pub';save();draw();ttoast(L[i].vis==='pub'?'Published.':'Moved to draft.');
+      }
+    };
+
+    drawFilters();drawTypes();countDesc();draw();
+  })();
+  </script>
+  <script src="nav-icons.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script>
+  </body></html>

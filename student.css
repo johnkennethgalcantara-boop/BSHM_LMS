@@ -1,0 +1,802 @@
+/* ACES Polytechnic College – BSHM Student Portal
+   Palette: navy #111827 · active #3730A3 / #4338CA · accent #6D5CE7 · warm accent #F59E0B */
+:root{--navy:#111827;--indigo:#3730A3;--indigo2:#4338CA;--pri:#6D5CE7;--sec:#6D5CE7;--ink:#17203A;--body:#475467;--mute:#667085;--bd:#E6E8F2;--bg:#F6F7FB;--soft:#F1EEFF;--tile:#F8F9FC;--r:#D92D3A;--o:#C77700;--g:#1E9E62;--amber:#F59E0B;
+--rad:14px;--sh:0 1px 2px rgba(17,24,39,.05);--gap:20px;--pad:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:14px/1.5 Inter,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--body);overflow:hidden;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}ul{list-style:none}h1,h2,h3{font-weight:inherit}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--sec);outline-offset:2px}
+.ar{display:inline-block;transition:transform .15s ease}
+a:hover .ar{transform:translateX(3px)}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:64px minmax(0,1fr);height:100%}
+
+/* Header (legacy – replaced by topnav.css) */
+header{grid-column:1/3;display:flex;align-items:center;gap:16px;padding:0 24px;background:#fff;border-bottom:1px solid var(--bd);min-width:0}
+.hl{display:flex;align-items:center;gap:16px;min-width:0}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand div{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.brand b{color:var(--ink);font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{font-size:12px;color:var(--mute);white-space:nowrap}
+.crest{width:36px;height:36px;flex:none}.prog .crest{width:32px;height:32px}.prog b{font-size:14px}
+.vr{width:1px;height:28px;background:var(--bd)}
+.crumb{font-size:13px;color:var(--mute);white-space:nowrap;margin:0 auto}
+.crumb span{margin:0 8px;color:#B0B6C9}.crumb b{color:var(--ink);font-weight:600}
+.hr{display:flex;align-items:center;gap:16px;height:100%}
+.bell{position:relative;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;color:var(--body);cursor:pointer;transition:background .15s,color .15s}
+.bell:hover{background:var(--soft);color:var(--pri)}
+.bell em{position:absolute;top:4px;right:3px;min-width:18px;height:18px;border-radius:9px;background:var(--r);color:#fff;font:600 10.5px/14px Inter,sans-serif;text-align:center;border:2px solid #fff}
+.user{display:flex;align-items:center;gap:12px;height:100%;padding-left:16px;border-left:1px solid var(--bd);color:var(--ink);cursor:pointer}
+.av{border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:600;flex:none}
+.user .av{width:36px;height:36px;font-size:13px}
+.user b{display:block;font-size:13.5px;font-weight:600;line-height:1.25}.user small{display:block;font-size:12px;color:var(--mute);line-height:1.25}
+.user svg{color:var(--mute);width:16px;height:16px}
+.menu{display:none;width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--ink);place-items:center;cursor:pointer}
+
+/* Sidebar (legacy – hidden by topnav.css) */
+aside{background:var(--navy);color:#C3C8E4;padding:8px 12px 16px;display:flex;flex-direction:column;overflow-y:auto}
+.sbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#7F86B3;padding:20px 12px 8px}
+aside a{position:relative;display:flex;align-items:center;gap:12px;min-height:40px;padding:0 12px;border-radius:8px;font-size:14px;font-weight:500;margin-bottom:2px;transition:background .15s,color .15s}
+aside a:hover{background:rgba(255,255,255,.07);color:#fff}
+aside a.on{background:var(--indigo);color:#fff;font-weight:600;box-shadow:0 0 0 1px var(--indigo2)}
+aside a.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:#A18FFF}
+aside a.on svg{color:#C9BEFF}
+.tag{margin-top:auto;padding:16px 12px 12px;font:italic 13px/1.4 Georgia,serif;color:#E3E5F5}
+.tag small{display:block;font:600 10.5px/1.4 Inter,sans-serif;letter-spacing:.05em;color:#8F96C2;margin-top:8px;font-style:normal}
+aside a.lo{border-top:1px solid rgba(255,255,255,.1);border-radius:0 0 8px 8px;min-height:44px;color:#E9B4B9}
+aside a.lo:hover{background:rgba(217,45,58,.16);color:#fff}
+.scrim{display:none}
+
+/* Main */
+main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:var(--gap);padding:28px 32px;align-content:start;align-items:start;overflow-y:auto;overflow-x:hidden;min-width:0}
+main>.top,main>.stats{grid-column:1/-1}
+.col{display:flex;flex-direction:column;gap:var(--gap);min-width:0}
+.card{background:#fff;border:1px solid var(--bd);border-radius:var(--rad);padding:var(--pad);box-shadow:var(--sh)}
+.h{display:flex;align-items:center;gap:8px;color:var(--ink);font-weight:600;font-size:17px;line-height:1.3;margin-bottom:16px}
+.h svg{color:var(--pri);width:18px;height:18px}
+.h a{margin-left:auto;font-size:13px;font-weight:500;color:var(--pri);white-space:nowrap}
+.h a:hover,.st a:hover{text-decoration:underline}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px}
+.wel{display:flex;align-items:center;gap:12px;min-width:0}.wel .av{width:40px;height:40px;font-size:14px}
+.wel h1{font-size:clamp(21px,2.3vw,26px);font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-.01em}
+.wel p{font-size:13px;color:var(--mute)}
+.date{display:flex;align-items:center;gap:12px;height:56px;background:#fff;border:1px solid var(--bd);border-radius:var(--rad);padding:0 16px;color:var(--ink);font-weight:600;line-height:1.3;box-shadow:var(--sh)}
+.date small{display:block;font-weight:400;color:var(--mute);font-size:12.5px}.date svg{color:var(--pri)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap)}
+.st{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;height:80px;padding:0 16px;background:#fff;border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh)}
+.st .ic{width:36px;height:36px;border-radius:10px;background:var(--soft);color:var(--pri);display:grid;place-items:center}
+.sx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sn{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.st b{font-size:22px;font-weight:700;color:var(--ink);line-height:1.2}
+.st small{font-size:13px;color:var(--mute);overflow:hidden;text-overflow:ellipsis}
+.st a{font-size:12.5px;font-weight:500;color:var(--pri);line-height:1.3}
+
+/* Continue learning */
+.cont{position:relative;overflow:hidden;border-radius:var(--rad);padding:16px 24px 20px;color:#fff;background:linear-gradient(135deg,#111827,#1E1B4B 70%,#3730A3)}
+.wm{position:absolute;right:-10px;bottom:-30px;width:150px;height:150px;fill:none;stroke:#fff;stroke-width:.7;opacity:.05;pointer-events:none}
+.kick{font-size:12px;font-weight:500;color:#C4BBFA}
+.cont h2{margin-top:4px;font-size:20px;font-weight:600;line-height:1.3}
+.cont h2 small{font-size:13px;font-weight:500;color:#A3A9CF;margin-left:8px}
+.mod{color:#CDD1EA;font-size:14px}
+.cp{display:flex;align-items:center;gap:16px;margin:12px 0 16px}
+.cp b{font-size:15px;font-weight:600;white-space:nowrap}
+.bar{height:6px;background:#E8E7F4;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--pri);border-radius:6px}
+.cp .bar{flex:1;background:rgba(255,255,255,.16)}.cp .bar i{background:#fff}
+.cf{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.cf span{font-size:13px;color:#A3A9CF}
+.btn{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:10px;background:#fff;color:var(--indigo);font-weight:600;font-size:14px;transition:background .15s}
+.btn:hover{background:var(--soft)}
+
+/* Deadlines */
+.dl{box-shadow:inset 0 2px 0 #E08A93,var(--sh)}
+.dl li{display:grid;grid-template-columns:8px minmax(0,1fr) 64px;gap:12px;align-items:center;min-height:52px;padding:8px 0;border-top:1px solid #EEF0F6}
+.dl li:first-child{border-top:0;padding-top:0}
+.dl i{width:8px;height:8px;border-radius:50%;background:var(--r)}.dl .o i{background:var(--amber)}.dl .g i{background:var(--g)}
+.dl b{display:block;color:var(--ink);font-size:14px;font-weight:600;line-height:1.3}.dl small{font-size:12.5px;color:var(--mute)}
+.dl time{font-size:13px;font-weight:500;color:var(--body);text-align:right;white-space:nowrap}
+.up{display:grid;grid-template-columns:72px 1fr;gap:4px 12px;margin-top:8px;padding:12px;background:var(--tile);border:1px solid #EEF0F6;border-radius:10px;font-size:13px;color:var(--ink)}
+.up span{font-weight:600;color:var(--mute);font-size:12.5px}
+
+/* Courses */
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:12px}
+.c{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--bd);border-radius:12px;background:#fff;transition:border-color .15s,box-shadow .15s,transform .15s}
+.c:hover{border-color:#CFC6F5;box-shadow:0 4px 12px rgba(17,24,39,.06);transform:translateY(-1px)}
+.ct{display:flex;align-items:center;gap:10px}
+.img{width:32px;height:32px;border-radius:8px;display:grid;place-items:center}
+.cd{font-size:12.5px;font-weight:600;color:var(--mute);letter-spacing:.02em}
+.pc{margin-left:auto;font-size:14px;font-weight:600;color:var(--ink)}
+.t{color:var(--ink);font-size:16px;font-weight:600;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins{font-size:12.5px;color:var(--mute);line-height:1.4;margin-top:-4px}
+.nx{font-size:12.5px;color:var(--body);padding-top:8px;border-top:1px solid #EEF0F6;margin-top:auto}.nx b{font-weight:600;color:var(--ink);margin-right:4px}
+.vc{font-size:13px;font-weight:500;color:var(--pri)}.vc::after{content:"";position:absolute;inset:0;border-radius:12px}
+.c.all{justify-content:center;gap:2px;border-style:dashed;background:var(--tile)}.c.all:hover{transform:none;box-shadow:none}
+.c.all b{color:var(--ink);font-size:15px;font-weight:600}.c.all small{font-size:12.5px;color:var(--mute)}.c.all .vc{margin-top:4px}
+
+/* Announcements */
+.an{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:start;padding:12px 0;border-top:1px solid #EEF0F6}
+.an:first-child{border-top:0;padding-top:0}.an:last-child{padding-bottom:0}
+.an .ic{width:32px;height:32px;border-radius:8px;background:var(--soft);color:var(--pri);display:grid;place-items:center}
+.tg{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--pri)}
+.tg::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.hi .tg{color:var(--r)}.mid .tg{color:var(--o)}
+.an b{display:block;color:var(--ink);font-size:14px;font-weight:600;line-height:1.4}
+.an small{display:block;font-size:13px;line-height:1.45}
+.an .tx a{display:inline-block;margin-top:4px;font-size:12.5px;font-weight:500;color:var(--pri)}.an .tx a:hover{text-decoration:underline}
+.an time{font-size:12.5px;color:var(--mute);white-space:nowrap}
+
+/* Recent */
+.rec li{display:grid;grid-template-columns:64px minmax(0,1fr) 84px 100px;gap:12px;align-items:center;min-height:44px;padding:8px 0;border-top:1px solid #EEF0F6}
+.rec li.hd{border-top:0;min-height:0;padding:0 0 8px;font-size:12.5px;font-weight:500;color:var(--mute)}
+.rec .ac{color:var(--ink);font-weight:500}
+.pill{display:inline-block;justify-self:start;padding:2px 10px;border-radius:6px;font-size:12.5px;font-weight:500}
+.ok{background:#E8F5EE;color:#1B6B43}.sub{background:var(--soft);color:var(--indigo)}.pen{background:#FEF3C7;color:#92400E}.vw{background:#EFF1F6;color:var(--body)}
+
+/* Performance */
+.pr{display:flex;align-items:center;gap:16px}
+.ring{width:56px;height:56px;flex:none}.ring circle{fill:none;stroke:#E8E7F4;stroke-width:5}.ring .v{stroke:var(--pri);stroke-linecap:round}
+.pr b{font-size:24px;font-weight:700;color:var(--ink);line-height:1.1}
+.up4{display:block;margin-top:2px;color:#1B6B43;font-weight:500;font-size:12.5px}
+.hn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.hn div{background:var(--tile);border:1px solid #EEF0F6;border-radius:10px;padding:8px 12px}
+.hn small{display:block;font-size:12px;color:var(--mute)}.hn b{font-size:13px;color:var(--ink);font-weight:600}
+.hn .w b{color:#92400E}
+
+/* Featured */
+.fw{border:1px solid var(--bd);border-radius:var(--rad);background:#fff;overflow:hidden;box-shadow:var(--sh)}
+.fh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 16px}
+.fh span{font-size:12px;font-weight:500;color:var(--mute)}.fh b{color:var(--ink);font-size:14px;font-weight:600}
+.show{position:relative;overflow:hidden;aspect-ratio:16/4.6;background:#1E1B4B}
+.track{display:flex;height:100%;transition:transform .5s ease}
+.sl{flex:0 0 100%;height:100%;position:relative;display:flex;align-items:flex-end;padding:12px 80px 12px 16px;color:#fff;font-size:13px;font-weight:500;overflow:hidden}
+.sl svg{position:absolute;right:-8px;top:-12px;width:110px;height:110px;fill:none;stroke:#fff;stroke-width:.6;opacity:.12}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:28px;height:28px;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);font:18px/1 sans-serif;cursor:pointer;transition:background .15s}
+.nav:hover{background:#fff}.prev{left:8px}.next{right:8px}
+.dots{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.dots button{width:6px;height:6px;padding:0;border:0;border-radius:3px;background:rgba(255,255,255,.55);cursor:pointer;transition:width .25s}
+.dots button.on{width:16px;background:#fff}
+.ff{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;font-size:12.5px;color:var(--mute)}
+.ff a{font-weight:500;color:var(--pri);white-space:nowrap}
+
+/* Calendar */
+.mo{display:flex;justify-content:space-between;color:var(--ink);font-weight:600;margin-bottom:8px}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;margin-bottom:8px}
+.dn{font-size:11.5px;color:var(--mute)}
+.dy{position:relative;width:32px;height:32px;margin:0 auto;display:grid;place-items:center;border-radius:50%;font-size:13px;color:var(--ink)}
+.dy.has::after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--pri)}
+.dy.today{background:var(--indigo);color:#fff;font-weight:600}.dy.today::after{background:#fff}
+.ev{display:flex;gap:12px;padding:8px 0;border-top:1px solid #EEF0F6}
+.ev::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pri);margin-top:8px;flex:none}
+.ev b{display:block;color:var(--ink);font-size:13.5px;font-weight:600;line-height:1.4}.ev small{font-size:12.5px;color:var(--mute)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (min-width:1500px){main{grid-template-columns:minmax(0,1fr) 360px}}
+@media (max-width:1250px){.crumb{display:none}}
+
+/* Tablet: collapsed icon rail */
+@media (max-width:1100px){
+ .app{grid-template-columns:72px minmax(0,1fr)}
+ .prog,.hl .vr{display:none}.hr{margin-left:auto}.user>div:not(.av){display:none}.user{padding-left:12px}
+ aside{padding:8px}
+ aside a{font-size:0;gap:0;justify-content:center;padding:0}
+ aside a svg{width:20px;height:20px}
+ aside a.on::before{left:-8px}
+ .sbl{font-size:0;height:1px;padding:0;margin:12px 8px;background:rgba(255,255,255,.1)}
+ .tag{display:none}
+ main{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .col{display:contents}
+ main>.top,main>.stats,#o-cont,#o-courses,#o-rec{grid-column:1/-1}
+ #o-cont{order:1}#o-courses{order:2}#o-dl{order:3}#o-perf{order:4}#o-ann{order:5}#o-rec{order:6}#o-cal{order:7}#o-feat{order:8}
+}
+
+/* Mobile: drawer */
+@media (max-width:767px){
+ .app{grid-template-columns:minmax(0,1fr);grid-template-rows:60px minmax(0,1fr)}
+ header{padding:0 16px}.hl{flex:1}.brand small,.user,.crumb{display:none}.menu{display:grid}
+ aside{position:fixed;z-index:60;top:0;right:0;bottom:0;width:min(288px,86vw);padding:12px;transform:translateX(102%);transition:transform .25s ease}
+ aside a{font-size:14px;gap:12px;justify-content:flex-start;padding:0 12px}aside a svg{width:18px;height:18px}
+ aside a.on::before{left:-12px}
+ .sbl{font-size:11px;height:auto;padding:20px 12px 8px;margin:0;background:none}.tag{display:block}
+ .nav-open aside{transform:none;box-shadow:-6px 0 24px rgba(17,24,39,.35)}
+ .scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(17,24,39,.5);opacity:0;pointer-events:none;transition:opacity .25s}
+ .nav-open .scrim{opacity:1;pointer-events:auto}
+ main{grid-template-columns:minmax(0,1fr);padding:16px;gap:16px}
+ .top{flex-wrap:wrap}.date{width:100%}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .st{height:auto;min-height:80px;padding:12px;grid-template-columns:32px minmax(0,1fr);gap:8px}
+ .st .ic{width:32px;height:32px}.st small{white-space:normal}.sn{flex-wrap:wrap;gap:0 8px}
+ .courses{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
+ .hn{grid-template-columns:minmax(0,1fr)}
+ .cont{padding:16px}.btn{width:100%;justify-content:center}.cf span{width:100%}
+ .rec li.hd{display:none}
+ .rec li{grid-template-columns:auto 1fr auto;gap:2px 12px}
+ .rec .ac{grid-column:1/-1;order:-1}
+}
+/* ===== UI refresh: dashboard additions (additive) ===== */
+.wel .wp{font-size:13.5px;font-weight:500;color:var(--ink)}
+.wel .wq{font-size:12.5px;font-style:italic;color:var(--mute);margin-top:1px}
+.wel .av{width:52px;height:52px;font-size:17px;background:linear-gradient(135deg,#8573EE,#6D5CE7);box-shadow:0 0 0 3px #fff,0 0 0 4px #E3DEFA}
+.st .ic{background:var(--soft)}
+.st{height:84px}
+/* Course banner (CSS-only image placeholder) */
+.c{padding:0;overflow:hidden;gap:8px}
+.c>:not(.cb){margin-inline:16px}
+.c>.vc{margin-bottom:0}
+.cb{position:relative;display:block;height:64px;margin:0!important;overflow:hidden}
+.cb svg{position:absolute;right:10px;top:50%;width:72px;height:72px;transform:translateY(-50%);fill:none;stroke:#fff;stroke-width:.9;opacity:.28;transition:transform .25s ease}
+.c:hover .cb svg{transform:translateY(-50%) scale(1.08) rotate(-4deg)}
+.c .ct{margin-top:4px}
+.c .ct .img{display:none}
+.c>.nx{margin-top:auto}
+.c .vc{display:inline-flex;align-items:center;gap:4px;margin-bottom:14px!important;margin-top:2px}
+.c.all{padding:16px;min-height:160px}.c.all>*{margin-inline:0}
+.cd{color:var(--pri)}
+/* Quick links */
+.ql{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ql a{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border:1px solid var(--bd);border-radius:10px;background:var(--tile);color:var(--ink);font-size:13px;font-weight:500;transition:background .18s,border-color .18s,transform .18s,color .18s}
+.ql a svg{color:var(--pri);width:18px;height:18px;transition:transform .18s}
+.ql a:hover{background:var(--soft);border-color:#D9D3F7;color:var(--pri);transform:translateY(-1px)}
+.ql a:hover svg{transform:scale(1.1)}
+@media (max-width:1100px){#o-ql{order:9}}
+@media (max-width:767px){.st{height:auto}.wel .av{width:44px;height:44px;font-size:15px}.wel .wq{display:none}}
+
+/* Fix (pre-existing): wrapped rows were sized too small so cards overlapped on tablet/phone */
+main.dash{grid-auto-rows:max-content}
+
+/* ===== MODERN REFRESH (paste at the very bottom of student.css) ===== */
+
+/* Tokens: one violet, lavender surfaces, rounder + softer cards */
+:root{
+  --pri:#6D3FEA;--sec:#6D3FEA;--soft:#F0EDFF;--tile:#F8F7FF;--bg:#F8F7FF;--bd:#ECEBF5;
+  --rad:18px;--sh:0 4px 14px rgba(79,53,210,.07);
+}
+body{background:#F8F7FF}
+main{background:linear-gradient(180deg,#F8F7FF 0%,#F0EDFF 100%)}
+
+/* Cards */
+.card{border-color:#ECEBF5;border-radius:18px;box-shadow:0 4px 14px rgba(79,53,210,.07)}
+.h{font-size:16.5px;letter-spacing:-.005em}
+.h svg{width:30px;height:30px;padding:6px;border-radius:9px;background:#F0EDFF;color:#6D3FEA}
+.h a{padding:4px 10px;border-radius:999px;background:#F0EDFF;color:#6D3FEA;font-weight:600}
+.h a:hover{background:#6D3FEA;color:#fff;text-decoration:none}
+
+/* Welcome + date */
+.date{border-color:#ECEBF5;border-radius:16px;box-shadow:0 2px 8px rgba(79,53,210,.06)}
+.date svg{padding:6px;width:32px;height:32px;border-radius:9px;background:#F0EDFF}
+
+/* Stat cards: tinted icon tiles + hover lift */
+.st{
+  position:relative;overflow:hidden;border:1px solid #ECEBF5;border-radius:16px;
+  box-shadow:0 2px 8px rgba(79,53,210,.06);transition:transform .18s,box-shadow .18s,border-color .18s;
+}
+.st:hover{transform:translateY(-2px);border-color:#D9D2F7;box-shadow:0 8px 22px rgba(79,53,210,.12)}
+.st .ic{width:40px;height:40px;border-radius:12px;background:#F0EDFF;color:#6D3FEA}
+.stats .st:nth-child(1) .ic{background:#EEF4FF;color:#2563EB}
+.stats .st:nth-child(2) .ic{background:#F0EDFF;color:#6D3FEA}
+.stats .st:nth-child(3) .ic{background:#FFF6DD;color:#D97706}
+.stats .st:nth-child(4) .ic{background:#EAF7F1;color:#16A34A}
+.st b{color:#171B6B;font-weight:800;letter-spacing:-.02em}
+.st a{font-weight:600}
+
+/* Continue learning hero */
+.cont{
+  border-radius:22px;padding:20px 28px 24px;
+  background:linear-gradient(135deg,#171B6B 0%,#4F35D2 62%,#6D3FEA 100%);
+  box-shadow:0 14px 32px rgba(79,53,210,.28);
+}
+.cont h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.cp .bar{height:8px;border-radius:999px}
+.cp .bar i{border-radius:999px}
+.btn{min-height:42px;padding:0 20px;border-radius:999px;color:#4F35D2;box-shadow:0 6px 16px rgba(0,0,0,.18);transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px);background:#F0EDFF}
+
+/* Progress bars */
+.bar{height:8px;border-radius:999px;background:#EEEDF8}
+.bar i{border-radius:999px;background:linear-gradient(90deg,#6D3FEA,#9B7BFF)}
+
+/* Deadlines */
+.dl{box-shadow:inset 0 3px 0 #F0A5AE,0 4px 14px rgba(79,53,210,.07)}
+.dl li{border-top-color:#F0EEFA}
+.up{border-radius:14px;background:#F8F7FF;border-color:#ECE8FF}
+
+/* Course cards */
+.c{border:1px solid #ECEBF5;border-radius:18px;box-shadow:0 2px 8px rgba(79,53,210,.05)}
+.c:hover{border-color:#D9D2F7;box-shadow:0 14px 32px rgba(79,53,210,.16);transform:translateY(-3px)}
+.c.all{border-radius:18px;border-color:#D9D2F7;background:#F8F7FF}
+.cd{color:#6D3FEA;font-weight:700}
+.nx{border-top-color:#F0EEFA}
+.vc{font-weight:600;color:#6D3FEA}
+
+/* Announcements + recent */
+.an{border-top-color:#F0EEFA}
+.an .ic{width:36px;height:36px;border-radius:12px;background:#F0EDFF;color:#6D3FEA}
+.rec li{border-top-color:#F0EEFA}
+.pill{border-radius:999px;padding:3px 11px;font-weight:600}
+.sub{background:#F0EDFF;color:#4F35D2}
+
+/* Performance */
+.ring .v{stroke:#6D3FEA}
+.ring circle{stroke:#EEEDF8}
+.hn div{background:#F8F7FF;border-color:#ECE8FF;border-radius:14px}
+
+/* Featured slideshow */
+.fw{border-color:#ECEBF5;border-radius:20px;box-shadow:0 4px 14px rgba(79,53,210,.07)}
+.nav{box-shadow:0 2px 8px rgba(0,0,0,.18)}
+
+/* Mini calendar */
+.dy.today{background:linear-gradient(135deg,#6D3FEA,#4F35D2);box-shadow:0 4px 10px rgba(79,53,210,.3)}
+.dy.has::after{background:#6D3FEA}
+.ev{border-top-color:#F0EEFA}
+.ev::before{background:#6D3FEA}
+
+/* Quick links */
+.ql a{border-color:#ECEBF5;border-radius:14px;background:#F8F7FF}
+.ql a svg{width:30px;height:30px;padding:6px;border-radius:9px;background:#fff}
+.ql a:hover{background:#F0EDFF;border-color:#D9D2F7;color:#6D3FEA}
+
+@media (prefers-reduced-motion:reduce){
+  .st:hover,.c:hover,.btn:hover,.ql a:hover{transform:none}
+}
+
+/* ACES BSHM LMS · student-stats-enhance.css
+   Enhances the 4 dashboard stat cards (Enrolled Courses / Pending Activities / Current Average / Upcoming).
+   Paint-only: colors, shadows, hover. It does NOT touch layout (no display / grid / size changes).
+   Paste at the VERY BOTTOM of student.css, or load after student.css and any dashboard-colors.css. */
+
+/* One accent per card */
+.stats .st:nth-child(1){--acc:#2563EB;--acc-soft:#EAF1FF;--acc-bd:#C9DBFB;--acc-glow:rgba(37,99,235,.35)}
+.stats .st:nth-child(2){--acc:#6D3FEA;--acc-soft:#EFEAFF;--acc-bd:#D9D2F7;--acc-glow:rgba(109,63,234,.35)}
+.stats .st:nth-child(3){--acc:#D97706;--acc-soft:#FFF3D6;--acc-bd:#F6DDA6;--acc-glow:rgba(217,119,6,.32)}
+.stats .st:nth-child(4){--acc:#16A34A;--acc-soft:#E4F6EC;--acc-bd:#BDE8CF;--acc-glow:rgba(22,163,74,.32)}
+
+/* Card: soft tinted corner glow, hairline border, layered shadow, accent bar on top */
+.stats .st{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(150px 110px at 100% 0%,var(--acc-soft) 0%,rgba(255,255,255,0) 72%),
+    linear-gradient(160deg,#FFFFFF 0%,#FAF9FF 100%);
+  border:1px solid #ECEBF5;border-radius:20px;
+  box-shadow:0 1px 2px rgba(79,53,210,.04),0 12px 26px -16px rgba(79,53,210,.24);
+  transition:transform .22s cubic-bezier(.22,.8,.3,1),box-shadow .22s ease,border-color .22s ease;
+}
+.stats .st::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:3px;pointer-events:none;
+  background:linear-gradient(90deg,var(--acc) 0%,rgba(255,255,255,0) 80%);opacity:.85;
+}
+.stats .st:hover{
+  transform:translateY(-3px);border-color:var(--acc-bd);
+  box-shadow:0 1px 2px rgba(79,53,210,.05),0 20px 36px -18px var(--acc-glow);
+}
+
+/* Icon picks up the card accent */
+.stats .st svg.i{color:var(--acc)}
+.stats .st .ic{background:var(--acc-soft);color:var(--acc);border-radius:12px}
+
+/* Big number: navy → accent gradient */
+.stats .st b{
+  width:fit-content;letter-spacing:-.02em;font-weight:800;
+  background:linear-gradient(135deg,#171B6B 20%,var(--acc) 130%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+
+/* Label stays quiet, link gets accent color + sliding arrow */
+.stats .st small{color:#6B6F95}
+.stats .st a{color:var(--acc);font-weight:600;transition:color .2s}
+.stats .st a::after{content:"→";display:inline-block;margin-left:6px;transition:transform .2s ease}
+.stats .st:hover a::after,.stats .st a:hover::after{transform:translateX(4px)}
+.stats .st a:hover{text-decoration:none}
+
+/* Keyboard focus */
+.stats .st a:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+
+/* Touch: no lift on tap-hover */
+@media (hover:none){.stats .st:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .stats .st,.stats .st a::after{transition:none!important}
+  .stats .st:hover{transform:none}
+}
+
+/* ACES BSHM LMS · student-enhance.css
+   Student dashboard polish, loaded LAST (after student.css, shell.css, dashboard-flat.css, topnav.css):
+     1. the four stat cards  (accent colors, glow, hover lift)
+     2. the round ↗ button on each "My Courses" card
+   Paint-only: it does not change layout, sizes or positions. */
+
+/* =====================================================================
+   1. Stat cards
+   ===================================================================== */
+.stats .st:nth-child(1){--acc:#2563EB;--acc-soft:#EAF1FF;--acc-bd:#C9DBFB;--acc-glow:rgba(37,99,235,.35)}
+.stats .st:nth-child(2){--acc:#6D3FEA;--acc-soft:#EFEAFF;--acc-bd:#D9D2F7;--acc-glow:rgba(109,63,234,.35)}
+.stats .st:nth-child(3){--acc:#D97706;--acc-soft:#FFF3D6;--acc-bd:#F6DDA6;--acc-glow:rgba(217,119,6,.32)}
+.stats .st:nth-child(4){--acc:#16A34A;--acc-soft:#E4F6EC;--acc-bd:#BDE8CF;--acc-glow:rgba(22,163,74,.32)}
+
+.stats .st{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(150px 110px at 100% 0%,var(--acc-soft) 0%,rgba(255,255,255,0) 72%),
+    linear-gradient(160deg,#FFFFFF 0%,#FAF9FF 100%);
+  border:1px solid #ECEBF5;border-radius:20px;
+  box-shadow:0 1px 2px rgba(79,53,210,.04),0 12px 26px -16px rgba(79,53,210,.24);
+  transition:transform .22s cubic-bezier(.22,.8,.3,1),box-shadow .22s ease,border-color .22s ease;
+}
+.stats .st::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:3px;pointer-events:none;
+  background:linear-gradient(90deg,var(--acc) 0%,rgba(255,255,255,0) 80%);opacity:.85;
+}
+.stats .st:hover{
+  transform:translateY(-3px);border-color:var(--acc-bd);
+  box-shadow:0 1px 2px rgba(79,53,210,.05),0 20px 36px -18px var(--acc-glow);
+}
+.stats .st svg.i{color:var(--acc)}
+.stats .st .ic{background:var(--acc-soft);color:var(--acc);border-radius:12px}
+.stats .st b{
+  width:fit-content;letter-spacing:-.02em;font-weight:800;
+  background:linear-gradient(135deg,#171B6B 20%,var(--acc) 130%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.stats .st small{color:#6B6F95}
+.stats .st a{color:var(--acc);font-weight:600;transition:color .2s}
+.stats .st a:hover{text-decoration:none}
+.stats .st a:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+
+/* =====================================================================
+   2. Round ↗ button on the course cards (the card's .vc link)
+   ===================================================================== */
+.courses .c:not(.all) .vc{
+  cursor:pointer;
+  background:#fff!important;color:#6D3FEA!important;
+  box-shadow:inset 0 0 0 1px #E8E3FB,0 4px 12px -5px rgba(109,63,234,.35)!important;
+  transition:background .25s ease,color .25s ease,box-shadow .25s ease,scale .2s cubic-bezier(.22,.8,.3,1)!important;
+}
+/* keep the arrow exactly centered in the circle */
+.courses .c:not(.all) .vc{display:grid!important;place-items:center;line-height:1}
+.courses .c:not(.all) .vc::before{display:block;position:static;inset:auto;margin:0;line-height:1;translate:none}
+.courses .c:not(.all):hover .vc,
+.courses .c:not(.all):focus-within .vc{
+  background:linear-gradient(135deg,#8B5CF6 0%,#6D3FEA 55%,#4F35D2 100%)!important;color:#fff!important;
+  box-shadow:0 0 0 5px rgba(109,63,234,.14),0 12px 22px -8px rgba(79,53,210,.6)!important;
+}
+.courses .c:not(.all) .vc:hover{scale:1.08}
+.courses .c:not(.all) .vc:active{scale:.94}
+.courses .c:not(.all) .vc:focus-visible{outline:2px solid #6D3FEA;outline-offset:3px}
+
+/* =====================================================================
+   3. Announcements: even spacing
+      card gap 14px · inner padding 18px 22px · tag → title → text → link rhythm
+   ===================================================================== */
+#o-ann ul{display:flex;flex-direction:column;gap:14px}
+#o-ann .an,
+#o-ann .an:first-child,
+#o-ann .an:last-child{margin:0;padding:18px 22px;border-top:0}
+#o-ann .an .tx{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+#o-ann .an .tg{margin:0 0 2px;padding:5px 12px 5px 10px}
+#o-ann .an b{margin:0;line-height:1.35}
+#o-ann .an small{margin:0;line-height:1.55}
+#o-ann .an .tx a{margin:6px 0 0;padding-bottom:1px}
+@media (max-width:767px){
+  #o-ann ul{gap:12px}
+  #o-ann .an,#o-ann .an:first-child,#o-ann .an:last-child{padding:16px 18px}
+}
+
+/* =====================================================================
+   Touch + reduced motion
+   ===================================================================== */
+@media (hover:none){
+  .stats .st:hover{transform:none}
+  .courses .c:not(.all) .vc:hover{scale:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .stats .st,.courses .c:not(.all) .vc,.courses .c:not(.all) .vc::before{transition:none!important}
+  .stats .st:hover{transform:none}
+}
+
+/* ===== Dashboard mobile: compact cards, Activities-style ===== */
+@media (max-width:767px){
+  main.dash{padding:14px 14px calc(96px + env(safe-area-inset-bottom));gap:12px}
+  main.dash .col{gap:12px}
+
+  /* welcome + date */
+  main.dash .top{gap:10px}
+  main.dash .wel{gap:10px}
+  main.dash .wel .av{width:42px;height:42px;font-size:14px}
+  main.dash .wel h1{font-size:20px}
+  .top .chips{gap:6px;margin:6px 0 0}
+  .top .chip{height:22px;padding:0 9px;font-size:11px}
+  main.dash .date{height:44px;padding:0 12px;border-radius:14px;gap:10px;font-size:13px}
+  main.dash .date svg{width:28px;height:28px;padding:5px}
+  main.dash .date small{font-size:11.5px}
+
+  /* stat cards: 2x2, tight */
+  main.dash .stats{gap:10px}
+  main.dash .stats .st{
+    min-height:0;padding:12px;border-radius:16px;gap:10px;
+    grid-template-columns:34px minmax(0,1fr);
+  }
+  main.dash .stats .st .ic{width:34px;height:34px;border-radius:10px}
+  main.dash .stats .st .ic svg{width:17px;height:17px}
+  main.dash .stats .st b{font-size:20px}
+  main.dash .stats .st small{font-size:11.5px;line-height:1.25}
+  main.dash .stats .st a{font-size:11.5px}
+
+  /* generic cards: smaller padding + thin gradient strip like Activities */
+  main.dash .card{position:relative;overflow:hidden;padding:16px 14px 14px;border-radius:16px;
+    box-shadow:0 0 0 1px rgba(60,50,160,.06),0 6px 16px -12px rgba(75,59,214,.28)}
+  main.dash .card:not(.dl)::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;
+    background:linear-gradient(90deg,#6D8CF5,#9A8CF2)}
+  main.dash .h{font-size:15px;margin-bottom:12px;gap:8px}
+  main.dash .h svg{width:26px;height:26px;padding:5px;border-radius:8px}
+  main.dash .h a{padding:3px 9px;font-size:11.5px}
+
+  /* continue learning */
+  main.dash .cont{padding:14px 16px 16px;border-radius:18px}
+  main.dash .cont h2{font-size:17px}
+  main.dash .cont h2 small{display:block;margin:2px 0 0;font-size:12px}
+  main.dash .mod{font-size:13px}
+  main.dash .cp{margin:10px 0 12px;gap:12px}
+  main.dash .cp b{font-size:13px}
+  main.dash .btn{min-height:40px;font-size:13.5px}
+  main.dash .cf{gap:8px}
+  main.dash .cf span{font-size:12px}
+
+  /* my courses */
+  main.dash .courses{gap:10px}
+  main.dash .c{border-radius:14px;gap:6px}
+  main.dash .cb{height:44px}
+  main.dash .cb svg{width:54px;height:54px}
+  main.dash .c .ct{margin-top:2px}
+  main.dash .cd{font-size:12px}
+  main.dash .pc{font-size:13px}
+  main.dash .t{font-size:15px}
+  main.dash .ins{font-size:12px;margin-top:-3px}
+  main.dash .bar{height:6px}
+  main.dash .nx{font-size:12px;padding-top:6px}
+  main.dash .c .vc{margin-bottom:10px!important}
+  main.dash .c.all{min-height:92px;padding:12px}
+
+  /* announcements */
+  #o-ann ul{gap:10px}
+  #o-ann .an,#o-ann .an:first-child,#o-ann .an:last-child{
+    padding:12px;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;border-radius:14px}
+  #o-ann .an .ic{width:32px;height:32px;border-radius:10px}
+  #o-ann .an .tx{gap:4px}
+  #o-ann .an .tg{padding:3px 9px 3px 8px;font-size:11px}
+  #o-ann .an b{font-size:13.5px}
+  #o-ann .an small{font-size:12.5px;line-height:1.45}
+  #o-ann .an .tx a{margin-top:2px;font-size:12px}
+  #o-ann .an time{font-size:11.5px}
+
+  /* recent activities */
+  main.dash .rec li{min-height:0;padding:8px 0;font-size:12.5px}
+  main.dash .pill{padding:2px 9px;font-size:11.5px}
+
+  /* deadlines */
+  main.dash .dl li{grid-template-columns:8px minmax(0,1fr) auto;gap:10px;min-height:46px}
+  main.dash .dl b{font-size:13.5px}
+  main.dash .dl small,main.dash .dl time{font-size:12px}
+  main.dash .up{padding:10px;font-size:12.5px;border-radius:12px;grid-template-columns:64px 1fr}
+
+  /* performance */
+  main.dash .ring{width:48px;height:48px}
+  main.dash .pr b{font-size:21px}
+  main.dash .hn{gap:8px;margin-top:12px}
+  main.dash .hn div{padding:8px 12px;border-radius:12px}
+
+  /* quick links: 2 columns, shorter */
+  main.dash .ql{gap:8px}
+  main.dash .ql a{min-height:40px;padding:0 10px;border-radius:12px;font-size:12.5px;gap:8px}
+  main.dash .ql a svg{width:26px;height:26px;padding:5px}
+
+  /* featured + calendar */
+  main.dash .fw{border-radius:16px}
+  main.dash .fh,main.dash .ff{padding:10px 14px}
+  main.dash .show{aspect-ratio:16/6}
+  main.dash .dy{width:30px;height:30px;font-size:12.5px}
+  main.dash .ev b{font-size:13px}
+}
+
+@media (max-width:380px){
+  main.dash{padding-left:12px;padding-right:12px}
+  main.dash .stats .st{padding:10px;grid-template-columns:30px minmax(0,1fr);gap:8px}
+  main.dash .stats .st .ic{width:30px;height:30px}
+  main.dash .stats .st b{font-size:18px}
+  main.dash .cont h2{font-size:16px}
+}
+
+/* ACES BSHM LMS · student-mobile.css
+   Mobile layout for student.html (phones, <= 767px).
+   Load this LAST, after student-enhance.css:
+     <link rel="stylesheet" href="student-mobile.css">
+   Desktop and tablet are not touched.
+
+   What changes on phones:
+   - Priority order: Stats -> Continue Learning -> Deadlines -> My Courses -> Announcements
+   - My Courses becomes a swipe carousel (scroll-snap) instead of a long stack
+   - Stat cards are fully tappable, buttons are 44px+ (thumb-friendly)
+   - Only 2 announcements shown, quote hidden, calendar/featured pushed to the bottom
+*/
+@media (max-width:767px){
+
+  /* ---------- Base ---------- */
+  html,body{overscroll-behavior-y:none}
+  body{-webkit-tap-highlight-color:transparent}
+  a,button{touch-action:manipulation}
+  .app{height:100dvh}
+  main.dash{
+    padding:12px 12px calc(92px + env(safe-area-inset-bottom));
+    gap:12px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  }
+  /* make sure the two columns flatten so we can reorder cards */
+  main.dash .col{display:contents}
+
+  /* ---------- Order (most-used first) ---------- */
+  main.dash>.top{order:-2}
+  main.dash>.stats{order:-1}
+  #o-cont{order:1}
+  #o-dl{order:2}
+  #o-courses{order:3}
+  #o-ann{order:4}
+  #o-ql{order:5}
+  #o-rec{order:6}
+  #o-perf{order:7}
+  #o-cal{order:8}
+  #o-feat{order:9}
+
+  /* ---------- Welcome + date ---------- */
+  main.dash .top{flex-direction:column;align-items:stretch;gap:10px;min-height:0}
+  main.dash .wel{align-items:flex-start;gap:12px}
+  main.dash .wel h1{font-size:20px;line-height:1.2}
+  main.dash .wel .wq{display:none!important}
+  main.dash .top .chips{margin:6px 0 0;gap:6px}
+  main.dash .date{width:100%;height:44px;padding:0 12px;font-size:13px;border-radius:14px}
+  main.dash .date>div{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  main.dash .date small{display:inline;font-size:12px}
+
+  /* ---------- Stat cards: 2x2, whole card is the tap target ---------- */
+  main.dash .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  main.dash .stats .st{
+    height:auto;min-height:84px;padding:12px;gap:10px;border-radius:16px;
+    grid-template-columns:34px minmax(0,1fr);align-items:start;
+  }
+  main.dash .stats .st .ic{width:34px;height:34px;border-radius:10px}
+  main.dash .stats .st .sx{gap:4px}
+  main.dash .stats .st .sn{flex-direction:column;align-items:flex-start;gap:0}
+  main.dash .stats .st b{font-size:22px;line-height:1.1}
+  main.dash .stats .st small{font-size:11.5px;line-height:1.25;white-space:normal}
+  main.dash .stats .st a{font-size:11.5px;position:static}
+  main.dash .stats .st a::before{content:"";position:absolute;inset:0;z-index:1}   /* stretched link */
+
+  /* ---------- Continue learning ---------- */
+  main.dash .cont{padding:16px;border-radius:18px}
+  main.dash .cont h2{font-size:18px;line-height:1.25}
+  main.dash .cont h2 small{display:block;margin:2px 0 0;font-size:12px}
+  main.dash .cont .mod{font-size:13px}
+  main.dash .cp{margin:12px 0 14px;gap:10px}
+  main.dash .cp b{font-size:12.5px}
+  main.dash .cf{flex-direction:column;align-items:stretch;gap:8px}
+  main.dash .cf .btn{width:100%;min-height:48px;justify-content:center;font-size:15px}
+  main.dash .cf>span{display:block;width:100%;text-align:center;white-space:normal;font-size:12.5px;line-height:1.4}
+
+  /* ---------- Cards: tighter ---------- */
+  main.dash .card{padding:16px 14px 14px;border-radius:18px}
+  main.dash .h{font-size:15px;margin-bottom:12px;gap:8px;flex-wrap:wrap}
+  main.dash .h a{min-height:32px;display:inline-flex;align-items:center;padding:0 12px;font-size:12px}
+
+  /* ---------- Deadlines ---------- */
+  main.dash .dl li{
+    display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;
+    min-height:48px;padding:10px 12px;
+  }
+  main.dash .dl li>div{flex:1 1 150px;min-width:0}
+  main.dash .dl li>i{flex:none}
+  main.dash .dl time{flex:none;margin-left:auto;font-size:12px}
+  main.dash .dl b{font-size:13.5px}
+  main.dash .up{display:grid;grid-template-columns:64px minmax(0,1fr);padding:10px 12px;font-size:12.5px}
+
+  /* ---------- My Courses: swipe carousel ---------- */
+  main.dash #courses{
+    display:flex!important;gap:10px;
+    overflow-x:auto;overflow-y:hidden;
+    margin:0 -14px;padding:2px 14px 10px;
+    scroll-snap-type:x mandatory;scroll-padding-left:14px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  main.dash #courses::-webkit-scrollbar{display:none}
+  main.dash #courses>*{
+    flex:0 0 84%;max-width:320px;min-width:0;
+    scroll-snap-align:start;scroll-snap-stop:always;
+  }
+  main.dash #courses>.c:hover{transform:none}
+  main.dash .c .t{font-size:15px}
+  main.dash .c .nx{font-size:12px}
+  /* round arrow button: bigger touch target */
+  main.dash .courses .c:not(.all) .vc{min-width:44px;min-height:44px}
+
+  /* ---------- Announcements: show 2 only ---------- */
+  #o-ann #annList .an:nth-child(n+3){display:none}
+  #o-ann .an,#o-ann .an:first-child,#o-ann .an:last-child{padding:12px;gap:10px;border-radius:14px}
+  #o-ann .an small{font-size:12.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #o-ann .an .tx a{min-height:32px;display:inline-flex;align-items:center}
+
+  /* ---------- Quick links ---------- */
+  main.dash .ql{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  main.dash .ql a{min-height:48px;padding:0 10px;font-size:13px;border-radius:14px}
+
+  /* ---------- Recent activities (no header row, stacked) ---------- */
+  main.dash .rec li.hd{display:none}
+  main.dash .rec li{grid-template-columns:auto minmax(0,1fr) auto;gap:2px 10px;padding:10px 0}
+  main.dash .rec .ac{grid-column:1/-1;order:-1}
+
+  /* ---------- Performance ---------- */
+  main.dash .hn{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  main.dash .hn b{font-size:12.5px;overflow-wrap:anywhere}
+
+  /* ---------- Calendar + featured ---------- */
+  main.dash .dy{width:34px;height:34px;font-size:12.5px}
+  main.dash .fw{border-radius:18px}
+  main.dash .show{aspect-ratio:16/7}
+  main.dash .nav{width:36px;height:36px}
+  main.dash .ff{flex-wrap:wrap}
+}
+
+/* Small phones */
+@media (max-width:380px){
+  main.dash{padding-left:10px;padding-right:10px}
+  main.dash .stats .st{padding:10px;grid-template-columns:30px minmax(0,1fr);gap:8px}
+  main.dash .stats .st .ic{width:30px;height:30px}
+  main.dash .stats .st b{font-size:20px}
+  main.dash .cont h2{font-size:17px}
+  main.dash #courses>*{flex-basis:88%}
+}
+
+@media (prefers-reduced-motion:reduce){
+  main.dash #courses{scroll-behavior:auto}
+}
+
+/* ===== Announcements fix: full-width stacked cards, no overlap ===== */
+#o-ann .an,
+#o-ann .an:first-child,
+#o-ann .an:last-child{
+  display:block;
+  position:relative;
+  padding:18px 22px;
+  border-radius:16px;
+}
+#o-ann .an .ic{display:none}
+
+#o-ann .an .tx{
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:8px;width:100%;min-width:0;
+}
+#o-ann .an .tg{margin:0}
+#o-ann .an b{font-size:15px;line-height:1.35;overflow-wrap:break-word}
+#o-ann .an small{
+  line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+#o-ann .an .tx a{
+  margin-top:4px;white-space:nowrap;
+}
+
+/* date sits on the tag row, top-right */
+#o-ann .an time{
+  position:absolute;top:22px;right:22px;
+  font-size:12px;line-height:1;white-space:nowrap;color:var(--mute);
+}
+
+@media (max-width:767px){
+  #o-ann ul{gap:12px}
+  #o-ann .an,
+  #o-ann .an:first-child,
+  #o-ann .an:last-child{padding:16px;border-radius:16px}
+  #o-ann .an .tx{gap:8px}
+  #o-ann .an b{font-size:14.5px}
+  #o-ann .an small{font-size:13px;line-height:1.5}
+  #o-ann .an .tx a{
+    min-height:36px;display:inline-flex;align-items:center;
+    font-size:13px;
+  }
+  #o-ann .an time{top:20px;right:16px;font-size:11.5px}
+}

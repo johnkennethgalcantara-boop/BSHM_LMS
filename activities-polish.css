@@ -1,0 +1,323 @@
+/* ===== Student Activities · visual polish =====
+   Load AFTER activities.css, shell.css, topnav.css and glass.css
+   (e.g. add one <link> right after the glass.css link in activities.html).
+   Visual only: no markup, IDs, classes, JS, localStorage or routes are changed.
+   Scoped to the Activities page via main.pg:has(.ag).
+
+   NAVY #172554 headings · VIOLET #6D3FEA active/accent · TEAL #0F766E practical
+   BLUE #2563EB assignments · GREEN/AMBER/RED for status only */
+
+/* ---------- Tokens (scoped) ---------- */
+main.pg:has(.ag){
+  --navy:#172554;
+  --ink:#172033;
+  --body:#344054;
+  --mute:#667085;
+  --bd:#E5E7EB;
+  --pri:#6D3FEA;
+  --sec:#6D3FEA;
+  --a-line:#E5E7EB;
+  --a-line-soft:#EEF0F3;
+  --a-tint:#F0EDFF;
+}
+
+/* ---------- Page background: flat and light, same as the dashboard ---------- */
+body:has(#view-list),
+body:has(#view-list) .app{background:#F8FAFC}
+body:has(#view-list) main.pg{background:#F8FAFC;background-image:none}
+.vw{gap:24px}
+
+/* ---------- 1. Page header ---------- */
+main.pg:has(.ag) .ph h1{
+  font-size:clamp(26px,2.6vw,32px);font-weight:700;color:#172554;line-height:1.2;letter-spacing:-.015em;
+}
+main.pg:has(.ag) .ph p{font-size:14.5px;color:#667085;margin-top:6px;line-height:1.55}
+
+/* ---------- 2. Category tabs ---------- */
+main.pg:has(.ag) .tabs{border-bottom:1px solid #E5E7EB;gap:2px}
+main.pg:has(.ag) .tabs button{
+  height:44px;padding:0 14px;font-size:14px;font-weight:500;color:#667085;
+  background:transparent;border-bottom:2px solid transparent;border-radius:8px 8px 0 0;
+  transition:color .18s ease,background-color .18s ease,border-color .18s ease;
+}
+main.pg:has(.ag) .tabs button:hover{color:#172554;background:rgba(109,63,234,.05);border-bottom-color:transparent}
+main.pg:has(.ag) .tabs button.on,
+main.pg:has(.ag) .tabs button.on:hover{
+  color:#6D3FEA;font-weight:600;background:#F0EDFF;border-bottom-color:#6D3FEA;
+}
+main.pg:has(.ag) .tabs em{background:#F2F4F7;color:#475467;font-weight:500;padding:1px 8px;transition:background-color .18s ease,color .18s ease}
+main.pg:has(.ag) .tabs .on em{background:#E4DCFF;color:#6D3FEA}
+
+/* ---------- 3. Summary: white card, one subtle accent per metric ---------- */
+main.pg:has(.ag) .sum{
+  background:#fff;border:1px solid #E5E7EB;border-radius:12px;
+  box-shadow:0 1px 3px rgba(16,24,40,.04);
+}
+main.pg:has(.ag) .sum div{padding:18px 24px}
+main.pg:has(.ag) .sum div+div{border-left:1px solid #EEF0F3}
+main.pg:has(.ag) .sum span{font-size:12.5px;font-weight:500;color:#667085}
+main.pg:has(.ag) .sum span::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:1px;background:var(--m,#172554);
+}
+main.pg:has(.ag) .sum b{font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--mn,#172554)}
+main.pg:has(.ag) .sum div:nth-child(1){--m:#2563EB;--mn:#172554}
+main.pg:has(.ag) .sum div:nth-child(2){--m:#6D3FEA;--mn:#6D3FEA}
+main.pg:has(.ag) .sum div:nth-child(3){--m:#16A34A;--mn:#15803D}
+main.pg:has(.ag) .sum div:nth-child(4){--m:#D97706;--mn:#B45309}
+
+/* ---------- 4. Section header: title left, search + filter right, aligned ---------- */
+main.pg:has(.ag) .tb{align-items:center}
+main.pg:has(.ag) .tbl{align-items:baseline}
+main.pg:has(.ag) .tbl h2{font-size:18px;font-weight:600;color:#172554}
+main.pg:has(.ag) .tbl span{font-size:13px;color:#667085}
+main.pg:has(.ag) .tbr{align-items:center}
+main.pg:has(.ag) .tbr input,
+main.pg:has(.ag) .tbr select{
+  height:42px;border:1px solid #E5E7EB;border-radius:10px;background:#fff;color:#172033;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+main.pg:has(.ag) .tbr input:focus,
+main.pg:has(.ag) .tbr select:focus{border-color:#6D3FEA;box-shadow:0 0 0 3px rgba(109,63,234,.08);outline:0}
+
+/* ---------- 5. Activity grid + cards ---------- */
+main.pg:has(.ag) .ag{gap:20px}
+
+main.pg:has(.ag) .card.ac{
+  padding:20px 22px 16px;gap:6px;
+  background:#fff;border:1px solid #E5E7EB;border-top:3px solid var(--bar);border-radius:12px;
+  box-shadow:0 1px 3px rgba(16,24,40,.04);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+main.pg:has(.ag) .card.ac:hover{
+  transform:translateY(-2px);
+  border-color:#D5DBE5;border-top-color:var(--bar-h);
+  box-shadow:0 8px 20px rgba(16,24,40,.08);
+}
+
+/* ---------- 6. Type identity (subtle) ---------- */
+main.pg:has(.ag) .card.t-assignment{--ac:#2563EB;--bar:#93B4F4;--bar-h:#6F9AEF}
+main.pg:has(.ag) .card.t-quiz{--ac:#6D3FEA;--bar:#B8A7F5;--bar-h:#9B86F0}
+main.pg:has(.ag) .card.t-exam{--ac:#3949AB;--bar:#6675C8;--bar-h:#4A58B0}
+main.pg:has(.ag) .card.t-practical{--ac:#0F766E;--bar:#7CCFC7;--bar-h:#4DB8AE}
+main.pg:has(.ag) .card.t-pos-training{--ac:#0E6B7B;--bar:#5BA7B5;--bar-h:#3F8FA0}
+main.pg:has(.ag) .card.ac .ty{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ac)}
+
+/* ---------- 7. Title ---------- */
+main.pg:has(.ag) .card.ac h3{font-size:18px;font-weight:600;color:#172033;line-height:1.35;letter-spacing:-.005em}
+
+/* ---------- 8. Description ---------- */
+main.pg:has(.ag) .card.ac .ds{font-size:14px;line-height:1.5;color:#667085}
+
+/* ---------- 9. Course + deadline ---------- */
+main.pg:has(.ag) .card.ac .mt{font-size:13px;font-weight:500;color:#475467}
+
+/* ---------- 10. Points / questions / time ---------- */
+main.pg:has(.ag) .card.ac .mx{border-top:1px solid #EEF0F3;color:#667085;font-size:13px}
+main.pg:has(.ag) .mx b{font-weight:600;color:#172033}
+main.pg:has(.ag) .mx .dot{margin:0 2px;color:#CBD5E1;font-weight:700}
+
+/* ---------- 11. Status badges ---------- */
+main.pg:has(.ag) .sb{height:22px;padding:0 9px;font-size:12px;font-weight:500;border-radius:999px}
+main.pg:has(.ag) .sb.ns{background:#F2F4F7;color:#475467}
+main.pg:has(.ag) .sb.ip{background:#F0EDFF;color:#6D3FEA}
+main.pg:has(.ag) .sb.cp{background:#EAF7F1;color:#15803D}
+main.pg:has(.ag) .sb.du{background:#FFF6DD;color:#A16207}
+main.pg:has(.ag) .sb.fl{background:#FEECEC;color:#B42318}
+
+/* ---------- 12 + 13. Footer + action link ---------- */
+main.pg:has(.ag) .card.ac .ft{border-top:1px solid #EEF0F3}
+main.pg:has(.ag) .go{
+  color:#6D3FEA;font-weight:600;font-size:13px;border-radius:8px;
+  transition:background-color .18s ease,color .18s ease;
+}
+main.pg:has(.ag) .go:hover{background:#F0EDFF;color:#5B2FD6}
+main.pg:has(.ag) .go span{transition:transform .18s ease}
+main.pg:has(.ag) .go:hover span{transform:translateX(3px)}
+
+/* empty state */
+main.pg:has(.ag) .none{border:1px dashed #D0D5DD;border-radius:12px;color:#667085}
+
+/* ---------- 15. Responsive ---------- */
+@media (max-width:1100px){
+  main.pg:has(.ag) .ag{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  main.pg:has(.ag) .ag{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:767px){
+  main.pg:has(.ag) .ph h1{font-size:26px}
+  main.pg:has(.ag) .tb{align-items:stretch}
+  main.pg:has(.ag) .tbr{width:100%;flex-wrap:wrap}
+  main.pg:has(.ag) .tbr input{flex:1 1 100%;width:100%;min-width:0}
+  main.pg:has(.ag) .tbr select{flex:1 1 100%;width:100%}
+  main.pg:has(.ag) .sum div{padding:14px 16px}
+  main.pg:has(.ag) .sum b{font-size:24px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  main.pg:has(.ag) .card.ac:hover{transform:none}
+  main.pg:has(.ag) .go:hover span{transform:none}
+}
+
+/* ===== PHONE: compact activity cards (paste at the very end) ===== */
+@media (max-width:767px){
+
+  body main.pg,
+  body:has(#view-list) main.pg{padding:14px 14px 100px!important}
+  body main.pg .vw{gap:12px!important}
+  body main.pg .ph h1{font-size:22px!important}
+  body main.pg .ph p{font-size:12.5px!important;line-height:1.4!important}
+
+  body main.pg .tabs button{height:34px!important;padding:0 12px!important;font-size:12.5px!important}
+  body main.pg .tbl h2{font-size:15px!important}
+  body main.pg .tbr input,
+  body main.pg .tbr select{height:38px!important;font-size:12.5px!important}
+
+  body main.pg .ag{gap:10px!important}
+
+  /* card = 4-row grid */
+  body main.pg .ag > .card.ac{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    align-items:center!important;
+    column-gap:8px!important;row-gap:0!important;
+    padding:12px 14px!important;
+    border-radius:16px!important;
+    min-height:0!important;height:auto!important;
+    animation:none!important;transform:none!important;
+    box-shadow:0 0 0 1px rgba(60,50,160,.06),0 8px 20px -14px rgba(75,59,214,.25)!important;
+  }
+  body main.pg .card.ac::before{height:2px!important}
+
+  /* row 1: type (left) + status (right) */
+  body main.pg .card.ac .ty{
+    grid-column:1!important;grid-row:1!important;justify-self:start!important;
+    padding:2px 9px!important;min-height:0!important;margin:0 0 6px!important;
+    font-size:10px!important;letter-spacing:.06em!important;
+  }
+  body main.pg .card.ac .ty svg{width:12px!important;height:12px!important}
+  body main.pg .card.ac .ft{display:contents!important}
+  body main.pg .card.ac .ft .sb{
+    grid-column:2!important;grid-row:1!important;justify-self:end!important;
+    height:22px!important;padding:0 9px!important;margin:0 0 6px!important;font-size:10.5px!important;
+  }
+
+  /* row 2: title */
+  body main.pg .card.ac h3{
+    grid-column:1 / -1!important;grid-row:2!important;
+    font-size:15px!important;line-height:1.3!important;min-height:0!important;margin:0 0 2px!important;
+  }
+
+  /* description hidden */
+  body main.pg .card.ac .ds{display:none!important}
+
+  /* row 3: course · due */
+  body main.pg .card.ac .mt{
+    grid-column:1 / -1!important;grid-row:3!important;
+    font-size:12px!important;line-height:16px!important;min-height:0!important;margin:0 0 6px!important;
+  }
+
+  /* row 4: points (left) + button (right) */
+  body main.pg .card.ac .mx{
+    grid-column:1!important;grid-row:4!important;
+    margin:0!important;padding:0!important;min-height:0!important;border-top:0!important;
+    font-size:12px!important;line-height:16px!important;box-sizing:border-box!important;
+  }
+  body main.pg .card.ac .ft .go{
+    grid-column:2!important;grid-row:4!important;justify-self:end!important;
+    margin:0!important;padding:6px 12px!important;font-size:12px!important;
+  }
+}
+@media (max-width:380px){
+  body main.pg .ag > .card.ac{padding:10px 12px!important}
+  body main.pg .card.ac h3{font-size:14.5px!important}
+}
+
+/* ===== PHONE: compact dashboard (paste at the very end) ===== */
+@media (max-width:767px){
+
+  body main.dash{padding:14px 14px 100px!important;gap:12px!important}
+  body main.dash .col{gap:12px!important}
+
+  /* welcome */
+  body main.dash .top{gap:8px!important;padding:0!important;align-items:flex-start!important}
+  body main.dash .wel{gap:12px!important;align-items:center!important}
+  body main.dash .av{width:44px!important;height:44px!important;font-size:15px!important;flex:none}
+  body main.dash .top h1{font-size:19px!important;line-height:1.2!important;margin:0!important}
+  body main.dash .top .chips{margin:6px 0 0!important;gap:6px!important}
+  body main.dash .top .chip{height:22px!important;padding:0 10px!important;font-size:11px!important}
+  body main.dash .top .wq{display:none!important}
+  body main.dash .top .date{display:none!important}
+
+  /* stat tiles: 2 x 2 */
+  body main.dash .stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  body main.dash .stats .st{padding:12px!important;gap:10px!important;min-height:0!important;border-radius:16px!important;display:flex!important;align-items:center!important}
+  body main.dash .stats .st .ic{width:34px!important;height:34px!important;border-radius:11px!important;flex:none}
+  body main.dash .stats .st .ic svg{width:17px!important;height:17px!important}
+  body main.dash .stats .st .sn b{font-size:20px!important;line-height:1.1!important}
+  body main.dash .stats .st .sn small{font-size:11px!important;line-height:1.25!important}
+  body main.dash .stats .st .sx a{display:none!important}
+
+  /* continue learning */
+  body main.dash .cont{padding:16px!important;border-radius:18px!important;gap:6px!important}
+  body main.dash .cont .wm{display:none!important}
+  body main.dash .cont .kick{font-size:10.5px!important}
+  body main.dash .cont h2{font-size:17px!important;line-height:1.25!important;margin:0!important}
+  body main.dash .cont .mod{font-size:12.5px!important;margin:0!important}
+  body main.dash .cont .cf{gap:8px!important;flex-direction:column!important;align-items:stretch!important}
+  body main.dash .cont .cf .btn{height:40px!important;font-size:13px!important;justify-content:center}
+  body main.dash .cont .cf > span{font-size:11.5px!important}
+
+  /* cards */
+  body main.dash .card{padding:14px!important;border-radius:18px!important}
+  body main.dash .card .h{font-size:14px!important;margin-bottom:10px!important;gap:8px!important}
+  body main.dash .card .h a{font-size:12px!important}
+  body main.dash .card .h svg.i{width:26px!important;height:26px!important;padding:5px!important;box-sizing:border-box!important}
+
+  /* announcements: show 2 */
+  body main.dash .an{padding:10px 0!important;gap:10px!important}
+  body main.dash .an:nth-child(n+3){display:none!important}
+  body main.dash .an .ic{width:30px!important;height:30px!important}
+  body main.dash .an .tx b{font-size:13.5px!important}
+  body main.dash .an .tx small{font-size:12px!important;line-height:1.35!important}
+  body main.dash .an .tx a{display:none!important}
+  body main.dash .an time{font-size:11px!important}
+
+  /* recent activities */
+  body main.dash .rec{font-size:12px!important;overflow-x:auto}
+  body main.dash .rec li{padding:8px 0!important;gap:8px!important}
+
+  /* deadlines */
+  body main.dash .dl li{padding:8px 0!important}
+  body main.dash .dl li b{font-size:13px!important}
+  body main.dash .dl li small,body main.dash .dl li time{font-size:11.5px!important}
+  body main.dash .dl .up{font-size:12px!important;margin-top:8px!important;padding-top:8px!important}
+
+  /* performance */
+  body main.dash .pr{gap:12px!important}
+  body main.dash .pr .ring{width:56px!important;height:56px!important}
+  body main.dash .pr b{font-size:20px!important}
+  body main.dash .hn{gap:8px!important}
+  body main.dash .hn b{font-size:13px!important}
+
+  /* quick links: 3 per row */
+  body main.dash .ql{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  body main.dash .ql a{flex-direction:column!important;justify-content:center!important;text-align:center!important;padding:10px 4px!important;gap:4px!important;font-size:11.5px!important;border-radius:14px!important}
+
+  /* featured carousel */
+  body main.dash .fw{border-radius:18px!important}
+  body main.dash .fw .fh{padding:12px 14px!important}
+  body main.dash .fw .show{max-height:170px!important}
+  body main.dash .fw .ff{padding:10px 14px!important;font-size:12px!important}
+
+  /* calendar */
+  body main.dash .mg{font-size:12px!important}
+  body main.dash .ev{padding:6px 0!important}
+  body main.dash .ev b{font-size:12.5px!important}
+  body main.dash .ev small{font-size:11.5px!important}
+  body main.dash .ev:nth-of-type(n+3){display:none!important}
+}
+@media (max-width:380px){
+  body main.dash .stats .st .sn small{font-size:10.5px!important}
+  body main.dash .top h1{font-size:18px!important}
+}

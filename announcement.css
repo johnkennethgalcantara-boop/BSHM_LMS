@@ -1,0 +1,136 @@
+/* ACES Polytechnic College – BSHM Student Portal · Announcements
+   Soft indigo style (matches dashboard-modern.css / activities.css / profile.css / settings.css).
+   Navbar + scrolling layout come from topnav.css (loaded after this file). */
+
+:root{
+  --navy:#1B1B5E;--pri:#4B3BD6;--sec:#4B3BD6;
+  --ink:#1B1B5E;--body:#4A4A7A;--mute:#7C7CA8;
+  --bd:rgba(60,50,160,.06);--bg:#F8F7FF;--soft:#EEEBFF;--tile:#F8F7FF;--surface:#F6F5FF;
+  --lav:#9A8CF2;--lav-d:#6D4FE3;
+  --r:#D14B54;--o:#E8A33D;--g:#4CB782;
+  --rad:24px;--gap:20px;
+  --sh:0 0 0 1px rgba(60,50,160,.05),0 1px 2px rgba(60,50,160,.04),0 14px 32px -16px rgba(75,59,214,.22);
+  --sh-hover:0 0 0 1px rgba(75,59,214,.12),0 18px 34px -16px rgba(75,59,214,.35);
+  --grad:linear-gradient(90deg,#4F3FD0,#8B63F0);
+  --glow:0 0 0 4px rgba(139,99,240,.16);
+  --ease:cubic-bezier(.22,.8,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:14px/1.5 Inter,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--body);overflow:hidden;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}ul{list-style:none}h1,h2,h3{font-weight:inherit}
+button,input,select{font:inherit;color:inherit}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--lav-d);outline-offset:2px}
+::selection{background:#D9D5FA;color:var(--ink)}
+
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* Main (1240px, centered) */
+main{
+  padding:28px 32px 48px;min-width:0;
+  background:
+    radial-gradient(55% 38% at 82% 0%,#E2DAFF 0%,rgba(226,218,255,0) 70%),
+    radial-gradient(40% 30% at 0% 100%,#EAE4FF 0%,rgba(234,228,255,0) 70%),
+    #F8F7FF;
+  scrollbar-width:thin;scrollbar-color:#CFC9F0 transparent;
+}
+main::-webkit-scrollbar{width:10px;height:10px}
+main::-webkit-scrollbar-thumb{background:#D5CFF3;border-radius:99px;border:3px solid transparent;background-clip:content-box}
+.lc{display:flex;flex-direction:column;gap:16px;width:100%;max-width:1240px;margin:0 auto;min-width:0}
+
+/* Page header + tabs */
+.ph{display:flex;align-items:center;gap:14px;animation:rise .45s var(--ease) both}
+.ph>svg{width:44px;height:44px;padding:11px;border-radius:14px;background:var(--grad);color:#fff;box-shadow:0 8px 18px -8px rgba(79,63,208,.65)}
+.ph h1{font-size:clamp(26px,2.8vw,34px);font-weight:600;line-height:1.15;letter-spacing:-.03em;text-wrap:balance;
+  background:linear-gradient(90deg,var(--ink) 0%,#3F34C8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ph p{font-size:14px;font-weight:500;color:var(--mute);margin-top:2px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;animation:rise .45s var(--ease) .05s both}
+.tabs button{position:relative;overflow:hidden;min-height:40px;padding:0 18px;border:0;border-radius:999px;background:#fff;color:var(--body);box-shadow:var(--sh);font-size:13.5px;font-weight:500;white-space:nowrap;cursor:pointer;transition:color .15s,background .2s,box-shadow .2s,transform .15s}
+.tabs button:hover{color:var(--ink);box-shadow:var(--sh-hover)}
+.tabs button:active{transform:scale(.97)}
+.tabs button.on{background:var(--grad);color:#fff;font-weight:600;box-shadow:0 8px 18px -8px rgba(79,63,208,.65)}
+.tabs button.on:hover{color:#fff}
+
+/* Cards */
+.alist{display:flex;flex-direction:column;gap:12px}
+.ai{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:start;width:100%;padding:18px 20px;text-align:left;background:#fff;border:0;border-radius:24px;box-shadow:var(--sh);cursor:pointer;transition:box-shadow .2s ease,transform .2s ease;animation:rise .45s var(--ease) both}
+.ai:nth-child(2){animation-delay:.04s}
+.ai:nth-child(3){animation-delay:.08s}
+.ai:nth-child(4){animation-delay:.12s}
+.ai:nth-child(n+5){animation-delay:.16s}
+.ai:hover{transform:translateY(-3px);box-shadow:var(--sh-hover)}
+.ai:active{transform:translateY(-1px)}
+.ai .ic,.mic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--surface);color:var(--lav-d)}
+.academic .ic,.academic.bdg{background:#EEF0FE;color:#4655C8}
+.events .ic,.events.bdg{background:#EAF6EF;color:#2A8458}
+.others .ic,.others.bdg{background:#FEF3E1;color:#9A6410}
+.ai b{display:block;color:var(--ink);font-size:15px;font-weight:650;line-height:1.4;letter-spacing:-.01em;transition:color .2s}
+.ai:hover b{color:var(--lav-d)}
+.ad{margin-top:2px;font-size:13px;line-height:1.5;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.am{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:10px;font-size:12.5px;color:var(--mute)}
+.am span{display:inline-flex;align-items:center;gap:6px}
+.am svg{width:14px;height:14px}
+.rt{display:flex;align-items:center;gap:10px}
+
+/* Category badge: dot pill */
+.bdg{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:11.5px;font-weight:600;background:#F3F1FD;color:var(--ink);white-space:nowrap}
+.bdg::before{content:"";width:6px;height:6px;border-radius:50%;background:#A9A6C8}
+.academic.bdg,.events.bdg,.others.bdg{background:#F3F1FD;color:var(--ink)}
+.academic.bdg::before{background:#6C7CF2}
+.events.bdg::before{background:var(--g)}
+.others.bdg::before{background:var(--o)}
+
+/* Arrow becomes a small round button */
+.go{width:32px;height:32px;padding:8px;border-radius:50%;background:var(--surface);color:var(--ink);transform:rotate(-90deg);transition:background .2s,color .2s,transform .2s var(--ease)}
+.ai:hover .go{background:var(--pri);color:#fff;transform:rotate(-90deg) translateY(2px)}
+
+.empty{padding:44px 16px;text-align:center;background:transparent;border:1.5px dashed rgba(60,50,160,.14);border-radius:20px;color:var(--mute)}
+.empty b{display:block;color:var(--ink);font-size:16px;font-weight:600}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(27,27,94,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.modal.show{display:flex;animation:fade .18s ease}
+.dlg{width:min(560px,100%);max-height:calc(100% - 8px);overflow-y:auto;background:#fff;border-radius:24px;box-shadow:0 24px 44px -20px rgba(27,27,94,.5);padding:28px;animation:pop .25s var(--ease) both}
+.dh{display:flex;align-items:flex-start;gap:14px}
+.dh h2{flex:1;color:var(--ink);font-size:21px;font-weight:600;line-height:1.3;letter-spacing:-.02em;margin-top:2px}
+.x{width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--mute);font-size:22px;line-height:1;cursor:pointer;transition:background .15s,color .15s}
+.x:hover{background:var(--surface);color:var(--ink)}
+.dm{display:flex;flex-wrap:wrap;gap:6px 16px;margin:14px 0;padding:14px 16px;background:var(--surface);border:0;border-radius:16px;font-size:13px;color:var(--mute)}
+.dm span{display:inline-flex;align-items:center;gap:6px}
+.dm svg{width:15px;height:15px}
+.dt{font-size:14px;line-height:1.65;color:var(--body)}
+.df{margin-top:22px;display:flex;justify-content:flex-end}
+.btn{position:relative;overflow:hidden;min-height:44px;padding:0 24px;border:0;border-radius:999px;background:var(--grad);color:#fff;font-weight:600;letter-spacing:.02em;cursor:pointer;box-shadow:0 8px 18px -8px rgba(79,63,208,.65);transition:filter .2s,box-shadow .2s,transform .12s}
+.btn:hover{background:var(--grad);filter:brightness(1.08);box-shadow:0 12px 22px -10px rgba(79,63,208,.8)}
+.btn:active{transform:scale(.98)}
+
+/* Accessibility / print */
+@media (prefers-contrast:more){.ai,.dlg{box-shadow:0 0 0 1px rgba(27,27,94,.35)}}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important}
+ .ai:hover{transform:none}
+}
+@media print{
+ body{overflow:visible;background:#fff}
+ main{background:#fff;padding:0}
+ .tabs,.modal,.go{display:none!important}
+ .ai{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+ .ph h1{-webkit-text-fill-color:currentColor;background:none}
+}
+
+/* Mobile (the bottom tab bar and its spacing come from topnav.css) */
+@media (max-width:767px){
+ main{padding:20px 16px 32px}
+ .lc{gap:12px}
+ .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px 14px 14px;margin:-2px -14px -10px}
+ .tabs::-webkit-scrollbar{display:none}
+ .tabs button{flex:none}
+ .ai{grid-template-columns:44px minmax(0,1fr);padding:16px}
+ .rt{grid-column:2;grid-row:1;justify-self:start;margin-bottom:-4px}
+ .ai>div:nth-child(2){grid-column:2}
+ .go{display:none}
+ .dlg{padding:22px 20px}
+}

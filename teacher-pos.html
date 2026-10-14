@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>POS Training Builder · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="student.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css">
+<style>
+main.pg{display:block;padding:28px 32px 48px}
+.vw{background:transparent;padding:0;border-radius:0;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.ph h1{font-size:clamp(21px,2.3vw,26px);font-weight:700;color:var(--ink)}.ph p{font-size:13px;color:var(--mute)}
+main.pg .vw{max-width:1240px!important;width:100%;margin:0 auto!important}
+.bd{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+.fm{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fm .w{grid-column:1/-1}
+.fm label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.fm input,.fm select,.fm textarea{width:100%;font:14px Inter,system-ui,sans-serif;color:var(--ink);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;background:#fff}
+.fm textarea{min-height:70px;resize:vertical}
+.fm input:focus,.fm select:focus,.fm textarea:focus{outline:0;border-color:var(--sec);box-shadow:0 0 0 3px rgba(107,78,240,.12)}
+.fm h3{grid-column:1/-1;font-size:13px;font-weight:600;color:var(--pri);padding-top:6px;border-top:1px solid #EEF0F6}
+.fm h3:first-child{border:0;padding:0}
+.hp{font-size:12px;color:var(--mute);margin-top:4px}
+.bt{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 18px;border-radius:10px;border:1px solid var(--pri);background:var(--pri);color:#fff;font:600 14px Inter,sans-serif;cursor:pointer}
+.bt.o{background:#F7F5FE;color:var(--pri);border-color:#D9D2F7}.bt.s{height:32px;padding:0 12px;font-size:12.5px}
+.pv{border-top:3px solid #B39AF7;position:sticky;top:0}
+.pv .ty{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6D3FE0}
+.pv h3{font-size:16.5px;font-weight:700;color:var(--navy);margin:6px 0 4px}.pv p{font-size:13px;color:var(--mute)}
+.pv .mx{margin-top:12px;padding-top:12px;border-top:1px solid #EEF0F6;font-size:12.5px;color:var(--mute)}.pv .mx b{color:var(--ink)}
+.sc{margin-top:12px;padding:12px;background:var(--tile);border:1px solid #EEF0F6;border-radius:10px;font-size:13px}
+.sc div{display:flex;justify-content:space-between;padding:2px 0}.sc span{color:var(--mute)}
+.tl li{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:10px 0;border-top:1px solid #EEF0F6}
+.tl li:first-child{border-top:0}.tl b{display:block;color:var(--ink);font-size:14px}.tl small{color:var(--mute);font-size:12.5px}
+.none{text-align:center;color:var(--mute);font-size:13px;padding:20px}
+.tt{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:120}.tt.on{opacity:1}
+@media(max-width:1100px){.bd{grid-template-columns:minmax(0,1fr)}.pv{position:static}}
+@media(max-width:767px){main.pg{padding:20px 16px}.fm{grid-template-columns:minmax(0,1fr)}}
+
+/* =====================================================================
+   MOBILE CARD SIZING (POS Training Builder)
+   ===================================================================== */
+@media(max-width:767px){
+  main.pg{padding:16px 12px 32px}
+  .vw{gap:14px}
+  .ph h1{font-size:20px}
+  .ph p{font-size:12.5px}
+  .bd{gap:14px}
+  .col{display:grid;gap:14px;min-width:0}
+
+  /* form card */
+  .card.fm{padding:16px 14px;border-radius:16px;gap:10px}
+  .fm label{font-size:12.5px;margin-bottom:4px}
+  .fm input,.fm select,.fm textarea{font-size:14px;padding:9px 11px;min-height:40px}
+  .fm textarea{min-height:64px}
+  .fm h3{font-size:12.5px;padding-top:8px}
+  .hp{font-size:11.5px}
+
+  /* Scoring: 2 columns para hindi mahaba */
+  .fm > div:not(.w){min-width:0}
+
+  /* buttons: full width */
+  .fm .w[style*="flex"]{gap:8px!important}
+  .fm .w[style*="flex"] .bt{flex:1 1 100%;height:44px}
+
+  /* preview card */
+  .pv{padding:16px 14px;border-radius:16px}
+  .pv h3{font-size:15px}
+  .pv p{font-size:12.5px}
+  .pv .mx{font-size:12px;line-height:1.7}
+  .sc{padding:10px 12px;font-size:12.5px;border-radius:10px}
+
+  /* Your POS Trainings list */
+  .card .h{font-size:15px}
+  .tl li{grid-template-columns:minmax(0,1fr) repeat(3,auto);gap:6px 8px;padding:12px 0}
+  .tl li > div:first-child{grid-column:1/-1}
+  .tl li .bt.s{grid-column:auto;width:100%;height:34px;padding:0 8px;font-size:12px}
+  .tl li{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tl b{font-size:13.5px;overflow-wrap:anywhere}
+  .tl small{font-size:11.5px}
+  .none{padding:16px 8px;font-size:12.5px}
+
+  .tt{max-width:90vw;text-align:center;bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+}
+
+/* napakaliit na phones */
+@media(max-width:360px){
+  main.pg{padding:14px 10px 28px}
+  .tl li{grid-template-columns:minmax(0,1fr)}
+  .tl li .bt.s{height:36px}
+}
+</style></head>
+<body data-role="teacher" data-page="pos" data-title="POS Training"><script src="auth-guard.js"></script>
+<div class="app">
+<main class="pg"><section class="vw">
+  <div class="ph"><h1>POS Training Builder</h1><p>Create a POS training. Students see it under Activities → POS Training.</p></div>
+  <div class="bd">
+    <div class="col">
+      <form class="card fm" id="f" autocomplete="off">
+        <h3>Training details</h3>
+        <div class="w"><label for="title">Title</label><input id="title" required placeholder="e.g. POS Training 3: Discounted Cash Order"></div>
+        <div><label for="course">Course</label><select id="course"><option>BSHM 101</option><option>BSHM 102</option><option>BSHM 103</option><option>BSHM 104</option><option>BSHM 105</option></select></div>
+        <div><label for="due">Due date</label><input id="due" type="date"></div>
+        <div class="w"><label for="desc">Description</label><textarea id="desc" placeholder="What will students practice?"></textarea></div>
+        <div class="w"><label for="obj">Training objective</label><textarea id="obj" placeholder="What should students be able to do afterwards?"></textarea></div>
+        <h3>Scoring &amp; time</h3>
+        <div><label for="pts">Points</label><input id="pts" type="number" min="1" value="50"></div>
+        <div><label for="pass">Passing score (%)</label><input id="pass" type="number" min="1" max="100" value="75"></div>
+        <div><label for="time">Time limit (minutes)</label><input id="time" type="number" min="1" value="15"></div>
+        <div><label>Steps</label><input value="7 (fixed POS workflow)" disabled></div>
+        <h3>Customer scenario</h3>
+        <div><label for="qty">Quantity requested</label><input id="qty" type="number" min="1" max="3" value="2"><div class="hp">Max 3: the lowest-stock products have 4 left.</div></div>
+        <div><label for="meth">Payment method</label><select id="meth"><option value="CASH">Cash</option><option value="GCASH">GCash</option><option value="random">Random (cash or GCash)</option></select></div>
+        <div><label for="dsc">Discount (%)</label><input id="dsc" type="number" min="0" max="100" value="0"><div class="hp">0 = no discount. Students must apply it at Review Total.</div></div>
+        <div><label>Product</label><input value="Random from the POS menu" disabled></div>
+        <div class="w" style="display:flex;gap:10px;flex-wrap:wrap"><button class="bt" type="submit">Publish Training</button><button class="bt o" type="reset" id="rs">Reset</button></div>
+      </form>
+      <section class="card"><div class="h"><svg class="i"><use href="#reg"/></svg>Your POS Trainings</div><ul class="tl" id="tl"></ul></section>
+    </div>
+    <div class="card pv" id="pv"></div>
+  </div>
+</section></main>
+</div>
+<div class="tt" id="tt" role="status"></div>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},KEY='bshm.pos.custom';
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
+  function store(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}
+  function toast(m){var t=$('tt');t.textContent=m;t.className='tt on';setTimeout(function(){t.className='tt'},2400)}
+  function dueTxt(v){if(!v)return'';var d=new Date(v+'T00:00');return 'Due '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+  function read(){
+    var dv=Math.max(0,Math.min(100,+$('dsc').value||0));
+    return {title:$('title').value.trim(),desc:$('desc').value.trim(),course:$('course').value,due:dueTxt($('due').value),
+      points:Math.max(1,+$('pts').value||50),pass:Math.max(1,Math.min(100,+$('pass').value||75)),steps:7,
+      time:Math.max(1,+$('time').value||15),objective:$('obj').value.trim(),
+      scenario:{qty:Math.max(1,Math.min(3,+$('qty').value||1)),method:$('meth').value,discount:dv>0?{type:'percent',value:dv}:null}};
+  }
+  function preview(){
+    var a=read(),s=a.scenario,m={CASH:'Cash',GCASH:'GCash',random:'Random'}[s.method];
+    $('pv').innerHTML='<span class="ty">POS Training · Student preview</span><h3>'+esc(a.title||'Untitled training')+'</h3><p>'+esc(a.desc||'No description yet.')+'</p>'+
+      (a.objective?'<p style="margin-top:8px"><b>Objective:</b> '+esc(a.objective)+'</p>':'')+'<p style="margin-top:8px">'+esc(a.course)+(a.due?' · '+esc(a.due):'')+'</p>'+
+      '<div class="mx"><b>'+a.points+'</b> Points · <b>'+a.time+'</b> Minutes · <b>7</b> Steps · Pass <b>'+a.pass+'%</b></div>'+
+      '<div class="sc"><div><span>Quantity</span><b>'+s.qty+'</b></div><div><span>Discount</span><b>'+(s.discount?s.discount.value+'%':'None')+'</b></div><div><span>Payment</span><b>'+m+'</b></div><div><span>Product</span><b>Random</b></div></div>';
+  }
+  function list(){
+    var L=load();
+    $('tl').innerHTML=L.length?L.map(function(a){return '<li><div><b>'+esc(a.title)+'</b><small>'+esc(a.course)+(a.due?' · '+esc(a.due):'')+' · '+a.time+' min · pass '+a.pass+'%</small></div><button type="button" class="bt o s" data-c="'+a.id+'">Duplicate</button><button type="button" class="bt o s" data-e="'+a.id+'">Edit</button><button type="button" class="bt o s" data-d="'+a.id+'">Delete</button></li>'}).join(''):'<li class="none">No trainings yet. Fill in the form above and publish your first one.</li>';
+  }
+  var editing=null;
+  $('f').addEventListener('input',preview);
+  $('f').addEventListener('reset',function(){editing=null;setTimeout(preview,0)});
+  $('f').addEventListener('submit',function(e){
+    e.preventDefault();var a=read();
+    if(!a.title){toast('Please enter a title.');return}
+    if(!a.objective)a.objective='Complete the POS workflow accurately and within the time limit.';
+    if(!a.desc)a.desc='Practice the POS transaction workflow.';
+    var L=load();
+    if(editing){L=L.map(function(x){return x.id===editing?Object.assign(a,{id:editing}):x});toast('Training updated.')}
+    else{a.id='pos-custom-'+Date.now();L.push(a);toast('Training published to students.')}
+    store(L);editing=null;$('f').reset();list();
+  });
+  $('tl').addEventListener('click',function(e){
+    var d=e.target.getAttribute('data-d'),ed=e.target.getAttribute('data-e'),cp=e.target.getAttribute('data-c'),L=load();
+    if(cp){var o=L.filter(function(x){return x.id===cp})[0];if(o){var n=JSON.parse(JSON.stringify(o));n.id='pos-custom-'+Date.now();n.title=o.title+' (copy)';L.push(n);store(L);list();toast('Training duplicated. Edit the copy to change it.')}return}
+    if(d&&confirm('Delete this training? Students will no longer see it.')){store(L.filter(function(x){return x.id!==d}));list();toast('Training deleted.')}
+    if(ed){var a=L.filter(function(x){return x.id===ed})[0];if(!a)return;editing=ed;
+      $('title').value=a.title;$('desc').value=a.desc;$('obj').value=a.objective;$('course').value=a.course;$('pts').value=a.points;$('pass').value=a.pass;$('time').value=a.time;
+      $('qty').value=a.scenario.qty;$('meth').value=a.scenario.method;$('dsc').value=a.scenario.discount?a.scenario.discount.value:0;
+      preview();window.scrollTo(0,0);var m=document.querySelector('main');if(m)m.scrollTop=0;toast('Editing: change values, then Publish Training.')}
+  });
+  var td=new Date();$('due').min=td.getFullYear()+'-'+('0'+(td.getMonth()+1)).slice(-2)+'-'+('0'+td.getDate()).slice(-2);
+  preview();list();
+})();
+</script>
+<script src="shell.js"></script>
+  <script src="chat.js"></script>
+  <script src="teacher-prefs.js"></script>
+</body></html>

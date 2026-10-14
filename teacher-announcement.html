@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Announcements · BSHM LMS (Teacher)</title><meta name="color-scheme" content="light">
+<link rel="stylesheet" href="announcement.css"><link rel="stylesheet" href="shell.css">
+<style>
+.cmp{background:#fff;border:1px solid var(--bd);border-radius:var(--rad);padding:20px;box-shadow:var(--sh);display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.cmp .w{grid-column:1/-1}.cmp h2{grid-column:1/-1;font-size:17px;font-weight:600;color:var(--ink)}
+.cmp label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.cmp input,.cmp select,.cmp textarea{width:100%;font:14px Inter,system-ui,sans-serif;color:var(--ink);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;background:#fff}
+.cmp textarea{min-height:90px;resize:vertical}.cmp input:focus,.cmp select:focus,.cmp textarea:focus{outline:0;border-color:var(--sec);box-shadow:0 0 0 3px rgba(107,78,240,.12)}
+.bt{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 18px;border-radius:10px;border:1px solid var(--pri);background:var(--pri);color:#fff;font:600 14px Inter,sans-serif;cursor:pointer}
+.bt.o{background:#F7F5FE;color:var(--pri);border-color:#D9D2F7;height:32px;padding:0 12px;font-size:12.5px}
+.rt{flex-direction:column;align-items:flex-end}
+.tt{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:120}.tt.on{opacity:1}
+@media(max-width:767px){.cmp{grid-template-columns:minmax(0,1fr)}.rt{grid-column:2;align-items:flex-start;flex-direction:row}}
+</style></head>
+<body data-role="teacher" data-page="ann" data-title="Announcements"><script src="auth-guard.js"></script><div class="app"><main><div class="lc">
+<div class="ph"><svg class="i"><use href="#mega"/></svg><div><h1>Announcements</h1><p>Post updates to your students and manage what you have posted.</p></div></div>
+<form class="cmp" id="f" autocomplete="off">
+<h2>New announcement</h2>
+<div class="w"><label for="t">Title</label><input id="t" placeholder="e.g. Practical exam moved to May 5"></div>
+<div><label for="c">Category</label><select id="c"><option value="academic">Academic</option><option value="administrative">Administrative</option><option value="events">Events</option><option value="others">Others</option></select></div>
+<div><label for="a">Audience</label><select id="a"><option>All my classes</option><option>BSHM 101</option><option>BSHM 103</option><option>BSHM 104</option></select></div>
+<div style="display:flex;align-items:end"><button class="bt" type="submit">Post announcement</button></div>
+<div class="w"><label for="m">Message</label><textarea id="m" placeholder="Write the announcement..."></textarea></div>
+</form>
+<div class="tabs" id="tabs" role="tablist" aria-label="Announcement categories"></div>
+<div class="alist" id="list" aria-live="polite"></div>
+</div></main></div>
+<div class="modal" id="modal" aria-hidden="true"><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="m-title"><div class="dh"><h2 id="m-title"></h2><button class="x" id="m-x" type="button" aria-label="Close">&times;</button></div><div class="dm" id="m-meta"></div><p class="dt" id="m-text"></p><div class="df"><button class="btn" id="m-close" type="button">Close</button></div></div></div>
+<div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var K='bshm.ann.custom',$=function(i){return document.getElementById(i)},st={cat:'all'};
+  var CATS=[['all','All'],['academic','Academic'],['administrative','Administrative'],['events','Events'],['others','Others']],B={academic:'Academic',administrative:'Administrative',events:'Events',others:'Others'},IC={administrative:'file',academic:'cal',events:'star',others:'alert'};
+  var fd=function(i){return new Date(i).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})},ft=function(i){return new Date(i).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})};
+  var ico=function(n){return '<svg class="i"><use href="#'+n+'"/></svg>'};
+  var all=function(){return tlsGet(K)||[]};
+  function render(){
+    var L=all();
+    $('tabs').innerHTML=CATS.map(function(c){var n=c[0]==='all'?L.length:L.filter(function(a){return a.category===c[0]}).length;return '<button type="button" data-k="'+c[0]+'" class="'+(c[0]===st.cat?'on':'')+'">'+c[1]+' ('+n+')</button>'}).join('');
+    var R=L.filter(function(a){return st.cat==='all'||a.category===st.cat}).sort(function(a,b){return b.when.localeCompare(a.when)});
+    $('list').innerHTML=R.length?R.map(function(a){return '<article class="ai '+a.category+'" role="button" tabindex="0" data-id="'+a.id+'"><span class="ic">'+ico(IC[a.category])+'</span><div><b>'+tesc(a.title)+'</b><p class="ad">'+tesc(a.text)+'</p><div class="am"><span>'+ico('user')+tesc(a.by)+'</span><span>'+ico('cal')+fd(a.when)+'</span><span>'+ico('clock')+ft(a.when)+'</span></div></div><div class="rt"><span class="bdg '+a.category+'">'+B[a.category]+'</span><button class="bt o" type="button" data-del="'+a.id+'">Delete</button></div></article>'}).join(''):'<div class="empty"><b>No announcements yet</b>Post your first announcement above.</div>';
+  }
+  $('f').onsubmit=function(e){e.preventDefault();var t=$('t').value.trim(),m=$('m').value.trim();
+    if(!t||!m){ttoast('Please enter a title and a message.');return}
+    var a=$('a').value,L=all();L.push({id:Date.now(),title:t,category:$('c').value,by:'Prof. Liza Santos'+(a==='All my classes'?'':' · '+a),when:new Date().toISOString(),text:m});
+    tlsSet(K,L);$('f').reset();render();ttoast('Posted. Students will see it in Announcements.')};
+  $('tabs').onclick=function(e){var b=e.target.closest('button');if(b){st.cat=b.getAttribute('data-k');render()}};
+  var last=null;
+  function open(id){var a=all().filter(function(x){return String(x.id)===String(id)})[0];if(!a)return;last=document.activeElement;
+    $('m-title').textContent=a.title;$('m-text').textContent=a.text;$('m-meta').innerHTML='<span class="bdg '+a.category+'">'+B[a.category]+'</span><span>'+ico('user')+tesc(a.by)+'</span><span>'+ico('cal')+fd(a.when)+'</span><span>'+ico('clock')+ft(a.when)+'</span>';
+    $('modal').classList.add('show');$('modal').setAttribute('aria-hidden','false');$('m-close').focus()}
+  function close(){var m=$('modal');if(!m.classList.contains('show'))return;m.classList.remove('show');m.setAttribute('aria-hidden','true');if(last)last.focus()}
+  $('list').onclick=function(e){var d=e.target.closest('[data-del]');
+    if(d){if(confirm('Delete this announcement? Students will no longer see it.')){tlsSet(K,all().filter(function(a){return String(a.id)!==d.getAttribute('data-del')}));render();ttoast('Deleted.')}return}
+    var c=e.target.closest('.ai');if(c)open(c.getAttribute('data-id'))};
+  $('list').onkeydown=function(e){var c=e.target.closest('.ai');if(c&&e.target===c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();open(c.getAttribute('data-id'))}};
+  $('m-x').onclick=close;$('m-close').onclick=close;$('modal').onclick=function(e){if(e.target.id==='modal')close()};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  render();
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script></body></html>
+<link rel="stylesheet" href="courses-polish.css">

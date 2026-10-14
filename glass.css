@@ -1,0 +1,68 @@
+/* ===== ACES DineLearn · glass.css (v5 · index palette) =====
+   Load LAST (after topnav.css and every page css).
+   Shared navbar variables + navbar-scoped rules only; nothing here touches page content.
+   Palette matches the role-selection page: navy #171B6B · violet #6D3FEA ·
+   lavender #F0EDFF / #F8F7FF · soft blue #EAF2FF. */
+
+:root{
+  --glass-bg:#FFFFFF;
+  --glass-border:#E5E7EB;
+  --glass-text:#171B6B;
+  --glass-muted:#667085;
+  --glass-primary:#6D3FEA;
+  --glass-primary-soft:#F0EDFF;
+  --glass-hover:#F8F7FF;
+  --glass-title:#171B6B;
+  --glass-danger:#D92D20;
+  --glass-shadow:0 1px 4px rgba(23,27,107,.06);
+}
+
+/* navbar: solid, no blur, no glow */
+header.topnav{
+  background:var(--glass-bg)!important;
+  border-bottom:1px solid var(--glass-border)!important;
+  box-shadow:var(--glass-shadow)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+header.topnav .tn-menu{
+  background:var(--glass-bg)!important;
+  border:1px solid var(--glass-border)!important;
+  box-shadow:0 8px 24px rgba(23,27,107,.12)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+header.topnav .bell,
+header.topnav .user{
+  background:var(--glass-bg);
+  border-color:var(--glass-border);
+  box-shadow:none;
+}
+header.topnav .tn-c a.on{
+  color:var(--glass-primary)!important;
+  background:var(--glass-primary-soft)!important;
+}
+
+/* ---------- Brand fix: title always visible (class-name independent) ---------- */
+header.topnav .tn-l,
+header.topnav .tn-l *:not(img):not(svg):not(path),
+header.topnav .crest ~ *,
+header.topnav .crest ~ * *{
+  color:#171B6B!important;
+  -webkit-text-fill-color:#171B6B!important;
+  opacity:1!important;visibility:visible!important;
+  text-shadow:none!important;filter:none!important;
+}
+header.topnav .tn-l small,
+header.topnav .crest ~ * small{
+  color:#667085!important;-webkit-text-fill-color:#667085!important;
+}
+/* remove any leftover pill / glass box behind the logo + title */
+header.topnav .tn-l,
+header.topnav .tn-brand,
+header.topnav .crest ~ *{
+  background:transparent!important;background-image:none!important;
+  border:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+header.topnav .tn-l::before,header.topnav .tn-l::after{content:none!important;display:none!important}

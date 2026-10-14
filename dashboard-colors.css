@@ -1,0 +1,140 @@
+/* ===== Student Dashboard · visual polish (v2) =====
+   Load AFTER student.css and glass.css (or paste at the bottom of student.css).
+   Scoped to main.dash, so the navbar and other pages are not affected.
+   Visual only: no markup, IDs, classes, JS, routes or layout changes.
+
+   NAVY   #172554  headings, brand, important text
+   VIOLET #6D3FEA  accent: avatar, course codes, active nav
+   TEAL   #0F766E  progress, ring, "Continue Course" links
+   BLUE   #2563EB  secondary: links, section icons, info
+   Status: red #DC2626 · amber #D97706 · green #16A34A */
+
+main.dash{
+  --ink:#172554;          /* headings + strong text */
+  --body:#172033;
+  --mute:#667085;
+  --bd:#E5E7EB;
+  --indigo:#172554;       /* button text, today marker, pill text */
+  --pri:#2563EB;          /* links + section icons: secondary blue */
+  --sec:#2563EB;
+  --soft:#EEF4FF;
+  --r:#DC2626;  --o:#D97706;  --g:#16A34A;  --amber:#D97706;
+  --rad:12px;
+  --sh:0 1px 3px rgba(16,24,40,.05);
+  --sh-hover:0 6px 16px rgba(16,24,40,.08);
+  --ease:.2s ease;
+}
+
+/* ---------- Page background: flat, enough contrast for white cards ---------- */
+.app:has(> main.dash){background:#F8FAFC}
+
+/* ---------- Typography hierarchy ---------- */
+main.dash .wel h1{font-size:clamp(26px,2.4vw,30px);font-weight:700;color:#172554}
+main.dash .h{font-size:18px;font-weight:600;color:#172554}
+main.dash .st b{font-size:24px;font-weight:700;color:#172554}
+main.dash .st small{font-size:13px;font-weight:500}
+main.dash .pr b{font-size:26px;font-weight:700;color:#172554}
+
+/* ---------- Cards: white, hairline border, soft neutral shadow, 12px radius ---------- */
+main.dash .card,
+main.dash .st,
+main.dash .date,
+main.dash .fw{
+  background:#fff;border:1px solid #E5E7EB;border-radius:12px;
+  box-shadow:0 1px 3px rgba(16,24,40,.05);
+  transition:transform var(--ease),box-shadow var(--ease),border-color var(--ease);
+}
+/* deadlines: neutral card, status lives in the dots only */
+main.dash .dl{box-shadow:0 1px 3px rgba(16,24,40,.05);border-top:1px solid #E5E7EB}
+
+/* hover: subtle lift on stat + course cards, gentle shadow/border on panels */
+main.dash .st:hover,
+main.dash .c:hover,
+main.dash .fw:hover{
+  transform:translateY(-2px);border-color:#CBD5E1;box-shadow:0 6px 16px rgba(16,24,40,.08);
+}
+main.dash .card:hover{border-color:#D5DBE5;box-shadow:0 6px 16px rgba(16,24,40,.06)}
+main.dash .c.all:hover{transform:none;box-shadow:none}
+
+/* ---------- Welcome avatar ---------- */
+main.dash .wel .av{
+  background:#6D3FEA;
+  box-shadow:0 0 0 3px #fff,0 0 0 4px #E6E0FF;
+  transition:box-shadow var(--ease),transform var(--ease);
+}
+main.dash .wel .av:hover{box-shadow:0 0 0 3px #fff,0 0 0 4px #C9BFFF;transform:scale(1.03)}
+
+/* ---------- Stat icon tiles: light tints, small rounded squares ---------- */
+main.dash .st .ic{border-radius:8px;transition:background var(--ease)}
+main.dash .stats .st:nth-child(1) .ic{background:#F0EDFF;color:#6D3FEA}
+main.dash .stats .st:nth-child(2) .ic{background:#EEF4FF;color:#2563EB}
+main.dash .stats .st:nth-child(3) .ic{background:#E8F5F2;color:#0F766E}
+main.dash .stats .st:nth-child(4) .ic{background:#EEF4FF;color:#2563EB}
+
+/* ---------- Continue Learning: deep navy to deep blue/teal ---------- */
+main.dash .cont{
+  border-radius:12px;
+  background:linear-gradient(135deg,#0F1D4A 0%,#172554 55%,#115E73 100%);
+}
+main.dash .cont .kick{color:#9FB8EE}
+main.dash .cont h2 small{color:#A9B8DB}
+main.dash .cp .bar{background:rgba(255,255,255,.16)}
+main.dash .cp .bar i{background:#fff}
+main.dash .cont .btn{
+  background:#fff;color:#172554;border:0;border-radius:9px;
+  transition:background .18s ease,box-shadow .18s ease;
+}
+main.dash .cont .btn:hover{background:#F1F5F9}
+main.dash .ar{transition:transform .18s ease}
+main.dash .btn:hover .ar,main.dash a:hover .ar{transform:translateX(3px)}
+
+/* ---------- Progress bars: 6px, teal, grows in once on load ---------- */
+main.dash .bar{height:6px;background:#E9EEF5;border-radius:999px}
+main.dash .bar i{
+  background:#0F766E;border-radius:999px;
+  transform-origin:left center;animation:barGrow .8s ease-out both;
+}
+main.dash .cp .bar{height:6px;border-radius:999px}
+main.dash .cp .bar i{background:#fff}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---------- Course cards ---------- */
+main.dash .c{border:1px solid #E5E7EB;border-radius:12px;transition:transform var(--ease),box-shadow var(--ease),border-color var(--ease)}
+main.dash .cd{color:#6D3FEA;font-weight:600}
+main.dash .vc{color:#0F766E;font-weight:500}
+/* controlled banner colors: navy-blue, teal, blue, indigo, slate */
+main.dash .courses .c:nth-child(5n+1) .cb{background:linear-gradient(135deg,#172554,#1E40AF)!important}
+main.dash .courses .c:nth-child(5n+2) .cb{background:linear-gradient(135deg,#134E4A,#0F766E)!important}
+main.dash .courses .c:nth-child(5n+3) .cb{background:linear-gradient(135deg,#1E3A8A,#2563EB)!important}
+main.dash .courses .c:nth-child(5n+4) .cb{background:linear-gradient(135deg,#1E1B6B,#4338CA)!important}
+main.dash .courses .c:nth-child(5n+5) .cb{background:linear-gradient(135deg,#1E293B,#475569)!important}
+/* subtle depth + quieter icon */
+main.dash .cb::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(140px 70px at 88% 0%,rgba(255,255,255,.14),transparent 70%);
+}
+main.dash .cb svg{opacity:.22}
+main.dash .c:hover .cb svg{transform:translateY(-50%) scale(1.04)}
+
+/* ---------- Radius consistency: small elements 6-8px ---------- */
+main.dash .pill{border-radius:6px}
+main.dash .up,main.dash .hn div{border-radius:8px}
+main.dash .ql a{border-radius:8px}
+main.dash .ql a:hover{border-color:#CBD5E1;background:#F8FAFC;color:#2563EB}
+
+/* ---------- Calendar widget ---------- */
+main.dash .dy.today{background:#172554;color:#fff}
+main.dash .dy.has::after{background:#2563EB}
+main.dash .dy.today::after{background:#fff}
+
+/* ---------- Performance ring ---------- */
+main.dash .ring circle{stroke:#E9EEF5}
+main.dash .ring .v{stroke:#0F766E}
+
+/* ---------- Featured slideshow base ---------- */
+main.dash .show{background:#172554}
+
+@media (prefers-reduced-motion:reduce){
+  main.dash .bar i{animation:none}
+  main.dash .st:hover,main.dash .c:hover,main.dash .fw:hover,main.dash .wel .av:hover{transform:none}
+}

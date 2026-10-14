@@ -1,0 +1,716 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><link rel="stylesheet" href="student.css"><link rel="stylesheet" href="teacher.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css"><link rel="stylesheet" href="teacher-activities-modern.css"><link rel="stylesheet" href="teacher-activities-v2.css"><style>
+/* ===== Review & Grade (teacher-grade.css) ===== */
+.rg-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rg-select{
+  font:13px Inter,sans-serif;color:#1F1B4D;background:#fff;
+  border:1px solid #E3E1F2;border-radius:10px;padding:6px 10px;max-width:170px;
+}
+
+/* status colors (list + totals) */
+.rg-st.ok{color:#217A4D}
+.rg-st.bad{color:#B42318}
+.rg-st.wn{color:#B54708}
+
+/* detail view */
+.rg-det{padding:8px 24px 24px}
+.rg-back{margin-bottom:6px}
+.rg-title{font-size:22px;font-weight:700;color:#1F1B4D;margin:14px 0 4px}
+.rg-meta{color:#5B5880;font-size:14px;margin:0 0 18px}
+.rg-alert{
+  color:#B42318;background:#FEF3F2;border:1px solid #FECDCA;
+  border-radius:12px;padding:10px 14px;font-size:14px;margin:0 0 14px;
+}
+
+/* question card */
+.rg-q{
+  padding:18px 20px;margin:14px 0;background:#fff;
+  border:1px solid #E3E1F2;border-radius:16px;
+}
+.rg-qh{display:flex;justify-content:space-between;gap:12px;color:#1F1B4D}
+.rg-pts{color:#5B5880;white-space:nowrap}
+
+/* essay */
+.rg-ans{
+  margin:12px 0;padding:14px 16px;background:#FAFAFF;
+  border:1px solid #E3E1F2;border-radius:12px;
+  white-space:pre-wrap;line-height:1.6;font-size:14.5px;color:#2B2757;
+}
+.rg-guide{font-size:13px;color:#5B5880;margin:0 0 12px}
+.rg-score{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:#4A4672}
+.g-es{
+  width:96px;height:40px;padding:0 12px;
+  border:1.5px solid #D9D5F0;border-radius:10px;background:#fff;
+  color:#1F1B4D;font:600 15px Inter,sans-serif;text-align:center;
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.g-es:focus{border-color:#6D3FE0;box-shadow:0 0 0 3px rgba(109,63,224,.15)}
+.g-es::placeholder{color:#A9A5C9;font-weight:500}
+
+/* multiple choice */
+.rg-opts{margin-top:10px;display:grid;gap:4px;font-size:14.5px}
+.rg-opt.ok{color:#217A4D;font-weight:600}
+.rg-opt.bad{color:#B42318;font-weight:600}
+.rg-verdict{font-size:13px;color:#5B5880;margin:10px 0 0}
+
+/* total + save bar */
+.rg-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  position:sticky;bottom:12px;margin-top:14px;padding:14px 20px;
+  background:#FAFAFF;border:1px solid #E3E1F2;border-radius:16px;
+  box-shadow:0 8px 24px rgba(60,40,140,.10);
+}
+#g-tot{font-size:15px}
+
+@media (max-width:640px){
+  .rg-det{padding:8px 12px 16px}
+  .rg-bar{flex-direction:column;align-items:stretch}
+  .rg-bar .bt{width:100%}
+}
+</style><title>Activities · BSHM LMS</title></head>
+<body data-role="teacher" data-page="activities" data-title="Activities"><script src="auth-guard.js"></script><div class="app"><main class="pg"><section class="vw">
+<div class="ph"><h1>Activities</h1><p>Create quizzes and exams, set anti-cheat rules, review submissions and grade essays.</p></div>
+<div class="tabs" id="tb"><button class="on" data-t="new">Create Quiz / Exam</button><button data-t="mine">My Activities</button><button data-t="grade" id="gtab">Review &amp; Grade</button></div>
+
+<div id="v-new">
+  <!-- Draft banner -->
+  <div class="wz-dbn" id="dbn" hidden><span id="dbn-t"></span><span class="wz-dba"><button class="bt o s" type="button" id="dbn-r">Resume draft</button><button class="bt o s" type="button" id="dbn-d">Discard</button></span></div>
+
+  <div class="wz wf" id="wz">
+    <!-- Stepper -->
+    <div class="wz-bar">
+      <ol class="wz-steps" id="stp" aria-label="Activity creation steps"></ol>
+      <div class="wz-pm" aria-hidden="true"><span id="pm-t"></span><i><u id="pm-b"></u></i></div>
+    </div>
+
+    <form id="f" autocomplete="off" novalidate>
+
+      <!-- STEP 1: DETAILS -->
+      <section class="wz-pn" id="p1">
+        <div class="wz-hd"><h2>Details</h2><p>The basics students see on their Activities page.</p></div>
+        <div class="fm">
+          <div class="wz-c2"><label for="type">Type</label><select id="type"><option value="quiz">Quiz</option><option value="exam">Exam</option></select></div>
+          <div class="wz-c2"><label for="course">Course</label><select id="course"><option>BSHM 101</option><option>BSHM 102</option><option>BSHM 103</option><option>BSHM 104</option><option>BSHM 105</option></select></div>
+          <div class="wz-c2"><label for="due">Due date <span class="wz-opt">(optional)</span></label><input id="due" type="date"></div>
+          <div class="w"><label for="title">Title</label><input id="title" placeholder="e.g. Front Office Quiz 2"></div>
+          <div class="w"><label for="desc">Description / coverage <span class="wz-opt">(optional)</span></label><textarea id="desc" placeholder="What topics does it cover?"></textarea></div>
+          <div class="wz-c3"><label for="pts">Total points</label><input id="pts" type="number" min="1" value="30"><p class="hp">Adds up from your questions automatically. <button type="button" class="wz-lnk" id="pt-r" hidden>Use question total</button></p></div>
+          <div class="wz-c3"><label for="time">Time limit (minutes) <span class="wz-opt" id="time-h"></span></label><input id="time" type="number" min="1" value="20" placeholder="No limit"></div>
+        </div>
+      </section>
+
+      <!-- STEP 2: QUESTIONS -->
+      <section class="wz-pn" id="p2" hidden>
+        <div class="wz-hd wz-row"><div><h2>Questions</h2><p id="q-sum">0 questions · 0 pts</p></div><button class="bt" type="button" id="add">+ Add Question</button></div>
+        <div class="wz-qtb" id="qtb" hidden><input id="qs-q" type="search" placeholder="Search questions" aria-label="Search questions"><select id="qs-t" aria-label="Filter by type"><option value="">All types</option><option value="mc">Multiple choice</option><option value="es">Essay</option></select><span id="qs-n"></span></div>
+        <div id="ql"></div>
+      </section>
+
+      <!-- STEP 3: SETTINGS (title follows Quiz / Exam) -->
+      <section class="wz-pn" id="p3" hidden>
+        <div class="wz-hd"><h2 id="p3-h">Quiz Settings</h2><p id="p3-p">Choose how the attempt is monitored.</p></div>
+        <div class="fm">
+          <label class="ck wz-big"><input type="checkbox" id="c_on" checked> Anti-cheat monitoring</label>
+          <div id="ac-more">
+            <label class="ck"><input type="checkbox" id="c_fs" checked> Require fullscreen</label>
+            <details class="wz-adv" open>
+              <summary>Violation rules</summary>
+              <div class="wz-inner">
+                <div><label for="c_max">Violations allowed</label><input id="c_max" type="number" min="1" value="1"><p class="hp">The attempt is restricted once a student reaches this number.</p></div>
+                <label class="ck"><input type="checkbox" id="c_auto" checked> Auto-submit (restrict) at maximum</label>
+              </div>
+            </details>
+          </div>
+          <p class="wz-note" id="ac-off" hidden>Monitoring is off. Students will not be monitored during this activity.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4: REVIEW -->
+      <section class="wz-pn" id="p4" hidden>
+        <div class="wz-hd"><h2>Review &amp; Publish</h2><p>Check everything, then publish. Use Edit to change any step.</p></div>
+        <div class="wz-rv" id="rv"></div>
+      </section>
+    </form>
+
+    <!-- Footer actions -->
+    <div class="wz-ft">
+      <button class="bt o" type="button" id="bk">Previous</button>
+      <span class="wz-sp"></span>
+      <button class="bt o" type="button" id="sd">Save draft</button>
+      <button class="bt" type="button" id="nx">Next</button>
+      <button class="bt" type="button" id="pb" hidden>Publish activity</button>
+    </div>
+  </div>
+
+  <!-- Question editor (modal) -->
+  <div class="wz-mdl" id="md" hidden>
+    <div class="wz-mp wf" role="dialog" aria-modal="true" aria-labelledby="md-t">
+      <div class="wz-mh"><h2 id="md-t">Add question</h2><button type="button" class="wz-x" id="md-x" aria-label="Close">&times;</button></div>
+      <div class="wz-mb">
+        <div class="wz-seg" id="qm" role="group" aria-label="Question type"><button type="button" class="on" data-m="mc">Multiple choice</button><button type="button" data-m="es">Essay</button></div>
+        <div class="fm">
+          <div class="w"><label for="qt">Question</label><textarea id="qt" placeholder="Type the question here"></textarea></div>
+          <div class="w" id="mc-box">
+            <label>Answer choices <span class="wz-opt">Select the circle beside the correct one</span></label>
+            <div class="wz-ops">
+              <div class="wz-op"><span class="wz-ol">A</span><input id="o0" placeholder="Option A"><label class="wz-rd"><input type="radio" name="ans" value="0" checked><span>Correct</span></label></div>
+              <div class="wz-op"><span class="wz-ol">B</span><input id="o1" placeholder="Option B"><label class="wz-rd"><input type="radio" name="ans" value="1"><span>Correct</span></label></div>
+              <div class="wz-op"><span class="wz-ol">C</span><input id="o2" placeholder="Option C (optional)"><label class="wz-rd"><input type="radio" name="ans" value="2"><span>Correct</span></label></div>
+              <div class="wz-op"><span class="wz-ol">D</span><input id="o3" placeholder="Option D (optional)"><label class="wz-rd"><input type="radio" name="ans" value="3"><span>Correct</span></label></div>
+            </div>
+          </div>
+          <div class="w" id="es-box" hidden>
+            <label for="eg">Grading guide <span class="wz-opt">(optional · only you can see this)</span></label>
+            <textarea id="eg" placeholder="Key points or a sample answer to check the essay against"></textarea>
+            <p class="hp">Essays are written by students and graded by you in the Review &amp; Grade tab, so they are not scored automatically.</p>
+          </div>
+          <div><label for="qp">Points</label><input id="qp" type="number" min="1" value="1"></div>
+        </div>
+      </div>
+      <div class="wz-mf"><button class="bt o" type="button" id="md-c">Cancel</button><span class="wz-sp"></span><button class="bt o" type="button" id="md-a">Save &amp; add another</button><button class="bt" type="button" id="md-s">Save question</button></div>
+    </div>
+  </div>
+</div>
+
+<section class="card" id="v-mine" hidden><div class="h">My Quizzes &amp; Exams</div><div class="tw"><table><thead><tr><th>Activity</th><th>Course</th><th>Details</th><th>Anti-cheat</th><th></th></tr></thead><tbody id="mb"></tbody></table></div></section>
+
+<!-- REVIEW & GRADE -->
+<section class="card" id="v-grade" hidden>
+  <div class="h rg-head">
+    <span>Review &amp; Grade</span>
+    <select id="g-f" class="rg-select" aria-label="Filter">
+      <option value="pending">Needs grading</option>
+      <option value="all">All submissions</option>
+    </select>
+  </div>
+  <div id="g-list"></div>
+  <div id="g-det" class="rg-det" hidden></div>
+</section>
+</section></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var K='bshm.act.custom',DK='bshm.act.draft',$=function(i){return document.getElementById(i)},
+      qs=[],mode='mc',touched=false,acTouched=false,cur=1,seen={1:true},editI=-1,
+      NAMES=['Details','Questions','Quiz Settings','Review'];
+  // question format: [text, options, correctIndex, 'mc'|'essay', points, gradingGuide]
+
+  function dueTxt(v){return v?'Due '+new Date(v+'T00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):''}
+  function pl(n,w){return n+' '+w+(n===1?'':'s')}
+  function total(){var s=0;qs.forEach(function(q){s+=q[4]||1});return s}
+  function essays(){return qs.filter(function(q){return q[3]==='essay'}).length}
+  function focusId(id){var el=$(id);if(el&&el.focus)el.focus()}
+  function needTime(){return qs.length>5}            // time limit required only above 5 questions
+  function hasTime(){return (+$('time').value||0)>0}
+
+  /* ---------- validation: returns [message, fieldId, stepToShow?] ---------- */
+  function check(n){
+    if(n===1){
+      if(!$('title').value.trim())return['Please enter a title.','title'];
+      if((+$('pts').value||0)<1)return['Total points must be at least 1.','pts'];
+      if($('time').value!==''&&!hasTime())return['Time limit must be at least 1 minute.','time'];
+    }
+    if(n===2){
+      if(!qs.length)return['Add at least one question.','add'];
+      if(needTime()&&!hasTime())return['More than 5 questions needs a time limit.','time',1];
+    }
+    if(n===3&&$('c_on').checked&&(+$('c_max').value||0)<1)return['Violations allowed must be at least 1.','c_max'];
+    return null;
+  }
+
+  /* ---------- quiz vs exam ---------- */
+  function typeSync(){
+    var ex=$('type').value==='exam';
+    NAMES[2]=ex?'Exam Settings':'Quiz Settings';
+    $('p3-h').textContent=NAMES[2];
+    $('p3-p').textContent=ex?'Exams are monitored by default. Choose how the attempt is monitored.':'Quizzes are not monitored by default. Turn monitoring on if you need it.';
+    if(!acTouched){$('c_on').checked=ex;acSync()}
+    stepper();
+    if(cur<4)$('nx').textContent='Next: '+NAMES[cur];
+  }
+  $('type').onchange=typeSync;
+
+  /* ---------- stepper + navigation ---------- */
+  function stepper(){
+    var h='';
+    for(var i=1;i<=4;i++){
+      var lk=false;for(var j=1;j<i;j++)if(check(j))lk=true;
+      var ok=seen[i]&&i<4&&i!==cur&&!check(i);
+      h+='<li'+(i<cur?' class="wz-dn"':'')+'><button type="button" class="wz-step'+(i===cur?' on':'')+(ok?' ok':'')+(lk&&i>cur?' lk':'')+'" data-s="'+i+'"'+(i===cur?' aria-current="step"':'')+'><span class="wz-num">'+i+'</span><span class="wz-lbl">'+NAMES[i-1]+'</span></button></li>';
+    }
+    $('stp').innerHTML=h;
+    $('pm-t').textContent='Step '+cur+' of 4 · '+NAMES[cur-1];
+    $('pm-b').style.width=(cur*25)+'%';
+  }
+  function show(n){
+    cur=n;seen[n]=true;
+    for(var i=1;i<=4;i++)$('p'+i).hidden=i!==n;
+    if(n===2)drawQ();
+    if(n===4)review();
+    stepper();
+    $('bk').style.visibility=n>1?'visible':'hidden';
+    $('nx').hidden=n===4;$('pb').hidden=n!==4;
+    if(n<4)$('nx').textContent='Next: '+NAMES[n];
+  }
+  function go(n){
+    for(var i=1;i<n;i++){
+      var e=check(i);
+      if(e){show(e[2]||i);ttoast(e[0]);focusId(e[1]);return false}
+    }
+    show(n);return true;
+  }
+  $('stp').onclick=function(e){var b=e.target.closest('[data-s]');if(b)go(+b.getAttribute('data-s'))};
+  $('bk').onclick=function(){if(cur>1)show(cur-1)};
+  $('nx').onclick=function(){go(cur+1)};
+  $('rv').onclick=function(e){var b=e.target.closest('[data-go]');if(b)go(+b.getAttribute('data-go'))};
+
+  /* ---------- points + time hint ---------- */
+  function sync(){
+    if(qs.length&&!touched)$('pts').value=total();
+    $('pt-r').hidden=!(touched&&qs.length&&(+$('pts').value||0)!==total());
+    $('q-sum').textContent=pl(qs.length,'question')+(essays()?' ('+essays()+' essay)':'')+' · '+total()+' pts';
+    $('time-h').textContent=needTime()?'(required for more than 5 questions)':'(optional for 5 questions or fewer)';
+  }
+  $('pts').oninput=function(){touched=true;sync()};
+  $('pt-r').onclick=function(){touched=false;sync()};
+
+  /* ---------- question cards ---------- */
+  var qf='',qt='',dragI=-1;
+  function filtering(){return !!(qf||qt)}
+  function drawQ(where){
+    var box=$('ql'),top=box.scrollTop,shown=0,reorder=!filtering();
+    $('qtb').hidden=qs.length<8&&!filtering();
+    var html=qs.map(function(q,i){
+      var es=q[3]==='essay';
+      if(qt&&(qt==='es')!==es)return '';
+      if(qf&&(q[0]+' '+q[1].join(' ')).toLowerCase().indexOf(qf)<0)return '';
+      shown++;
+      var pt=(q[4]||1)+' pt'+((q[4]||1)===1?'':'s');
+      var meta=es?'Essay · written answer':'Multiple choice · Answer '+'ABCD'.charAt(q[2])+': '+tesc(q[1][q[2]]);
+      return '<div class="wz-qc" data-i="'+i+'"'+(reorder?' draggable="true"':'')+'><span class="wz-qn">'+(i+1)+'</span>'+
+        '<button type="button" class="wz-qbody" data-a="edit" data-i="'+i+'" title="Click to edit"><b>'+tesc(q[0])+'</b><small>'+meta+'</small></button>'+
+        '<span class="wz-tg '+(es?'es':'mc')+'">'+(es?'Essay':'MC')+'</span><span class="wz-ptx">'+pt+'</span>'+
+        '<span class="wz-qa">'+
+        '<button type="button" class="wz-ib" data-a="up" data-i="'+i+'" aria-label="Move up" title="Move up"'+(reorder&&i?'':' disabled')+'>&uarr;</button>'+
+        '<button type="button" class="wz-ib" data-a="down" data-i="'+i+'" aria-label="Move down" title="Move down"'+(reorder&&i<qs.length-1?'':' disabled')+'>&darr;</button>'+
+        '<button type="button" class="wz-ib" data-a="dup" data-i="'+i+'">Duplicate</button>'+
+        '<button type="button" class="wz-ib wz-dl" data-a="del" data-i="'+i+'">Delete</button></span></div>';
+    }).join('');
+    if(!qs.length)html='<div class="none">No questions yet.<br><button type="button" class="bt o s" data-a="new">+ Add your first question</button></div>';
+    else if(!shown)html='<div class="none">No questions match your search.</div>';
+    box.innerHTML=html;
+    box.scrollTop=where==='end'?box.scrollHeight:top;
+    $('qs-n').textContent=filtering()&&qs.length?'Showing '+shown+' of '+qs.length+' · reordering is off while filtering':(qs.length>1?'Drag a card to reorder':'');
+    sync();
+  }
+  $('qs-q').oninput=function(){qf=this.value.trim().toLowerCase();drawQ()};
+  $('qs-t').onchange=function(){qt=this.value;drawQ()};
+  function moveQ(from,to){if(from===to||from<0||to<0||to>=qs.length)return;var q=qs.splice(from,1)[0];qs.splice(to,0,q);drawQ()}
+  $('ql').addEventListener('dragstart',function(e){
+    var c=e.target.closest&&e.target.closest('.wz-qc');if(!c||filtering())return;
+    dragI=+c.getAttribute('data-i');c.classList.add('wz-drag');
+    e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',String(dragI))}catch(x){}
+  });
+  $('ql').addEventListener('dragover',function(e){
+    if(dragI<0)return;e.preventDefault();
+    [].forEach.call($('ql').querySelectorAll('.wz-over'),function(n){n.classList.remove('wz-over')});
+    var c=e.target.closest('.wz-qc');if(c)c.classList.add('wz-over');
+  });
+  $('ql').addEventListener('drop',function(e){
+    if(dragI<0)return;e.preventDefault();
+    var c=e.target.closest('.wz-qc'),to=c?+c.getAttribute('data-i'):-1,from=dragI;dragI=-1;
+    if(to>-1)moveQ(from,to);else drawQ();
+  });
+  $('ql').addEventListener('dragend',function(){dragI=-1;[].forEach.call($('ql').querySelectorAll('.wz-drag,.wz-over'),function(n){n.classList.remove('wz-drag');n.classList.remove('wz-over')})});
+  $('ql').onclick=function(e){
+    var b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+    var a=b.getAttribute('data-a'),i=+b.getAttribute('data-i');
+    if(a==='new')openEd(-1);
+    else if(a==='edit')openEd(i);
+    else if(a==='up')moveQ(i,i-1);
+    else if(a==='down')moveQ(i,i+1);
+    else if(a==='dup'){qs.splice(i+1,0,JSON.parse(JSON.stringify(qs[i])));drawQ();ttoast('Question duplicated.')}
+    else if(a==='del'&&confirm('Delete question '+(i+1)+'?')){qs.splice(i,1);drawQ();ttoast('Question deleted.')}
+  };
+  $('add').onclick=function(){openEd(-1)};
+
+  /* ---------- question editor ---------- */
+  function setMode(m){
+    var oldDef=mode==='es'?10:1,v=+$('qp').value;
+    mode=m;
+    [].forEach.call($('qm').children,function(b){b.className=b.getAttribute('data-m')===m?'on':''});
+    $('mc-box').hidden=m!=='mc';$('es-box').hidden=m!=='es';
+    if(v===oldDef||!v)$('qp').value=m==='es'?10:1;
+  }
+  $('qm').onclick=function(e){var m=e.target.getAttribute('data-m');if(m)setMode(m)};
+  function clearEd(){
+    ['qt','o0','o1','o2','o3','eg'].forEach(function(i){$(i).value=''});
+    document.querySelector('input[name="ans"][value="0"]').checked=true;
+    $('qp').value=mode==='es'?10:1;
+  }
+  function openEd(i){
+    editI=i;
+    if(i>=0){
+      var q=qs[i];
+      mode=q[3]==='essay'?'es':'mc';setMode(mode);
+      clearEd();
+      $('qt').value=q[0];$('qp').value=q[4]||1;
+      if(mode==='mc'){q[1].forEach(function(o,k){$('o'+k).value=o});document.querySelector('input[name="ans"][value="'+q[2]+'"]').checked=true}
+      else $('eg').value=q[5]||'';
+    }else{
+      setMode('mc');clearEd();
+    }
+    $('md-t').textContent=i>=0?'Edit question '+(i+1):'Add question';
+    $('md-a').hidden=i>=0;
+    $('md-s').textContent=i>=0?'Save changes':'Save question';
+    $('md').hidden=false;
+    setTimeout(function(){$('qt').focus()},30);
+  }
+  function closeEd(){$('md').hidden=true;if(cur===2)focusId('add')}
+  function saveEd(another){
+    var t=$('qt').value.trim(),p=Math.max(1,+$('qp').value||1),q;
+    if(!t){ttoast('Type the question first.');$('qt').focus();return}
+    if(mode==='mc'){
+      var raw=[0,1,2,3].map(function(i){return $('o'+i).value.trim()}),last=-1;
+      raw.forEach(function(v,i){if(v)last=i});
+      if(last<1){ttoast('Add at least 2 answer choices.');$('o'+(raw[0]?1:0)).focus();return}
+      var gap=raw.slice(0,last+1).indexOf('');
+      if(gap>-1){ttoast('Fill in choice '+'ABCD'.charAt(gap)+' or clear the ones after it.');$('o'+gap).focus();return}
+      var a=+(document.querySelector('input[name="ans"]:checked')||{value:0}).value;
+      if(a>last){ttoast('The correct answer must be one of your filled-in choices.');return}
+      q=[t,raw.slice(0,last+1),a,'mc',p,''];
+    }else{
+      q=[t,[],-1,'essay',p,$('eg').value.trim()];
+    }
+    if(editI>=0){qs[editI]=q;ttoast('Question updated.')}
+    else{qs.push(q);ttoast('Question added.')}
+    drawQ(editI<0?'end':undefined);
+    if(another&&editI<0){clearEd();$('qt').focus()}else closeEd();
+  }
+  $('md-s').onclick=function(){saveEd(false)};
+  $('md-a').onclick=function(){saveEd(true)};
+  $('md-c').onclick=closeEd;$('md-x').onclick=closeEd;
+  $('md').onclick=function(e){if(e.target===$('md'))closeEd()};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('md').hidden)closeEd()});
+
+  /* ---------- anti-cheat ---------- */
+  function acSync(){
+    var on=$('c_on').checked;
+    $('ac-more').hidden=!on;$('ac-off').hidden=on;
+  }
+  $('c_on').onchange=function(){acTouched=true;acSync()};   // manual choice beats the Quiz/Exam default
+
+  /* ---------- review ---------- */
+  function chip(t,c){return '<span class="wz-chip '+c+'">'+t+'</span>'}
+  function review(){
+    var ex=$('type').value==='exam',on=$('c_on').checked,es=essays(),mc=qs.length-es,dv=$('due').value,
+        fs=$('c_fs').checked,mx=Math.max(1,+$('c_max').value||1),au=$('c_auto').checked,
+        tm=hasTime()?+$('time').value:0,pts=+$('pts').value||0,
+        title=$('title').value.trim()||'Untitled',desc=$('desc').value.trim(),course=$('course').value;
+    var due=dv?new Date(dv+'T00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+    function r(k,v){return '<div><dt>'+k+'</dt><dd>'+v+'</dd></div>'}
+
+    /* 1. readiness checklist */
+    var ck=[['ok','Title and course are set'],['ok',pl(qs.length,'question')+' · '+total()+' pts in total']];
+    ck.push(tm?['ok','Time limit: '+pl(tm,'minute')]:['ok','No time limit']);
+    if(!dv)ck.push(['wn','No due date set']);
+    if(!ex&&on)ck.push(['wn','Monitoring is ON for this quiz (quizzes are usually unmonitored)']);
+    if(ex&&!on)ck.push(['wn','Monitoring is OFF for this exam']);
+    if(es)ck.push(['wn',pl(es,'essay question')+' will need manual grading']);
+    if(pts!==total())ck.push(['wn','Total points ('+pts+') does not match question points ('+total()+')']);
+    if(tm&&qs.length){var sec=Math.round(tm*60/qs.length);if(sec<30)ck.push(['wn','About '+sec+' seconds per question. Is that enough time?'])}
+    var warns=ck.filter(function(c){return c[0]==='wn'}).length;
+    var ckH='<div class="wz-rb wz-ck"><div class="wz-rh"><b>Ready to publish?</b>'+(warns?chip(pl(warns,'thing')+' to double-check','w'):chip('All good','g'))+'</div><ul class="wz-cl">'+
+      ck.map(function(c){return '<li><span class="wz-ci '+c[0]+'"></span><span>'+tesc(c[1])+'</span></li>'}).join('')+'</ul></div>';
+
+    /* cards */
+    var det=r('Type',chip(ex?'Exam':'Quiz','p'))+r('Course',tesc(course))+r('Title',tesc(title))+r('Due date',due||chip('Not set','n'))+r('Time limit',tm?pl(tm,'minute'):chip('No limit','n'))+r('Total points',pts);
+    var qd=r('Questions',qs.length)+r('Multiple choice',mc)+r('Essay',es)+r('Question points',total());
+    var ac=on?r('Monitoring',chip('On','g'))+r('Fullscreen',fs?chip('Required','g'):chip('Not required','n'))+r('Violations allowed',mx)+r('Auto-submit at limit',au?chip('Yes','g'):chip('No','n')):r('Monitoring',chip('Off','n'));
+
+    /* 2. plain-language anti-cheat summary */
+    var plain=on?(fs?'Students must stay in fullscreen. ':'Fullscreen is not required. ')+(au?'The attempt is automatically submitted after '+pl(mx,'violation')+'.':'Violations are recorded, but the attempt is not auto-submitted.'):'Students will not be monitored during this activity.';
+
+    /* 3. questions list, open when short */
+    var list=qs.length?'<details class="wz-adv"'+(qs.length<=5?' open':'')+'><summary>View questions</summary><ol class="wz-rl">'+qs.map(function(q,i){
+      var e=q[3]==='essay',m=e?'Essay':'MC · Answer '+'ABCD'.charAt(q[2]);
+      return '<li><span class="wz-rn">'+(i+1)+'</span><span class="wz-rt">'+tesc(q[0])+'</span><span class="wz-tg '+(e?'es':'mc')+'">'+m+'</span><span class="wz-rp">'+(q[4]||1)+' pt'+((q[4]||1)===1?'':'s')+'</span></li>'}).join('')+'</ol></details>':'';
+
+    /* 4. what students will see */
+    var pv='<div class="wz-rb"><div class="wz-rh"><b>What students will see</b></div><div class="wz-pvc"><div class="wz-pvt">'+chip(ex?'Exam':'Quiz','p')+'<span>'+tesc(course)+'</span></div><h4>'+tesc(title)+'</h4>'+
+      (desc?'<p>'+tesc(desc)+'</p>':'')+'<div class="wz-pvm">'+pl(qs.length,'question')+' · '+(tm?pl(tm,'min').replace('mins','min'):'No time limit')+' · '+pl(pts,'pt')+'</div>'+
+      (due?'<div class="wz-pvd">Due '+tesc(due)+'</div>':'')+'<div class="wz-pvs">Not Started</div></div></div>';
+
+    $('rv').innerHTML=ckH+
+      '<div class="wz-rb"><div class="wz-rh"><b>Details</b><button type="button" class="wz-lnk" data-go="1">Edit</button></div><dl>'+det+'</dl></div>'+
+      '<div class="wz-rb"><div class="wz-rh"><b>Questions</b><button type="button" class="wz-lnk" data-go="2">Edit</button></div><dl>'+qd+'</dl>'+list+'</div>'+
+      '<div class="wz-rc"><div class="wz-rb"><div class="wz-rh"><b>'+NAMES[2]+'</b><button type="button" class="wz-lnk" data-go="3">Edit</button></div><dl>'+ac+'</dl><p class="wz-plain">'+tesc(plain)+'</p></div>'+pv+'</div>';
+  }
+
+  /* ---------- drafts (saved separately; students never see these) ---------- */
+  function snap(){return{v:1,step:cur,touched:touched,qs:qs,
+    f:{type:$('type').value,course:$('course').value,title:$('title').value,desc:$('desc').value,due:$('due').value,pts:$('pts').value,time:$('time').value},
+    cfg:{on:$('c_on').checked,fs:$('c_fs').checked,max:$('c_max').value,auto:$('c_auto').checked}}}
+  function clearDraft(){try{localStorage.removeItem(DK)}catch(x){}}
+  function banner(){
+    var d=tlsGet(DK),b=$('dbn');
+    if(d&&d.f&&(d.f.title||(d.qs||[]).length)){
+      $('dbn-t').textContent='Unfinished draft: '+(d.f.title||'Untitled')+' · '+pl((d.qs||[]).length,'question');b.hidden=false;
+    }else b.hidden=true;
+  }
+  function restore(d){
+    ['type','course','title','desc','due','pts','time'].forEach(function(k){if(d.f[k]!=null)$(k).value=d.f[k]});
+    $('c_on').checked=!!d.cfg.on;$('c_fs').checked=!!d.cfg.fs;$('c_max').value=d.cfg.max||1;$('c_auto').checked=!!d.cfg.auto;
+    qs=d.qs||[];touched=!!d.touched;acTouched=true;acSync();
+    seen={};for(var i=1;i<=(d.step||1);i++)seen[i]=true;
+    typeSync();
+    show(Math.min(d.step||1,4));
+    sync();
+  }
+  $('sd').onclick=function(){tlsSet(DK,snap());$('dbn').hidden=true;ttoast('Draft saved. You can resume it from this page later.')};
+  $('dbn-r').onclick=function(){var d=tlsGet(DK);if(d){restore(d);$('dbn').hidden=true;ttoast('Draft restored.')}};
+  $('dbn-d').onclick=function(){if(confirm('Discard this draft?')){clearDraft();$('dbn').hidden=true}};
+
+  /* ---------- publish ---------- */
+  $('f').onsubmit=function(e){e.preventDefault()};
+  $('pb').onclick=function(){
+    for(var i=1;i<=3;i++){var e=check(i);if(e){show(e[2]||i);ttoast(e[0]);focusId(e[1]);return}}
+    var ty=$('type').value,title=$('title').value.trim(),
+        id=ty+'-c'+Date.now(),d=$('desc').value.trim()||'Teacher-created '+ty+'.';
+    var act={id:id,type:ty,category:ty==='quiz'?'Quizzes':'Exams',title:title,desc:d,course:$('course').value,due:dueTxt($('due').value),points:Math.max(1,+$('pts').value||30),status:'Not Started',questions:qs.length,essays:essays(),time:hasTime()?+$('time').value:0};  // time 0 = no limit
+    if(ty==='exam')act.coverage=d;
+    var L=tlsGet(K)||[];L.push({act:act,qs:qs});tlsSet(K,L);
+    tlsSet('bshm.cfg.'+id,{on:$('c_on').checked,fs:$('c_fs').checked,max:Math.max(1,+$('c_max').value||1),auto:$('c_auto').checked});
+    clearDraft();qs=[];qf='';qt='';$('qs-q').value='';$('qs-t').value='';touched=false;$('f').reset();
+    acTouched=false;seen={1:true};typeSync();drawQ();show(1);list();banner();
+    ttoast('Published. Students will see it in Activities.');
+  };
+
+  /* ---------- My Activities ---------- */
+  /* Course picker per activity, so it can be moved to another class without deleting it */
+  function courseSel(a){
+    var codes=TLS_CLASSES.map(function(c){return c[0]});
+    if(codes.indexOf(a.course)<0)codes.push(a.course);
+    return '<select class="rg-select" data-c="'+tesc(a.id)+'" aria-label="Course">'+
+      codes.map(function(c){return '<option value="'+tesc(c)+'"'+(c===a.course?' selected':'')+'>'+tesc(c)+'</option>'}).join('')+'</select>';
+  }
+  function list(){
+    var L=tlsGet(K)||[];
+    $('mb').innerHTML=L.length?L.map(function(c){var a=c.act,g=tlsGet('bshm.cfg.'+a.id)||{};
+      var es=(c.qs||[]).filter(function(q){return q[3]==='essay'}).length;
+      return '<tr><td><b>'+tesc(a.title)+'</b><br>'+(a.type==='quiz'?'Quiz':'Exam')+'</td><td>'+courseSel(a)+'<br>'+tesc(a.due)+'</td><td>'+a.questions+' questions'+(es?' ('+es+' essay)':'')+' · '+(a.time?a.time+' min':'No time limit')+' · '+a.points+' pts</td><td>'+(g.on?'ON · max '+g.max+(g.fs?' · fullscreen':'')+(g.auto?' · auto-submit':''):'OFF')+'</td><td><button class="bt o s" data-d="'+a.id+'">Delete</button></td></tr>'}).join(''):'<tr><td colspan="5"><div class="none">Nothing created yet.</div></td></tr>'}
+  $('mb').onclick=function(e){var d=e.target.getAttribute('data-d');
+    if(d&&confirm('Delete this activity? Students will no longer see it. Existing attempts stay in Results.')){
+      tlsSet(K,(tlsGet(K)||[]).filter(function(c){return c.act.id!==d}));try{localStorage.removeItem('bshm.cfg.'+d)}catch(x){}list();gBadge();ttoast('Deleted.')}};
+  /* Move an existing activity to another class (students of that class will see it) */
+  $('mb').onchange=function(e){
+    var id=e.target.getAttribute('data-c');if(!id)return;
+    var L=tlsGet(K)||[];
+    L.forEach(function(c){if(c.act&&c.act.id===id)c.act.course=e.target.value});
+    tlsSet(K,L);
+    list();
+    ttoast('Moved to '+e.target.value+'. Students in that class will see it.');
+  };
+
+  /* ---------- Review & Grade: data ----------
+     Reads every submitted attempt from bshm.hist.<activityId> (written by the
+     student page). The teacher sees the answers, scores each essay, and saves a
+     final grade that is also pushed to the student's result. */
+  var PASS=75,gOpen=null;   // PASS = same as PASSING_PERCENT on the student side
+  function tlsAct(id){var f=null;(tlsGet(K)||[]).forEach(function(c){if(c.act.id===id)f=c});return f}
+  function allSubs(){
+    var out=[];
+    (tlsGet(K)||[]).forEach(function(c){
+      (tlsGet('bshm.hist.'+c.act.id)||[]).forEach(function(r){
+        if(r.status!=='IN_PROGRESS'&&r.submitted_at)out.push({c:c,r:r});
+      });
+    });
+    out.sort(function(a,b){return a.r.submitted_at<b.r.submitted_at?1:-1});
+    return out;
+  }
+  function needs(r){return (r.essay_pending||0)>0&&!r.graded_at}
+  function gBadge(){
+    var n=allSubs().filter(function(x){return needs(x.r)}).length;
+    $('gtab').textContent='Review & Grade'+(n?' ('+n+')':'');
+  }
+  function fmtDT(iso){
+    var d=new Date(iso);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  }
+
+  /* ---------- Review & Grade: list ---------- */
+  function statusHtml(r){
+    if(needs(r))return '<b class="rg-st wn">Needs grading</b>';
+    if(r.status==='PASSED')return '<b class="rg-st ok">PASSED</b>';
+    if(r.status==='PENDING')return 'PENDING';
+    return '<b class="rg-st bad">'+tesc(r.status)+'</b>';
+  }
+  function scoreHtml(r){
+    return r.total?r.score+' / '+r.total+(r.percentage!=null?' ('+r.percentage+'%)':''):'—';
+  }
+  function subRow(x){
+    var r=x.r,a=x.c.act;
+    return '<tr>'+
+      '<td><b>'+tesc(r.student_id)+'</b></td>'+
+      '<td>'+tesc(a.title)+'<br>'+tesc(a.course)+'</td>'+
+      '<td>#'+r.attempt_number+'</td>'+
+      '<td>'+fmtDT(r.submitted_at)+'</td>'+
+      '<td>'+scoreHtml(r)+'</td>'+
+      '<td>'+statusHtml(r)+'</td>'+
+      '<td><button class="bt o s" data-g="'+tesc(a.id)+'" data-n="'+r.attempt_number+'">'+(needs(r)?'Review &amp; Grade':'View')+'</button></td>'+
+    '</tr>';
+  }
+  function gList(){
+    gOpen=null;$('g-det').hidden=true;$('g-list').hidden=false;
+    var pending=$('g-f').value==='pending',
+        S=allSubs().filter(function(x){return !pending||needs(x.r)}),
+        empty='<tr><td colspan="7"><div class="none">'+(pending?'Nothing to grade right now.':'No submissions yet.')+'</div></td></tr>';
+    $('g-list').innerHTML='<div class="tw"><table><thead><tr><th>Student</th><th>Activity</th><th>Attempt</th><th>Submitted</th><th>Score</th><th>Status</th><th></th></tr></thead><tbody>'+
+      (S.length?S.map(subRow).join(''):empty)+'</tbody></table></div>';
+    gBadge();
+  }
+  $('g-f').onchange=gList;
+  $('g-list').onclick=function(e){
+    var b=e.target.closest('[data-g]');
+    if(b)gDetail(b.getAttribute('data-g'),+b.getAttribute('data-n'));
+  };
+
+  /* ---------- Review & Grade: detail ---------- */
+  function qHead(num,q,p){
+    return '<div class="rg-qh"><b>Q'+num+'. '+tesc(q[0])+'</b><span class="rg-pts">'+pl(p,'pt')+'</span></div>';
+  }
+  function essayCard(q,num,p,answer,score){
+    return '<div class="rg-q">'+qHead(num,q,p)+
+      '<div class="rg-ans">'+(answer?tesc(answer):'<i>No answer submitted.</i>')+'</div>'+
+      (q[5]?'<p class="rg-guide"><b>Grading guide:</b> '+tesc(q[5])+'</p>':'')+
+      '<label class="rg-score">Score (0 – '+p+')'+
+        '<input type="number" class="g-es" data-q="'+num+'" min="0" max="'+p+'" step="0.5" placeholder="0–'+p+'" value="'+(score!=null?score:'')+'">'+
+      '</label></div>';
+  }
+  function mcCard(q,num,p,pick,recorded){
+    var opts=q[1].map(function(o,j){
+      var right=j===q[2],mine=j===pick,
+          cls=right?'ok':(mine?'bad':''),
+          tag=right?(mine?' ✓ correct (student)':' ✓ correct'):(mine?' ✗ student':'');
+      return '<div class="rg-opt '+cls+'">'+'ABCD'.charAt(j)+'. '+tesc(o)+tag+'</div>';
+    }).join('');
+    var verdict=!recorded?'Answer not recorded for this older attempt.'
+      :pick===undefined?'No answer.'
+      :pick===q[2]?'Correct · '+pl(p,'pt'):'Incorrect · 0 pt';
+    return '<div class="rg-q">'+qHead(num,q,p)+'<div class="rg-opts">'+opts+'</div><p class="rg-verdict">'+verdict+'</p></div>';
+  }
+
+  function gDetail(id,n){
+    var c=tlsAct(id),r=null;
+    (tlsGet('bshm.hist.'+id)||[]).forEach(function(x){if(x.attempt_number===n)r=x});
+    if(!c||!r)return;
+    gOpen={id:id,n:n};
+
+    var essayAns={},essayScore={};
+    (r.essay_answers||[]).forEach(function(x){essayAns[x.question]=x.answer});
+    (r.essay_scores||[]).forEach(function(x){essayScore[x.question]=x.score});
+
+    var answers=r.answers||null,mcPts=0,allPts=0;
+    var cards=c.qs.map(function(q,i){
+      var num=i+1,p=Math.max(1,+q[4]||1);
+      allPts+=p;
+      if(q[3]==='essay')return essayCard(q,num,p,essayAns[num],essayScore[num]);
+      var pick=answers?answers[i]:undefined;
+      if(pick===q[2])mcPts+=p;
+      return mcCard(q,num,p,pick,!!answers);
+    }).join('');
+
+    /* MC points stay stable on re-grade */
+    var mcBase=answers?mcPts:(r.mc_score!=null?r.mc_score:(r.score||0));
+
+    $('g-list').hidden=true;
+    var d=$('g-det');d.hidden=false;
+    d.setAttribute('data-mc',mcBase);
+    d.setAttribute('data-all',allPts);
+    d.setAttribute('data-pts',c.act.points);
+    d.innerHTML=
+      '<button class="bt o s rg-back" type="button" id="g-back">← Back to submissions</button>'+
+      '<h3 class="rg-title">'+tesc(c.act.title)+'</h3>'+
+      '<p class="rg-meta">'+tesc(r.student_id)+' · '+tesc(c.act.course)+' · Attempt #'+r.attempt_number+' · '+fmtDT(r.submitted_at)+'</p>'+
+      (r.status==='RESTRICTED'?'<p class="rg-alert"><b>This attempt was RESTRICTED (anti-cheat).</b> Essay grading is allowed but the status stays Restricted.</p>':'')+
+      cards+
+      '<div class="rg-bar"><div id="g-tot"></div><button class="bt" type="button" id="g-save">'+(r.graded_at?'Update grade':'Save grade')+'</button></div>';
+    gTotal();
+  }
+
+  function gTotal(){
+    var d=$('g-det'),mc=+d.getAttribute('data-mc'),all=+d.getAttribute('data-all'),es=0,blank=0;
+    [].forEach.call(d.querySelectorAll('.g-es'),function(i){
+      if(i.value==='')blank++;
+      else es+=Math.min(+i.max,Math.max(0,+i.value||0));
+    });
+    var tot=mc+es,pct=all?Math.round(tot/all*100):0,pass=pct>=PASS;
+    $('g-tot').innerHTML='<b>Total: '+tot+' / '+all+' ('+pct+'%)</b> · '+
+      '<span class="rg-st '+(pass?'ok':'bad')+'">'+(pass?'PASSED':'FAILED')+'</span>'+
+      (blank?' · <span class="rg-st wn">'+blank+' essay not scored</span>':'');
+  }
+
+  function saveGrade(){
+    var d=$('g-det'),inputs=[].slice.call(d.querySelectorAll('.g-es'));
+    for(var i=0;i<inputs.length;i++){
+      if(inputs[i].value===''){ttoast('Give a score to every essay first.');inputs[i].focus();return}
+    }
+    var mc=+d.getAttribute('data-mc'),all=+d.getAttribute('data-all'),actPts=+d.getAttribute('data-pts'),
+        scores=inputs.map(function(i){return{question:+i.getAttribute('data-q'),score:Math.min(+i.max,Math.max(0,+i.value||0))}}),
+        tot=mc+scores.reduce(function(s,x){return s+x.score},0),
+        pct=all?Math.round(tot/all*100):0;
+
+    var H=tlsGet('bshm.hist.'+gOpen.id)||[],rec=null;
+    H.forEach(function(x){if(x.attempt_number===gOpen.n)rec=x});
+    if(!rec)return;
+
+    var status=rec.status==='RESTRICTED'?'RESTRICTED':(pct>=PASS?'PASSED':'FAILED');
+    if(rec.mc_score==null)rec.mc_score=mc;
+    Object.assign(rec,{score:tot,total:all,percentage:pct,status:status,essay_scores:scores,essay_pending:0,graded_at:new Date().toISOString()});
+    tlsSet('bshm.hist.'+gOpen.id,H);
+
+    /* push the final grade to the student's result (same attempt only) */
+    var st=tlsGet('bshm.exam.'+gOpen.id);
+    if(st&&st.submitted&&st.result&&(st.attemptNumber||1)===gOpen.n){
+      Object.assign(st.result,{correct:tot,total:all,percentage:pct,status:status,points:Math.round(tot/all*actPts*10)/10,essayPending:0,graded:true});
+      tlsSet('bshm.exam.'+gOpen.id,st);
+    }
+    ttoast('Grade saved: '+tot+' / '+all+' ('+pct+'%).');
+    gList();
+  }
+
+  $('g-det').addEventListener('input',function(e){
+    if(e.target.classList.contains('g-es'))gTotal();
+  });
+  $('g-det').addEventListener('click',function(e){
+    if(e.target.id==='g-back'){gList();return}
+    if(e.target.id==='g-save'&&gOpen)saveGrade();
+  });
+
+  /* ---------- tabs ---------- */
+  $('tb').onclick=function(e){var t=e.target.getAttribute('data-t');if(!t)return;
+    [].forEach.call($('tb').children,function(b){b.className=b.getAttribute('data-t')===t?'on':''});
+    $('v-new').hidden=t!=='new';$('v-mine').hidden=t!=='mine';$('v-grade').hidden=t!=='grade';
+    if(t==='mine')list();
+    if(t==='grade')gList();
+  };
+
+  /* ---------- Course dropdown = every class the teacher has (built-in + added on My Classes) ---------- */
+  (function(){
+    (tlsGet('bshm.class.custom')||[]).forEach(function(c){
+      if(!TLS_CLASSES.some(function(x){return x[0]===c[0]}))TLS_CLASSES.push(c);
+    });
+    $('course').innerHTML=TLS_CLASSES.map(function(c){
+      return '<option value="'+tesc(c[0])+'">'+tesc(c[0])+' · '+tesc(c[1])+'</option>';
+    }).join('');
+  })();
+
+  /* A student may submit in another tab while the teacher is on this page. */
+  window.addEventListener('storage',function(e){
+    if(!e.key||e.key.indexOf('bshm.hist.')!==0)return;
+    gBadge();
+    if(!$('v-grade').hidden&&!gOpen)gList();
+  });
+
+  acSync();drawQ();show(1);typeSync();banner();gBadge();
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script></body></html>

@@ -1,0 +1,68 @@
+/* ===== My Courses · summary cards (visual only) =====
+   Load AFTER courses.css, shell.css, topnav.css and glass.css
+   (add one <link> right after the glass.css link in courses.html).
+   Replaces the plain 4-cell strip (5 Enrolled / 4 In Progress / 1 Needs Attention / 0 Completed)
+   with four clean stat cards. No HTML, IDs, JS or data are changed:
+   #n-all, #n-prog, #n-attn, #n-done keep updating exactly as before. */
+
+main.pg:has(.cg) .sum{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;
+  background:none;border:0;border-radius:0;box-shadow:none;
+}
+
+/* each metric = one card: icon tile on the left, label + big number on the right */
+main.pg:has(.cg) .sum div{
+  display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;
+  column-gap:14px;row-gap:2px;align-items:center;
+  padding:16px 18px;
+  background:#fff;border:1px solid #E5E7EB;border-radius:12px;
+  box-shadow:0 1px 3px rgba(16,24,40,.04);
+}
+
+/* icon tile (drawn with CSS, so no markup is needed) */
+main.pg:has(.cg) .sum div::before{
+  content:"";grid-column:1;grid-row:1 / 3;
+  width:44px;height:44px;border-radius:10px;
+  background-color:var(--tile);background-repeat:no-repeat;background-position:center;background-size:22px;
+  background-image:var(--ico);
+}
+
+/* label on top, number below (the HTML has the number first, so place them explicitly) */
+main.pg:has(.cg) .sum span{
+  grid-column:2;grid-row:1;
+  font-size:13px;font-weight:500;color:#667085;line-height:1.3;
+}
+main.pg:has(.cg) .sum b{
+  grid-column:2;grid-row:2;
+  font-size:28px;font-weight:700;color:#172554;line-height:1.1;letter-spacing:-.02em;
+}
+
+/* subtle accent per metric: blue / violet / amber / green */
+main.pg:has(.cg) .sum div:nth-child(1){
+  --tile:#EEF4FF;
+  --ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z'/%3E%3C/svg%3E");
+}
+main.pg:has(.cg) .sum div:nth-child(2){
+  --tile:#F0EDFF;
+  --ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236D3FEA' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+}
+main.pg:has(.cg) .sum div:nth-child(3){
+  --tile:#FFF6DD;
+  --ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v6M12 16.5v.5'/%3E%3C/svg%3E");
+}
+main.pg:has(.cg) .sum div:nth-child(4){
+  --tile:#EAF7F1;
+  --ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316A34A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E");
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1050px){
+  main.pg:has(.cg) .sum{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:480px){
+  main.pg:has(.cg) .sum{gap:12px}
+  main.pg:has(.cg) .sum div{grid-template-columns:38px minmax(0,1fr);column-gap:10px;padding:14px}
+  main.pg:has(.cg) .sum div::before{width:38px;height:38px;background-size:20px}
+  main.pg:has(.cg) .sum b{font-size:24px}
+  main.pg:has(.cg) .sum span{font-size:12.5px}
+}

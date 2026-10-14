@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Admin · ACES DineLearn</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('bshm.admin.theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#5B35C9;--p2:#7A55E6;--pd:#3E2291;--pt:#5B35C9;--ink:#17133A;--mu:#6E6B8F;--bd:#E7E4F5;--bg:#F6F5FB;--cd:#fff;--soft:#F9F8FE;--tint:#F0ECFF;--hov:#FAF9FF;--ok:#0F7B53;--okb:#E2F6EC;--bad:#C0332A;--badb:#FDECEA;--bdb:#F3CFCB;--in:#DDD9F0;--tp:rgba(255,255,255,.85);--sh:0 1px 2px rgba(23,19,58,.05),0 4px 16px rgba(23,19,58,.05);--shl:0 12px 40px rgba(23,19,58,.25);color-scheme:light}
+[data-theme=dark]{--pt:#B9A8FF;--ink:#ECEAFB;--mu:#9C98C4;--bd:#2E2A63;--bg:#0E0B26;--cd:#181440;--soft:#1F1A4D;--tint:#2B2570;--hov:#1D1948;--ok:#4FD6A0;--okb:#12382C;--bad:#FF8A80;--badb:#3A1B24;--bdb:#5A2A33;--in:#363070;--tp:rgba(24,20,64,.85);--sh:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 'Plus Jakarta Sans',Inter,system-ui,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}button,input,select{font:inherit;color:inherit}
+svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ly{display:grid;grid-template-columns:256px minmax(0,1fr);min-height:100vh}
+.sb{background:#1D1250;color:#fff;padding:20px 14px 40px;position:sticky;top:0;height:100vh;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+[data-theme=dark] .sb{background:#120B36;border-right:1px solid var(--bd)}
+.sb h1{display:flex;flex-direction:column;font-size:16px;font-weight:800;margin:2px 8px 18px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb h1 small{margin-top:3px;font-size:12px;font-weight:500;opacity:.6}
+.sb p{margin:18px 10px 6px;font-size:12px;font-weight:600;opacity:.5}
+.sb a{position:relative;display:flex;align-items:center;gap:11px;margin:2px 0;padding:9px 12px;border-radius:10px;color:#fff;text-decoration:none;font-weight:500;font-size:14px;opacity:.78;transition:background .15s,opacity .15s}
+.sb a:hover{background:rgba(255,255,255,.09);opacity:1}
+.sb a.on{background:#fff;color:#3E2291;opacity:1;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.sb a.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:4px;border-radius:0 4px 4px 0;background:var(--p2)}
+.mn{min-width:0}
+.tp{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 32px;background:var(--tp);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--bd)}
+.tp>b{font-size:15px}.tp>div{display:flex;align-items:center;gap:8px}.tp span{color:var(--mu);font-size:13.5px;margin-right:6px}
+.pad{padding:32px;display:grid;gap:22px;max-width:1500px}
+h2{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}.sub{margin:2px 0 0;color:var(--mu)}h3{margin:0 0 10px;font-size:16px;font-weight:700}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cd{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:22px;box-shadow:var(--sh)}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.st div{position:relative;overflow:hidden;background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:18px 20px 16px;color:var(--mu);font-weight:600;font-size:13px;box-shadow:var(--sh)}
+.st div::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--p2)}
+.st div:nth-child(2)::before{background:#2BA67A}.st div:nth-child(3)::before{background:#E5A02A}.st div:nth-child(4)::before{background:#3B8BEB}.st div:nth-child(5)::before{background:#E0567A}
+.st b{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em;color:var(--pt);line-height:1.2;margin-top:4px}
+.g3{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr);gap:18px}
+.ch{display:flex;gap:16px;height:170px;border-bottom:1px solid var(--bd);padding-top:8px}
+.ch div{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:4px}
+.br{width:26px;background:var(--p);border-radius:6px 6px 0 0;transition:opacity .15s}.br:hover{opacity:.8}.br.l{background:#B9A4EE}
+.lb{display:flex;gap:16px;margin-top:6px;color:var(--mu);font-size:12.5px;text-align:center}.lb span{flex:1}
+.dn{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin:4px auto 12px}
+.dn i{width:92px;height:92px;border-radius:50%;background:var(--cd);display:grid;place-items:center;font-style:normal;font-weight:700;text-align:center;font-size:12px}
+.lg div{display:flex;justify-content:space-between;padding:2px 0}.lg em{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.qa{display:grid;gap:8px}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 18px;border:0;border-radius:11px;background:var(--p);color:#fff;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(62,34,145,.25),0 4px 10px rgba(91,53,201,.22);transition:transform .12s,background .15s,border-color .15s}
+.b:hover{background:var(--pd);transform:translateY(-1px)}.b:active{transform:scale(.98)}.b:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.b.o{background:var(--cd);color:var(--pt);border:1px solid var(--bd);box-shadow:none}.b.o:hover{background:var(--tint)}
+.b.d{background:var(--cd);color:var(--bad);border:1px solid var(--bdb);box-shadow:none}.b.d:hover{background:var(--badb)}
+.b.s{min-height:34px;padding:0 12px;font-size:13px;border-radius:9px}.qa .b{justify-content:flex-start;min-height:44px}
+.mb,.ov{display:none}
+button:focus-visible,a:focus-visible{outline:3px solid rgba(122,85,230,.5);outline-offset:2px}
+.fm{display:grid;gap:12px}.fm label{display:grid;gap:5px;font-weight:600;font-size:13px}
+input,select{min-height:44px;padding:8px 12px;border:1.5px solid var(--in);border-radius:11px;background:var(--cd);color:var(--ink);width:100%;transition:border-color .15s,box-shadow .15s}
+input:hover,select:hover{border-color:var(--p2)}input:focus,select:focus{outline:0;border-color:var(--p2);box-shadow:0 0 0 4px rgba(122,85,230,.18)}
+input::placeholder{color:var(--mu);opacity:.7}input:disabled{background:var(--soft);color:var(--mu)}
+#q{max-width:360px;margin-bottom:16px;padding-left:40px;background:var(--cd) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238A87AD' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 13px center}
+.tw{overflow-x:auto}table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px}
+th{text-align:left;font-size:12.5px;font-weight:700;color:var(--mu);padding:11px 14px;background:var(--soft)}th:first-child{border-radius:10px 0 0 10px}th:last-child{border-radius:0 10px 10px 0}
+td{padding:14px;border-bottom:1px solid var(--bd);vertical-align:middle;transition:background .12s}td small{display:block;color:var(--mu);font-size:12.5px}
+tbody tr:hover td{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:13px;color:#fff;background:hsl(var(--h) 52% 46%);flex:none}
+.ac{display:flex;gap:6px;flex-wrap:wrap}.none{text-align:center;color:var(--mu);padding:48px 20px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);color:var(--mu);border:1px solid var(--bd)}
+.pill.a{background:var(--okb);color:var(--ok);border-color:transparent}.pill.a::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.mini{display:inline-block;margin:2px 4px 2px 0;padding:2px 10px;border-radius:99px;background:var(--tint);color:var(--pt);font-size:12px;font-weight:600}
+.err{margin:0;padding:9px 12px;border-radius:10px;background:var(--badb);color:var(--bad);border:1px solid var(--bdb);font-size:13px;font-weight:500}
+.mdl{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(14,11,38,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fi .15s ease-out}
+.mp{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:var(--cd);color:var(--ink);border:1px solid var(--bd);border-radius:20px;padding:28px;box-shadow:var(--shl);animation:pop .18s ease-out}
+.mp h3{font-size:19px;font-weight:800;margin-bottom:6px}
+.ft{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.cr{margin:12px 0;padding:16px;border-radius:14px;background:var(--soft);border:1px solid var(--bd);display:grid;gap:8px}
+.cr div{display:flex;justify-content:space-between;align-items:center;gap:12px}.cr span{color:var(--mu)}.cr code{font-weight:700;font-size:15px;overflow-wrap:anywhere;background:var(--cd);padding:3px 9px;border-radius:7px;border:1px solid var(--bd)}
+.note{padding:10px 12px;border-radius:10px;background:#FFF6E8;color:#9A5B07;border:1px solid #F7DFB5;font-size:13px}
+[data-theme=dark] .note{background:#3A2C10;color:#F2C26B;border-color:#5A4318}
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:radial-gradient(900px 500px at 15% 10%,#5B35C9,transparent 60%),#1D1250}
+.gate .mp{max-width:400px;padding:34px}.gate .mp h3{font-size:22px}
+.tt{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:#17133A;color:#fff;border:1px solid #3A3480;padding:12px 20px;border-radius:12px;font-weight:600;box-shadow:var(--shl);opacity:0;pointer-events:none;transition:.2s;z-index:120}.tt.on{opacity:1;transform:translate(-50%,0)}
+.bnr{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--bd)}.bnr:last-child{border-bottom:0}
+.bnt{aspect-ratio:16/4.6;border-radius:12px;background:#1E1B4B;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}.bni b{display:block;font-size:15px}.bni small{display:block;color:var(--mu);margin-bottom:4px}.bni .pill{margin-right:4px}
+@keyframes fi{from{opacity:0}}@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}}
+@media(max-width:1000px){.g3{grid-template-columns:minmax(0,1fr)}}
+@media screen and (max-width:800px){
+html,body{font-size:15px}
+.ly{grid-template-columns:minmax(0,1fr)}
+.sb{position:fixed;left:0;top:0;bottom:0;width:280px;max-width:84vw;height:100%;z-index:50;transform:translateX(-100%);transition:transform .22s ease;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+body.mo .sb{transform:none;box-shadow:var(--shl)}body.mo{overflow:hidden}
+body.mo .ov{display:block;position:fixed;inset:0;z-index:40;background:rgba(14,11,38,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.mb{display:inline-flex;padding:0 10px}
+.tp{padding:10px 14px;gap:8px;justify-content:flex-start}.tp>b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.tp span{display:none}
+.pad{padding:16px;gap:16px}h2{font-size:22px}.cd{padding:16px}
+.hd>.b,.hd>.ac{width:100%}.hd .ac .b{flex:1}
+.st{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.st div{padding:14px 16px}.st b{font-size:28px}
+.ch{gap:8px}.br{width:16px}.lb{gap:8px;font-size:11.5px}
+.bnr{grid-template-columns:minmax(0,1fr);gap:10px}
+input,select{font-size:16px}#q{max-width:none}.b.s{min-height:38px}
+.tw{overflow:visible}table{min-width:0}thead{display:none}table,tbody,tr,td{display:block;width:100%}
+tr{border:1px solid var(--bd);border-radius:12px;padding:6px 14px;margin-bottom:10px;background:var(--cd)}
+td{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;padding:10px 0;border-bottom:1px solid var(--bd);text-align:right}td:last-child{border-bottom:0}
+td::before{content:attr(data-l);color:var(--mu);font-size:12.5px;font-weight:600;text-align:left;flex:none}
+td[data-l=""]::before,td:has(.who)::before{display:none}
+td:has(.who){justify-content:flex-start;text-align:left}td:has(.ac){display:block}td.none{display:block;text-align:center}
+tbody tr:hover td{background:none}.ac .b{flex:1 1 auto}
+.mdl{place-items:end center;padding:0}
+.mp{max-width:none;border-radius:20px 20px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));max-height:92vh}
+.gate{padding:14px}.gate .mp{border-radius:20px;padding:26px 20px}.ft .b{flex:1}
+.tt{width:calc(100% - 32px);text-align:center}}
+@media print{.sb,.tp,.ov,.hd .b,.hd button{display:none}.ly{display:block}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<div class="gate" id="gate"><form class="mp" id="gf" autocomplete="off"><h3 id="gt"></h3><p class="sub" id="gp" style="margin-bottom:12px"></p>
+<div class="fm"><label>Username<input value="admin" disabled></label><label>Password<input id="gpw" type="password" required></label>
+<label id="gcw" hidden>Confirm password<input id="gpw2" type="password"></label><p class="err" id="gerr" hidden></p><button class="b" id="gb"></button></div></form></div>
+
+<div class="ly" id="app" hidden>
+<aside class="sb" id="sb"><h1>ACES DINELEARN<small>Department Admin</small></h1><nav id="nav"></nav></aside>
+<section class="mn"><header class="tp"><button class="b o s mb" id="mb" type="button" aria-label="Open menu" aria-controls="sb" aria-expanded="false"></button><b id="sch"></b><div><span id="dt"></span><button class="b o s" id="th" type="button" aria-label="Switch light or dark mode" title="Switch light or dark mode"></button><button class="b o s" id="out">Sign out</button></div></header><div class="pad" id="pg"></div></section>
+</div>
+<div class="ov" id="ov"></div>
+<div id="mr"></div><div class="tt" id="tt" role="status" aria-live="polite"></div>
+
+<script src="banners.js"></script>
+<script>
+/* Prototype: browser storage only (not real security).
+   Teacher accounts keep the SAME format as before under  bshm.accounts
+   (hash = SHA-256(salt + ':' + password)), so your login page still works.
+   Everything else (programs, sections, subjects, students, enrollment, assignments, activity log) is in  bshm.db  */
+(function(){'use strict';
+const $=i=>document.getElementById(i),KEY='bshm.accounts',CRED='bshm.admin.cred',SESS='bshm.admin.session',DBK='bshm.db',UK='aces_users',TK='bshm.admin.theme';
+let ACC=[],USR=[],BNL=[],D,pg='dash',q='',RW,RP,AF,tt;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=m=>{const t=$('tt');t.textContent=m;t.className='tt on';clearTimeout(tt);tt=setTimeout(()=>t.className='tt',2800)};
+const jget=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Could not save. Browser storage may be full or blocked.');return false}};
+const hex=u=>Array.from(u,x=>('0'+x.toString(16)).slice(-2)).join('');
+const rnd=n=>crypto.getRandomValues(new Uint8Array(n));
+const uid=()=>'i'+Date.now().toString(36)+hex(rnd(2));
+const hashPw=(salt,pw)=>{const s=salt+':'+pw;
+ if(crypto.subtle&&window.TextEncoder)return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(b=>hex(new Uint8Array(b)));
+ let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return Promise.resolve('f'+(h>>>0).toString(16))};
+const genPw=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789',r=rnd(10);return Array.from(r,x=>c[x%c.length]).join('')};
+const dstr=i=>{const d=new Date(i);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
+const showErr=(id,m)=>{const e=$(id);e.textContent=m||'';e.hidden=!m};
+
+/* ---- icons, avatars, theme ---- */
+const IC={acts:'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',res:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5zM9 7h7M9 11h7',ann:'M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8',notif:'M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0',logs:'M12 8v4l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5',menu:'M3 6h18M3 12h18M3 18h18',dash:'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z',programs:'M22 10 12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5',years:'M12 2 2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5',sections:'M4 4h16v16H4zM9 4v16M15 4v16',subjects:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5',enroll:'M9 3h6v4H9zM15 5h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3M9 14l2 2 4-4',assign:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM16 11l2 2 4-4',students:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',sacc:'M3 5h18v14H3zM8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 16c0-1.5 1.5-2.5 3-2.5s3 1 3 2.5M14 9h4M14 13h4',fac:'M3 7h18v13H3zM8 7V4h8v3M3 13h18',ban:'M3 3h18v18H3zM8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM21 15l-5-5L5 21',r3:'M23 6l-9.5 9.5-5-5L1 18M17 6h6v6',set:'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6',moon:'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z',sun:'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4'};
+const ic=k=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+IC[k]+'"/></svg>';
+const av=n=>{n=String(n||'?').trim();const w=n.split(/\s+/),i=(w[0][0]||'?')+(w.length>1?w[w.length-1][0]:'');return '<i class="av" style="--h:'+(Array.from(n).reduce((a,c)=>a+c.charCodeAt(0),0)*7%360)+'">'+esc(i.toUpperCase())+'</i>'};
+const who=(n,s)=>'<div class="who">'+av(n)+'<div><b>'+esc(n)+'</b><small>'+esc(s)+'</small></div></div>';
+const setTh=t=>{document.documentElement.dataset.theme=t;$('th').innerHTML=ic(t==='dark'?'sun':'moon')+'<span class="sr" style="display:none">Theme</span>';try{localStorage.setItem(TK,t)}catch(e){}};
+$('th').onclick=()=>setTh(document.documentElement.dataset.theme==='dark'?'light':'dark');
+setTh(document.documentElement.dataset.theme==='dark'?'dark':'light');
+
+/* ---- mobile menu (sidebar drawer) ---- */
+const menu=o=>{document.body.classList.toggle('mo',!!o);$('mb').setAttribute('aria-expanded',o?'true':'false');$('mb').setAttribute('aria-label',o?'Close menu':'Open menu')};
+$('mb').innerHTML=ic('menu');
+$('mb').onclick=()=>menu(!document.body.classList.contains('mo'));
+$('ov').onclick=()=>menu(false);
+window.addEventListener('resize',()=>{if(innerWidth>800)menu(false)});
+
+/* ---- data ---- */
+const load=()=>{const v=jget(KEY);ACC=Array.isArray(v)?v:[];const uv=jget(UK);USR=Array.isArray(uv)?uv:[];BNL=ACESBanners.all();
+ D=Object.assign({years:['1st Year','2nd Year','3rd Year','4th Year'].map((n,i)=>({id:'y'+i,name:n})),sections:[],subjects:[],students:[],staff:[],enroll:[],assign:[],log:[],set:{school:'ACES Polytechnic College, Inc.',ay:'2025-2026'}},jget(DBK)||{})};
+const save=()=>jset(DBK,D),saveAcc=()=>jset(KEY,ACC),saveU=()=>jset(UK,USR);
+const su=id=>USR.find(u=>String(u.studentId)===String(id)),sfull=u=>[u.firstName,u.middleName,u.lastName].filter(Boolean).join(' ');
+const hashStu=(salt,pw)=>crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw)).then(b=>hex(new Uint8Array(b)));
+const teachers=()=>ACC.filter(a=>a&&a.role==='teacher'),byId=id=>ACC.find(a=>String(a.id)===String(id));
+const taken=(f,v,skip)=>{v=String(v).trim().toLowerCase();return ACC.some(a=>a&&String(a.id)!==String(skip)&&String(a[f]||'').toLowerCase()===v)};
+const syncClasses=()=>{const m={};D.assign.forEach(x=>{if(!x.facultyId)return;const sb=D.subjects.find(z=>z.code===x.subject)||{};(m[x.facultyId]=m[x.facultyId]||[]).push([x.subject,sb.title||x.subject,x.section])});jset('bshm.assignments',m)};
+const lg=(a,d)=>{D.log.unshift({t:new Date().toISOString(),a,d});D.log=D.log.slice(0,200);save()};
+const Y=()=>D.years.map(x=>x.name),SEC=()=>D.sections.map(x=>x.name);
+const E={
+ years:{t:'Year Levels',l:'Year',f:[['name','Year level']]},
+ sections:{t:'Sections',l:'Section',f:[['name','Section name'],['year','Year level',Y]]},
+ subjects:{t:'Subjects',l:'Subject',f:[['code','Code'],['title','Title'],['units','Units']]},
+ enroll:{t:'Student Enrollment',l:'Enrollment',f:[['student','Student',()=>USR.filter(u=>u.status==='verified').map(u=>u.studentId+' · '+sfull(u))],['section','Section',SEC],['term','Term',()=>['1st Semester','2nd Semester','Summer']]]},
+ assign:{t:'Faculty Assignment',l:'Faculty',f:[['faculty','Faculty',()=>teachers().map(x=>x.name+' ('+x.username+')')],['subject','Subject',()=>D.subjects.map(x=>x.code)],['section','Section',SEC]]},};
+const NAV=[['dash','Dashboard'],['Academic Management',[['years'],['sections'],['subjects'],['enroll'],['assign','Faculty Assignment']]],['User Management',[['students'],['sacc','Student Accounts'],['fac','Faculty / Teachers']]],['LMS Management',[['acts','Activities & Assessments'],['r3','Grades & Reports'],['res','Learning Resources']]],['Communication',[['ban','Homepage Banners'],['ann','Announcements'],['notif','Notifications']]],['System',[['logs','Activity Logs'],['set','Settings']]]];
+
+/* ---- modal ---- */
+const mod=h=>{$('mr').innerHTML='<div class="mdl" id="md"><div class="mp" role="dialog" aria-modal="true">'+h+'</div></div>';const f=$('mr').querySelector('input,select,button');if(f)f.focus()};
+const close=()=>{$('mr').innerHTML=''};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();menu(false)}});
+$('mr').addEventListener('click',e=>{if(e.target.id==='md'||e.target.closest('[data-close]'))close();const g=e.target.closest('[data-gen]');if(g)$('pw').value=genPw()});
+function form(t,body,ok,btn){mod('<h3>'+t+'</h3><form class="fm" id="mf" novalidate>'+body+'<p class="err" id="me" hidden></p><div class="ft"><button class="b o" type="button" data-close>Cancel</button><button class="b" type="submit">'+(btn||'Save changes')+'</button></div></form>');
+ $('mf').onsubmit=ev=>{ev.preventDefault();const fd={};new FormData($('mf')).forEach((v,k)=>fd[k]=String(v).trim());
+  Promise.resolve(ok(fd)).then(m=>{if(m)return showErr('me',m);close();render();if(AF){AF();AF=null}})}}
+const inp=(k,l,v,x)=>'<label>'+l+'<input name="'+k+'" value="'+esc(v||'')+'" '+(x||'')+'></label>';
+
+/* ---- generic CRUD ---- */
+function rowsC(){const e=E[pg],ks=e.f.map(x=>x[0]);
+ return D[pg].filter(r=>!q||ks.some(k=>String(r[k]).toLowerCase().includes(q))).map(r=>'<tr>'+ks.map((k,i)=>'<td data-l="'+esc(e.f[i][1])+'">'+esc(r[k])+'</td>').join('')+'<td data-l=""><div class="ac"><button class="b o s" data-a="e" data-id="'+r.id+'">Edit</button><button class="b d s" data-a="x" data-id="'+r.id+'">Delete</button></div></td></tr>').join('')||'<tr><td colspan="9" class="none">Nothing here yet. Select Add to create the first record.</td></tr>'}
+const head=(t,s,btn)=>'<div class="hd"><div><h2>'+t+'</h2><p class="sub">'+s+'</p></div>'+(btn||'')+'</div>';
+function crud(){const e=E[pg];RW=rowsC;
+ return head(e.t,'Manage '+e.t.toLowerCase()+' for the BSHM department.','<button class="b" data-a="add">Add '+e.l.toLowerCase()+'</button>')+
+ '<div class="cd"><input id="q" type="search" placeholder="Search" aria-label="Search"><div class="tw"><table><thead><tr>'+e.f.map(x=>'<th>'+x[1]+'</th>').join('')+'<th></th></tr></thead><tbody id="tb">'+rowsC()+'</tbody></table></div></div>'}
+function ent(r){const e=E[pg],o=r||{},bad=e.f.find(x=>x[2]&&!x[2]().length);
+ if(bad)return toast('Add at least one '+bad[1].toLowerCase()+' first.');
+ form((r?'Edit ':'Add ')+e.l.toLowerCase(),e.f.map(([k,l,s])=>s?'<label>'+l+'<select name="'+k+'">'+s().map(x=>'<option'+(x===o[k]?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></label>':inp(k,l,o[k])).join(''),fd=>{
+  if(e.f.some(([k])=>!fd[k]))return 'Fill in every field.';
+  if(pg==='enroll')fd.sid=fd.student.split(' · ')[0];if(pg==='assign'){const t=teachers().find(x=>x.name+' ('+x.username+')'===fd.faculty);fd.facultyId=t&&t.id;fd.faculty=t?t.name:fd.faculty}
+  if(r)Object.assign(r,fd);else D[pg].push(Object.assign({id:uid()},fd));if(pg==='assign')syncClasses();
+  lg(e.l,(r?'Updated ':'Added ')+Object.values(fd)[0]);return save()?0:'Could not save.'})}
+
+/* ---- faculty (teacher accounts) ---- */
+function rowsF(){return teachers().filter(a=>!q||(a.name+a.email+a.username+(a.empId||'')).toLowerCase().includes(q)).map(a=>{const off=a.status==='disabled',cl=D.assign.filter(x=>x.facultyId===a.id);
+ return '<tr><td data-l="">'+who(a.name,a.email)+'</td><td data-l="Username">'+esc(a.username)+'<small>Added '+dstr(a.created)+'</small></td><td data-l="Assigned">'+(cl.length?cl.map(x=>'<span class="mini">'+esc(x.subject+' · '+x.section)+'</span>').join(''):'<small>No assignment yet</small>')+'</td><td data-l="Status"><span class="pill'+(off?'':' a')+'">'+(off?'Disabled':'Active')+'</span>'+(a.mustChange?'<small>Password not changed yet</small>':'')+'</td><td data-l=""><div class="ac"><button class="b o s" data-a="fe" data-id="'+esc(a.id)+'">Edit</button><button class="b o s" data-a="rp" data-id="'+esc(a.id)+'">Reset password</button><button class="b o s" data-a="tg" data-id="'+esc(a.id)+'">'+(off?'Enable':'Disable')+'</button><button class="b d s" data-a="fx" data-id="'+esc(a.id)+'">Delete</button></div></td></tr>'}).join('')||'<tr><td colspan="5" class="none">No teacher accounts yet. Select Create teacher account.</td></tr>'}
+function fac(){RW=rowsF;return head('Faculty','Create teacher accounts and manage who can sign in.','<button class="b" data-a="add">Create teacher account</button>')+
+ '<div class="cd"><input id="q" type="search" placeholder="Search name, email or username" aria-label="Search"><div class="tw"><table><thead><tr><th>Teacher</th><th>Username</th><th>Assigned</th><th>Status</th><th></th></tr></thead><tbody id="tb">'+rowsF()+'</tbody></table></div></div>'}
+function reveal(t,a,pw,lb,who){lb=lb||'Username';who=who||'teacher';mod('<h3>'+t+'</h3><p class="sub">Share these sign-in details with the '+who+'.</p><div class="cr"><div><span>Name</span><b>'+esc(a.name)+'</b></div><div><span>'+lb+'</span><code>'+esc(a.username)+'</code></div><div><span>Temporary password</span><code>'+esc(pw)+'</code></div></div><p class="note">This password is not stored and cannot be shown again. If it is lost, use Reset password.</p><div class="ft"><button class="b o" id="cp">Copy details</button><button class="b" data-close>Done</button></div>');
+ $('cp').onclick=()=>{const x='ACES DineLearn '+who+' account\nName: '+a.name+'\n'+lb+': '+a.username+'\nTemporary password: '+pw;
+  (navigator.clipboard?navigator.clipboard.writeText(x).then(()=>toast('Details copied.'),()=>toast('Could not copy. Select the text manually.')):toast('Copy is not available here.'))}}
+function facNew(){form('Create teacher account',inp('name','Full name','','placeholder="e.g. Liza Santos"')+inp('email','Email','','type="email"')+inp('username','Username','','autocapitalize="none" placeholder="e.g. lsantos"')+inp('empId','Employee ID (optional)')+
+ '<label>Temporary password<span style="display:flex;gap:8px"><input id="pw" name="pw" value="'+genPw()+'" autocomplete="off"><button class="b o s" type="button" data-gen>Generate</button></span></label>',fd=>{
+  const u=fd.username.toLowerCase();
+  if(!fd.name)return 'Enter the teacher’s full name.';
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+  if(!/^[a-z0-9._-]{3,30}$/.test(u))return 'Username must be 3–30 characters: letters, numbers, dot, dash or underscore.';
+  if(taken('username',u))return 'That username is already used.';
+  if(taken('email',fd.email))return 'An account with that email already exists.';
+  if(fd.pw.length<8)return 'The password needs at least 8 characters.';
+  const salt=hex(rnd(8));
+  return hashPw(salt,fd.pw).then(h=>{const a={id:'t'+Date.now().toString(36)+hex(rnd(2)),role:'teacher',name:fd.name,email:fd.email,username:u,empId:fd.empId,dept:'BSHM Department',courses:[],salt,hash:h,status:'active',mustChange:true,created:new Date().toISOString()};
+   ACC.push(a);if(!saveAcc()){ACC.pop();return 'Could not save.'}lg('Faculty','Account created for '+a.name);AF=()=>reveal('Account created',a,fd.pw);return 0})},'Create account')}
+function facEdit(a){form('Edit teacher',inp('name','Full name',a.name)+inp('email','Email',a.email,'type="email"')+inp('empId','Employee ID',a.empId),fd=>{
+ if(!fd.name)return 'Enter the full name.';if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+ if(taken('email',fd.email,a.id))return 'Another account uses that email.';
+ const p=Object.assign({},a);D.assign.forEach(x=>{if(x.facultyId===a.id)x.faculty=fd.name});Object.assign(a,fd);if(!saveAcc()){Object.assign(a,p);return 'Could not save.'}save();return 0})}
+
+/* ---- student accounts (self-registered; admin controls access) ---- */
+function rowsS(){return USR.filter(u=>!q||(sfull(u)+u.email+u.studentId).toLowerCase().includes(q)).map(u=>{const st=u.status==='disabled'?'Disabled':u.status==='verified'?'Active':'Pending',id=esc(u.studentId),bt=(a,l,c)=>'<button class="b '+(c||'o')+' s" data-a="'+a+'" data-id="'+id+'">'+l+'</button>';
+ return '<tr><td data-l="">'+who(sfull(u),u.email)+'</td><td data-l="Student ID">'+id+'<small>Registered '+dstr(u.createdAt)+'</small></td><td data-l="Status"><span class="pill'+(st==='Active'?' a':'')+'">'+st+'</span>'+(st==='Pending'?'<small>Email not verified yet</small>':'')+'</td><td data-l=""><div class="ac">'+bt('se','Edit')+bt('srp','Reset password')+(st==='Pending'?bt('sver','Verify'):bt('stg',st==='Disabled'?'Enable':'Disable'))+bt('sx','Delete','d')+'</div></td></tr>'}).join('')||'<tr><td colspan="4" class="none">No student accounts yet. Students create their own account from the registration page.</td></tr>'}
+function sacc(){RW=rowsS;return head('Student Accounts','Students register themselves. You decide who can sign in.')+
+ '<div class="cd"><input id="q" type="search" placeholder="Search name, email or student ID" aria-label="Search"><div class="tw"><table><thead><tr><th>Student</th><th>Student ID</th><th>Status</th><th></th></tr></thead><tbody id="tb">'+rowsS()+'</tbody></table></div></div>'}
+function stuEdit(u){form('Edit student',inp('firstName','First name',u.firstName)+inp('middleName','Middle name',u.middleName)+inp('lastName','Last name',u.lastName)+inp('email','Email',u.email,'type="email"'),fd=>{
+ if(!fd.firstName||!fd.lastName)return 'Enter the first and last name.';if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+ if(USR.some(x=>x!==u&&String(x.email).toLowerCase()===fd.email.toLowerCase()))return 'Another student uses that email.';
+ const p=Object.assign({},u);Object.assign(u,fd);if(!saveU()){Object.assign(u,p);return 'Could not save.'}lg('Student','Updated '+sfull(u));return 0})}
+
+
+/* ---- students (read from aces_users: the same records used by registration/login) ---- */
+const enr=u=>D.enroll.filter(e=>e.sid===u.studentId);
+function rowsT(){return USR.filter(u=>!q||(sfull(u)+u.email+u.studentId).toLowerCase().includes(q)).map(u=>{const st=u.status==='disabled'?'Disabled':u.status==='verified'?'Active':'Pending',en=enr(u);
+ return '<tr><td data-l="">'+who(sfull(u),u.email)+'</td><td data-l="Student ID">'+esc(u.studentId)+'</td><td data-l="Enrollment">'+(en.length?en.map(e=>'<span class="mini">'+esc(e.section+' · '+e.term)+'</span>').join(''):'<small>Not enrolled</small>')+'</td><td data-l="Account"><span class="pill'+(st==='Active'?' a':'')+'">'+st+'</span></td></tr>'}).join('')||'<tr><td colspan="4" class="none">No registered students yet.</td></tr>'}
+function stud(){RW=rowsT;return head('Students','Registered students and their enrollment. Change access under Student Accounts.')+'<div class="cd"><input id="q" type="search" placeholder="Search name, email or student ID" aria-label="Search"><div class="tw"><table><thead><tr><th>Student</th><th>Student ID</th><th>Enrollment</th><th>Account</th></tr></thead><tbody id="tb">'+rowsT()+'</tbody></table></div></div>'}
+/* ---- simple LMS / communication modules wired to existing storage keys ---- */
+const tbl=(h,r,e)=>'<div class="cd"><div class="tw"><table><thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+(r.map(x=>'<tr>'+x.map((c,i)=>'<td data-l="'+esc(h[i])+'">'+c+'</td>').join('')+'</tr>').join('')||'<tr><td colspan="9" class="none">'+e+'</td></tr>')+'</tbody></table></div></div>';
+const xb=(a,id)=>'<button class="b d s" data-a="'+a+'" data-id="'+esc(id)+'">Delete</button>';
+function acts(){const A=jget('bshm.act.custom')||[],Pz=jget('bshm.pos.custom')||[];
+ return head('Activities & Assessments','Created by teachers. Admin view is read-only; teachers publish and grade them.')+'<div class="st"><div>Quizzes / exams / activities<b>'+A.length+'</b></div><div>POS trainings<b>'+Pz.length+'</b></div></div>'+tbl(['Type','Course','Title'],A.map(c=>['Activity',esc((c.act||{}).course||'-'),esc((c.act||{}).title||c.title||'Untitled')]).concat(Pz.map(c=>['POS Training',esc(c.course||'-'),esc(c.title||'Untitled')])),'Teachers have not created any activities yet.')}
+function res(){const M=jget('bshm.materials')||[];return head('Learning Resources','Materials teachers publish for students. Remove inappropriate items here.')+tbl(['Title','Course','Type',''],M.map(m=>[esc(m.title||m.t||'Untitled'),esc(m.course||'-'),esc(m.vis||m.type||'-'),xb('mx',m.id)]),'No learning materials have been uploaded yet.')}
+function ann(){const L=(jget('bshm.ann.custom')||[]).slice().reverse();return head('Announcements','Posted to the student Announcements page and dashboard.','<button class="b" data-a="add">New announcement</button>')+tbl(['Title','Category','By','Date',''],L.map(a=>[esc(a.title),esc(a.category),esc(a.by),dstr(a.when),xb('ax',a.id)]),'No announcements yet.')}
+function annNew(){form('New announcement',inp('title','Title')+'<label>Category<select name="category"><option value="academic">Academic</option><option value="administrative">Administrative</option><option value="events">Events</option><option value="others">Others</option></select></label>'+inp('text','Message'),fd=>{
+ if(!fd.title||!fd.text)return 'Enter a title and a message.';const L=jget('bshm.ann.custom')||[];L.push({id:Date.now(),title:fd.title,category:fd.category,by:'Admin',when:new Date().toISOString(),text:fd.text});if(!jset('bshm.ann.custom',L))return 'Could not save.';lg('Announcement','Posted '+fd.title);return 0},'Post')}
+function notif(){return head('Notifications','Not implemented: the existing notification bell reads announcements and teacher events only. Post an announcement to notify students.')}
+function logs(){return head('Activity Logs','Actions taken in this admin panel on this browser.')+tbl(['Date','Type','Details'],D.log.map(l=>[dstr(l.t),esc(l.a),esc(l.d)]),'No activity recorded yet.')}
+
+/* ---- homepage banners (Featured carousel on the student and teacher dashboards) ---- */
+const AUD={both:'Students & Teachers',student:'Students only',teacher:'Teachers only'};
+function ban(){return head('Homepage Banners','The Featured slides on the student and teacher dashboards. Add a photo, then choose who sees it.','<button class="b" data-a="add">Add banner</button>')+
+ '<div class="cd">'+(BNL.map((b,i)=>{const id=esc(b.id),bt=(a,l,c,x)=>'<button class="b '+(c||'o')+' s" data-a="'+a+'" data-id="'+id+'"'+(x||'')+'>'+l+'</button>';
+  return '<div class="bnr"><div class="bnt" style="background:'+ACESBanners.bg(b)+'"></div><div class="bni"><b>'+esc(b.title)+'</b><small>'+esc(b.caption||'No caption')+'</small><span class="pill">'+AUD[b.audience]+'</span><span class="pill'+(b.active===false?'':' a')+'">'+(b.active===false?'Hidden':'Visible')+'</span>'+(b.img?'':'<span class="pill">No photo</span>')+'</div><div class="ac">'+bt('be','Edit')+bt('bup','↑','o',i?'':' disabled')+bt('bdn','↓','o',i<BNL.length-1?'':' disabled')+bt('btg',b.active===false?'Show':'Hide')+bt('bx','Delete','d')+'</div></div>'}).join('')||'<p class="none">No banners. The Featured section is hidden on the dashboards.</p>')+'</div>'+
+ '<p class="note">Wide photos work best (about 1200 × 350). The banner crops from the center. Students and teachers see changes right away.</p>'}
+const shrink=f=>new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{const k=Math.min(1,1200/im.width),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));const x=c.getContext('2d');x.fillStyle='#1E1B4B';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(f)});
+function bsave(fn){const snap=JSON.stringify(BNL);fn();if(!ACESBanners.save(BNL)){BNL=JSON.parse(snap);toast('Could not save. The photo may be too large for browser storage.');return false}return true}
+function banEdit(b){const o=b||{audience:'student'};let img=o.img||'';const pv=()=>{$('bp').style.background=ACESBanners.bg({img,colors:o.colors})};
+ mod('<h3>'+(b?'Edit':'Add')+' banner</h3><form class="fm" id="mf" novalidate><div class="bnt" id="bp"></div>'+
+  '<label>Photo<input id="bf" type="file" accept="image/png,image/jpeg,image/webp"></label><button class="b o s" type="button" id="brm" style="justify-self:start">Remove photo</button>'+
+  inp('title','Title (on the banner)',o.title)+inp('caption','Caption (under the banner)',o.caption)+inp('link','Link (page opened by the button)',o.link,'placeholder="courses.html"')+
+  '<label>Show to<select name="audience">'+Object.keys(AUD).map(k=>'<option value="'+k+'"'+(k===o.audience?' selected':'')+'>'+AUD[k]+'</option>').join('')+'</select></label>'+
+  '<p class="err" id="me" hidden></p><div class="ft"><button class="b o" type="button" data-close>Cancel</button><button class="b" type="submit">'+(b?'Save changes':'Add banner')+'</button></div></form>');
+ pv();
+ $('bf').onchange=ev=>{const f=ev.target.files[0];showErr('me','');if(!f)return;
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type))return showErr('me','Choose a PNG, JPG or WEBP image.');
+  if(f.size>8*1024*1024)return showErr('me','That image is over 8 MB. Choose a smaller one.');
+  shrink(f).then(d=>{img=d;pv()},()=>showErr('me','Could not read that image.'))};
+ $('brm').onclick=()=>{img='';$('bf').value='';pv()};
+ $('mf').onsubmit=ev=>{ev.preventDefault();const fd={};new FormData($('mf')).forEach((v,k)=>{if(typeof v==='string')fd[k]=v.trim()});
+  if(!fd.title)return showErr('me','Enter a title.');
+  if(fd.link&&!ACESBanners.safeLink(fd.link))return showErr('me','The link must be a page like courses.html or a web address starting with https://');
+  if(!(fd.audience in AUD))fd.audience='student';
+  const ok=bsave(()=>{if(b)Object.assign(b,fd,{img});else BNL.push(Object.assign({id:uid(),colors:'',active:true,img},fd))});
+  if(ok){lg('Banner',(b?'Updated ':'Added ')+fd.title);close();render()}}}
+
+/* ---- dashboard ---- */
+const COL=['#4B2A9B','#7C4DDB','#B9A4EE','#E0D5FA'];
+function dash(){
+ const secY=n=>(D.sections.find(x=>x.name===n)||{}).year,yr=D.years.map(y=>[y.name,new Set(D.enroll.filter(e=>secY(e.section)===y.name).map(e=>e.sid)).size,D.enroll.filter(e=>secY(e.section)===y.name).length]);
+ const mx=Math.max(1,...yr.flatMap(r=>[r[1],r[2]])),pc=[['Active',USR.filter(u=>u.status==='verified').length,COL[0]],['Pending',USR.filter(u=>u.status!=='verified'&&u.status!=='disabled').length,COL[2]],['Disabled',USR.filter(u=>u.status==='disabled').length,COL[3]]],tot=USR.length;
+ let a=0;const cg=tot?'conic-gradient('+pc.map(p=>{const s=a;a+=p[1]/tot*100;return p[2]+' '+s+'% '+a+'%'}).join(',')+')':'var(--tint)';
+ const lgrows=D.log.slice(0,6).map(l=>'<tr><td data-l="Date">'+dstr(l.t)+'</td><td data-l="Type"><span class="pill a">'+esc(l.a)+'</span></td><td data-l="Details">'+esc(l.d)+'</td></tr>').join('')||'<tr><td colspan="3" class="none">No activity yet. Actions you take will show here.</td></tr>';
+ const qa=[['sections','Add section'],['subjects','Add subject'],['enroll','Enroll student'],['assign','Assign faculty']].map(x=>'<button class="b o" data-go="'+x[0]+'" data-add="1">'+ic(x[0])+x[1]+'</button>').join('');
+ return head('Department Admin Dashboard','Manage the BSHM department: academic records, accounts, LMS content and communication.')+
+ '<div class="st"><div>Registered students<b>'+tot+'</b></div><div>Total faculty<b>'+teachers().length+'</b></div><div>Total subjects<b>'+D.subjects.length+'</b></div><div>Total sections<b>'+D.sections.length+'</b></div><div>Total enrollments<b>'+D.enroll.length+'</b></div></div>'+
+ '<div class="g3"><div class="cd"><h3>Students and enrollments by year level</h3><div class="ch">'+yr.map(r=>'<div><i class="br" style="height:'+Math.max(2,r[1]/mx*100)+'%" title="Students: '+r[1]+'"></i><i class="br l" style="height:'+Math.max(2,r[2]/mx*100)+'%" title="Enrollments: '+r[2]+'"></i></div>').join('')+'</div><div class="lb">'+yr.map(r=>'<span>'+esc(r[0])+'<br>'+r[1]+' / '+r[2]+'</span>').join('')+'</div><p class="sub">Dark bar: students. Light bar: enrollments.</p></div>'+
+ '<div class="cd"><h3>Student accounts</h3><div class="dn" style="background:'+cg+'"><i>'+tot+'<br>students</i></div><div class="lg">'+pc.map(p=>'<div><span><em style="background:'+p[2]+'"></em>'+esc(p[0])+'</span><b>'+p[1]+'</b></div>').join('')+'</div></div>'+
+ '<div class="cd"><h3>Quick actions</h3><div class="qa">'+qa+'<button class="b o" data-go="r3">'+ic('acts')+'Grades & reports</button></div></div></div>'+
+ '<div class="cd"><h3>Recent activities</h3><div class="tw"><table><thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead><tbody>'+lgrows+'</tbody></table></div></div>'}
+
+/* ---- reports & settings ---- */
+function rep(){const t='Performance Reports',h=['Faculty','Assigned classes','Subjects'],
+ r=teachers().map(f=>{const c=D.assign.filter(x=>x.facultyId===f.id);return [f.name,c.length,c.map(x=>x.subject).join(', ')||'-']});
+ RP={t,h,r};
+ return head(t,'Generated from the records in this system.','<span class="ac"><button class="b o" data-a="pr">Print</button><button class="b" data-a="csv">Export CSV</button></span>')+
+ '<p class="note">Grades, quizzes, and pass rates will appear here once the LMS records them. For now this shows faculty load.</p>'+
+ '<div class="cd tw"><table><thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+(r.map(x=>'<tr>'+x.map((c,i)=>'<td data-l="'+esc(h[i])+'">'+esc(c)+'</td>').join('')+'</tr>').join('')||'<tr><td colspan="9" class="none">No data to report yet.</td></tr>')+'</tbody></table></div>'}
+function sett(){return head('Settings','School details shown across the admin pages.')+'<div class="cd fm" style="max-width:460px">'+inp('school','School name',D.set.school,'id="sn"')+inp('ay','Academic year',D.set.ay,'id="ay"')+'<button class="b" data-a="sv">Save settings</button></div>'}
+
+/* ---- router ---- */
+function nav(){$('nav').innerHTML=NAV.map(n=>Array.isArray(n[1])?'<p>'+n[0]+'</p>'+n[1].map(i=>link(i)).join(''):link(n)).join('')}
+const link=i=>'<a href="#" data-n="'+i[0]+'"'+(pg===i[0]?' class="on" aria-current="page"':'')+'>'+ic(i[0])+'<span>'+(i[1]||E[i[0]].t)+'</span></a>';
+function render(){nav();$('sch').textContent=D.set.school;$('pg').innerHTML=({dash,fac,students:stud,acts,res,ann,notif,logs}[pg]||(pg==='fac'?fac:pg==='sacc'?sacc:pg==='ban'?ban:pg==='set'?sett:pg==='r3'?rep:crud))()}
+const go=p=>{pg=p;q='';menu(false);render();scrollTo(0,0)};
+$('nav').onclick=e=>{const a=e.target.closest('[data-n]');if(a){e.preventDefault();go(a.dataset.n)}};
+$('pg').addEventListener('input',e=>{if(e.target.id==='q'){q=e.target.value.trim().toLowerCase();$('tb').innerHTML=RW()}});
+$('pg').onclick=e=>{const b=e.target.closest('[data-a],[data-go]');if(!b)return;
+ if(b.dataset.go){go(b.dataset.go);if(b.dataset.add)act('add');return}act(b.dataset.a,b.dataset.id)};
+function act(a,id){const t=byId(id),u=su(id),bn=BNL.find(x=>x.id===id);
+ if(a==='add'&&pg==='ban'){if(BNL.length>=8)return toast('You can keep up to 8 banners.');return banEdit()}
+ if(a==='be'&&bn)return banEdit(bn);
+ if((a==='bup'||a==='bdn')&&bn){const i=BNL.indexOf(bn),j=a==='bup'?i-1:i+1;if(j<0||j>=BNL.length)return;if(bsave(()=>{BNL[i]=BNL[j];BNL[j]=bn}))render();return}
+ if(a==='btg'&&bn){const off=bn.active!==false;if(bsave(()=>{bn.active=!off})){lg('Banner',(off?'Hid ':'Showed ')+bn.title);render();toast(off?'Banner hidden.':'Banner visible.')}return}
+ if(a==='bx'&&bn){if(!confirm('Delete the banner "'+bn.title+'"? This cannot be undone.'))return;if(bsave(()=>{BNL=BNL.filter(x=>x!==bn)})){lg('Banner','Deleted '+bn.title);render();toast('Banner deleted.')}return}
+ if(a==='se'&&u)return stuEdit(u);
+ if(a==='srp'&&u){if(!confirm('Reset the password for '+sfull(u)+'? Their current password will stop working.'))return;
+  const pw=genPw(),salt=hex(rnd(8));return hashStu(salt,pw).then(h=>{const p=[u.salt,u.passwordHash];u.salt=salt;u.passwordHash=h;if(!saveU()){[u.salt,u.passwordHash]=p;return}lg('Student','Password reset for '+sfull(u));render();reveal('Password reset',{name:sfull(u),username:u.studentId},pw,'Student ID','student')})}
+ if(a==='stg'&&u){const off=u.status!=='disabled';if(off&&!confirm('Disable '+sfull(u)+'? They cannot sign in until you enable the account again.'))return;
+  const prev=u.status;u.status=off?'disabled':'verified';if(!saveU()){u.status=prev;return}lg('Student',(off?'Disabled ':'Enabled ')+sfull(u));render();return toast(off?'Account disabled.':'Account enabled.')}
+ if(a==='sver'&&u){u.status='verified';delete u.otp;if(!saveU())return;lg('Student','Verified '+sfull(u));render();return toast('Account verified.')}
+ if(a==='sx'&&u){if(!confirm('Delete the account for '+sfull(u)+'? This cannot be undone.'))return;const i=USR.indexOf(u);USR.splice(i,1);if(!saveU()){USR.splice(i,0,u);return}lg('Student','Deleted '+sfull(u));render();return toast('Account deleted.')}
+ if(a==='mx'){if(!confirm('Delete this material? Students and teachers will no longer see it.'))return;jset('bshm.materials',(jget('bshm.materials')||[]).filter(m=>String(m.id)!==id));lg('Resource','Deleted a material');return render()}
+ if(a==='ax'){if(!confirm('Delete this announcement?'))return;jset('bshm.ann.custom',(jget('bshm.ann.custom')||[]).filter(m=>String(m.id)!==id));lg('Announcement','Deleted');return render()}
+ if(a==='add')return pg==='fac'?facNew():pg==='ann'?annNew():ent();
+ if(a==='e')return ent(D[pg].find(r=>r.id===id));
+ if(a==='x'){if(!confirm('Delete this record? This cannot be undone.'))return;D[pg]=D[pg].filter(r=>r.id!==id);lg(E[pg].l,'Deleted a record');save();if(pg==='assign')syncClasses();return render()}
+ if(a==='fe'&&t)return facEdit(t);
+ if(a==='rp'&&t){if(!confirm('Reset the password for '+t.name+'? Their current password will stop working.'))return;
+  const pw=genPw(),salt=hex(rnd(8));return hashPw(salt,pw).then(h=>{const p=[t.salt,t.hash,t.mustChange];t.salt=salt;t.hash=h;t.mustChange=true;if(!saveAcc()){[t.salt,t.hash,t.mustChange]=p;return}lg('Faculty','Password reset for '+t.name);render();reveal('Password reset',t,pw)})}
+ if(a==='tg'&&t){const off=t.status!=='disabled';if(off&&!confirm('Disable '+t.name+'? They cannot sign in until you enable the account again.'))return;
+  t.status=off?'disabled':'active';if(!saveAcc()){t.status=off?'active':'disabled';return}lg('Faculty',(off?'Disabled ':'Enabled ')+t.name);render();return toast(off?'Account disabled.':'Account enabled.')}
+ if(a==='fx'&&t){if(!confirm('Delete the account for '+t.name+'? This cannot be undone.'))return;D.assign=D.assign.filter(x=>x.facultyId!==t.id);save();const i=ACC.indexOf(t);ACC.splice(i,1);if(!saveAcc()){ACC.splice(i,0,t);return}lg('Faculty','Deleted '+t.name);render();return toast('Account deleted.')}
+ if(a==='sv'){D.set.school=$('sn').value.trim()||D.set.school;D.set.ay=$('ay').value.trim()||D.set.ay;if(save()){render();toast('Settings saved.')}return}
+ if(a==='pr')return print();
+ if(a==='csv'){const c=[RP.h].concat(RP.r).map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n'),l=document.createElement('a');
+  l.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));l.download=RP.t.replace(/ /g,'-').toLowerCase()+'.csv';l.click()}}
+window.addEventListener('storage',e=>{if(e.key===KEY||e.key===DBK||e.key===UK||e.key===ACESBanners.KEY){load();render()}});
+
+/* ---- admin sign-in gate ---- */
+function start(){$('gate').hidden=true;$('app').hidden=false;load();syncClasses();$('dt').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});render()}
+function gate(){const c=jget(CRED),first=!(c&&c.hash);
+ $('gt').textContent=first?'Set up admin access':'Admin sign-in';$('gp').textContent=first?'First time here. Choose a password for the admin account.':'';
+ $('gcw').hidden=!first;$('gb').textContent=first?'Save and continue':'Sign in';
+ $('gf').onsubmit=ev=>{ev.preventDefault();showErr('gerr','');const pw=$('gpw').value,ok=()=>{try{sessionStorage.setItem(SESS,'1')}catch(e){}start()};
+  if(first){if(pw.length<8)return showErr('gerr','Use at least 8 characters.');if(pw!==$('gpw2').value)return showErr('gerr','The two passwords do not match.');
+   const salt=hex(rnd(8));hashPw(salt,pw).then(h=>{if(jset(CRED,{user:'admin',salt,hash:h}))ok()})}
+  else hashPw(c.salt,pw).then(h=>{if(h!==c.hash){showErr('gerr','Wrong password.');return}ok()})};
+ $('gpw').focus()}
+$('out').onclick=()=>{try{sessionStorage.removeItem(SESS)}catch(e){}location.reload()};
+let s=false;try{s=sessionStorage.getItem(SESS)==='1'&&!!(jget(CRED)&&jget(CRED).hash)}catch(e){}
+s?start():gate();
+})();
+</script>
+</body></html>

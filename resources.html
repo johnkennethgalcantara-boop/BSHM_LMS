@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resources · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="resources.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+</head>
+<body data-role="student" data-nav="resources.html"><script src="auth-guard.js"></script>
+
+<!-- Icons used by this page. shell.js adds the navbar icons (home, book, task, cal, bell, search, user, gear, file, out...) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+<symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+<symbol id="dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></symbol>
+<symbol id="flame" viewBox="0 0 24 24"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></symbol>
+</defs></svg>
+
+<div class="app">
+<!-- shell.js inserts <header class="topnav"> here -->
+<main class="pg rs-page">
+  <div class="rs-head">
+    <div>
+      <h1>Resources</h1>
+      <p>Access learning materials, reference files, and useful links to support your studies.</p>
+    </div>
+    <div class="rs-tools">
+      <label class="rs-search"><svg class="i rs-ic"><use href="#search"/></svg><input id="rs-q" type="search" placeholder="Search resources..." aria-label="Search resources" autocomplete="off"></label>
+      <label class="rs-sem"><svg class="i rs-ic"><use href="#cal"/></svg>
+        <select id="rs-sem" aria-label="Filter by semester">
+          <option value="all">All Semesters</option>
+          <option value="1">1st Semester</option>
+          <option value="2">2nd Semester</option>
+        </select></label>
+    </div>
+  </div>
+
+  <div class="rs-layout">
+
+    <!-- LEFT: tabs + resource list -->
+    <div class="rs-main">
+      <div class="rs-tabs" id="rs-tabs" role="group" aria-label="Resource categories"></div>
+      <p class="rs-rc" id="rs-rc" aria-live="polite"></p>
+      <div class="rs-list" id="rs-list"></div>
+      <div class="rs-empty" id="rs-empty" hidden>
+        <svg class="i rs-ic"><use href="#search"/></svg>
+        <b>No resources found</b>
+        <p>Try a different search term or category.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Popular Resources -->
+    <div class="rs-side">
+      <section class="rs-sc" aria-labelledby="rs-pop-h">
+        <h2 id="rs-pop-h"><svg class="i rs-ic"><use href="#flame"/></svg>Popular Resources</h2>
+        <ul class="rs-pop" id="rs-pop"></ul>
+      </section>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<!-- three-dot menu (single shared popover) -->
+<div class="rs-menu" id="rs-menu" role="menu" hidden>
+  <button type="button" role="menuitem" data-m="details"><svg class="i rs-ic"><use href="#eye"/></svg>View Details</button>
+  <button type="button" role="menuitem" data-m="copy"><svg class="i rs-ic"><use href="#link"/></svg>Copy Link</button>
+</div>
+
+<!-- preview / details modal -->
+<div class="rs-modal" id="rs-modal" hidden>
+  <div class="rs-dialog" role="dialog" aria-modal="true" aria-labelledby="rs-m-title">
+    <div class="rs-mh">
+      <h2 id="rs-m-title"></h2>
+      <button type="button" class="rs-mx" id="rs-m-x" aria-label="Close"><svg class="i rs-ic"><use href="#x"/></svg></button>
+    </div>
+    <div id="rs-m-body"></div>
+    <div class="rs-ma">
+      <button type="button" class="rs-btn rs-sec" id="rs-m-close">Close</button>
+      <button type="button" class="rs-btn" id="rs-m-p"></button>
+    </div>
+  </div>
+</div>
+
+<div class="rs-toast" id="rs-toast" role="status" aria-live="polite"></div>
+<script src="resources.js"></script>
+<script src="shell.js"></script>
+<link rel="stylesheet" href="courses-polish.css">
+<script src="prefs.js"></script>
+  <script src="chat.js"></script>
+</body></html>

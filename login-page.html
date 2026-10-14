@@ -1,0 +1,133 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In – ACES Polytechnic College, Inc.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login-page-style.css">
+  </head>
+  <body>
+  <main class="stage">
+
+    <section class="left">
+      <div class="left-bg"></div>
+      <!-- FIX: image must sit inside .hero so the CSS (position, fade mask, overlay) applies -->
+      <div class="hero">
+        <img src="assets/hero.jpg" alt="Hospitality students and staff at a hotel reception and restaurant">
+      </div>
+
+      <div class="bgroup">
+        <div class="brand">
+          <img src="assets/nbg (2).png" alt="ACES Polytechnic College logo" class="logo logo-1">
+          <span class="brand-divider"></span>
+          <img src="assets/nbghm (2).png" alt="Hospitality Management logo" class="logo logo-2">
+        </div>
+        <h1 class="inst">ACES POLYTECHNIC<br>COLLEGE, INC.</h1>
+        <p class="loc">Brgy. San Francisco, Panabo City, Davao del Norte</p>
+        <hr class="rule">
+        <p class="tag">Your Journey in <em>Hospitality</em><br>Starts Here</p>
+        <p class="sub-tag">Learn • Serve • Lead</p>
+      </div>
+    </section>
+
+    <svg class="curve" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8f6cf0"/><stop offset=".55" stop-color="#7d57e8"/><stop offset="1" stop-color="#9b78f3"/>
+        </linearGradient>
+      </defs>
+      <path d="M842,0 C842,110 776,190 774,320 C772,450 836,520 834,650 C832,780 796,850 800,941 L1672,941 L1672,0 Z" fill="#f8f9fd"/>
+      <path class="curve-edge" d="M842,0 C842,110 776,190 774,320 C772,450 836,520 834,650 C832,780 796,850 800,941" fill="none" stroke="url(#band)" stroke-width="6" stroke-opacity=".66" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+
+    <section class="right">
+      <i class="orb orb-a"></i><i class="orb orb-b"></i><i class="orb orb-c"></i><i class="orb orb-d"></i><i class="orb orb-e"></i>
+
+      <div class="login" id="loginBox" data-role="student">
+        <div class="role" id="role">
+          <button type="button" class="role-btn" id="roleBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="roleMenu">
+            <span id="roleLabel">Student</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="role-menu" id="roleMenu" role="listbox" aria-label="Select role" tabindex="-1">
+            <li role="option" data-role="Student" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Student</span></li>
+            <li role="option" data-role="Teacher" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Teacher</span></li>
+          </ul>
+        </div>
+        <a href="#" id="changeRole" hidden aria-hidden="true" tabindex="-1"></a>
+
+        <svg class="cap" viewBox="0 0 90 80" aria-hidden="true">
+          <path d="M45 4 2 25l43 21 43-21z" fill="#4535c9"/>
+          <path d="M18 38v17c0 8 12 15 27 15s27-7 27-15V38L45 51z" fill="#2c2bb0"/>
+          <path d="M45 51 18 38 45 26l27 12z" fill="#5a45e0" opacity=".0"/>
+          <path d="M84 27v22" stroke="#4535c9" stroke-width="3" stroke-linecap="round"/><circle cx="84" cy="52" r="4.5" fill="#4535c9"/>
+        </svg>
+
+        <h2 class="title">Sign In to Your Account</h2>
+        <p class="sub">Enter your credentials to continue to your<br>ACES Polytechnic College, Inc. portal.</p>
+
+        <form id="loginForm" novalidate data-role="student">
+          <label class="field f1">
+            <span class="fi"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="m4 7.5 8 6 8-6" class="stroke"/></svg></span>
+            <input type="text" id="user" placeholder="Student ID or Email" autocomplete="username">
+          </label>
+          <label class="field f2">
+            <span class="fi"><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" class="stroke"/><circle cx="12" cy="15.5" r="1.6" class="hole"/></svg></span>
+            <input type="password" id="pass" placeholder="Password" autocomplete="current-password">
+            <button type="button" class="eye" id="eye" aria-label="Show password">
+              <svg viewBox="0 0 24 24"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </label>
+
+          <div class="row">
+            <label class="check"><input type="checkbox" id="remember"><span class="box"></span>Remember me</label>
+            <a href="#" id="forgot">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="btn-primary" id="signin"><span class="lbl">Sign In</span>
+            <svg class="arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 5l7 7-7 7"/></svg><i class="spin"></i>
+          </button>
+
+          <!-- Student only -->
+          <div class="or"><span>OR</span></div>
+
+          <button type="button" class="btn-google" id="google">
+            <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+            Sign in with Google
+          </button>
+
+          <p class="create">Don't have an account? <a href="register.html" id="create">Create Account</a></p>
+
+          <!-- Teacher only -->
+          <div class="teacher-note" id="teacherNote">
+            <span class="tn-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3 4 6v5.5c0 4.6 3.3 8.4 8 9.5 4.7-1.1 8-4.9 8-9.5V6z"/>
+                <path d="m8.8 12.2 2.4 2.4 4-4.4"/>
+              </svg>
+            </span>
+            <div class="tn-text">
+              <b>Teacher accounts are issued by the school</b>
+              <span>No account yet or having trouble signing in? Please contact the <strong>school administrator</strong>.</span>
+            </div>
+          </div>
+        </form>
+
+        <div class="info">
+          <div class="info-item i1">
+            <svg viewBox="0 0 48 48"><path d="M24 3 3 13v4h42v-4zM6 20h6v18H6zm10 0h6v18h-6zm10 0h6v18h-6zm10 0h6v18h-6zM3 40h42v5H3z"/></svg>
+            <div><b>ACES POLYTECHNIC COLLEGE, INC.</b><span>Hospitality Management Department</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+
+<script src="aces-store.js"></script>
+<script src="login-page-script.js"></script>
+  </body>
+  </html>

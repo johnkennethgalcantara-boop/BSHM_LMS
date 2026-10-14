@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>My Profile · BSHM LMS (Teacher)</title><meta name="color-scheme" content="light">
+<link rel="stylesheet" href="profile.css"><link rel="stylesheet" href="shell.css">
+<style>
+[hidden]{display:none!important}
+.f input,.f select,.al input,.who input,.who select{width:100%;min-height:36px;padding:0 10px;border:1px solid var(--bd);border-radius:8px;background:#fff;font:14px Inter,sans-serif;color:var(--ink);box-sizing:border-box}
+.f input:focus,.f select:focus,.al input:focus,.who input:focus,.who select:focus{outline:2px solid #DDD6FA;border-color:var(--sec)}
+.who h2 input{width:min(300px,100%);font:600 18px Inter,sans-serif;margin:2px 0}
+.who p input{width:150px;display:inline-block;margin:2px 2px}
+.who small input{width:min(320px,100%);margin:2px 0}
+.lnk{margin-top:8px;padding:0;border:0;background:none;color:#C9434C;font:600 12.5px Inter,sans-serif;cursor:pointer;text-decoration:underline}
+.btn.alt{margin-top:8px;background:#fff;color:var(--sec);border:1px solid var(--bd);box-shadow:none}
+.big{background-size:cover;background-position:center}
+.tt{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:120}.tt.on{opacity:1}
+</style></head>
+<body data-role="teacher" data-page="prof" data-title="Profile"><script src="auth-guard.js"></script><div class="app"><main><div class="wrap">
+<div class="ph"><span class="tile"><svg class="i"><use href="#user"/></svg></span><div><h1>My Profile</h1><p>View and manage your personal information and teaching details.</p></div></div>
+<div class="grid">
+<section class="card"><div class="pf"><div class="photo"><div class="big" aria-label="Profile photo">LS</div><button type="button" id="cam" aria-label="Change profile photo"><svg class="i"><use href="#cam"/></svg></button><input type="file" id="fi" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
+<div class="who"><h2><span data-k="name" data-e data-l="Full name">Prof. Liza Santos</span> <span class="pill">Active</span></h2><p><span data-k="position" data-e data-l="Position">Instructor</span> | <span data-k="department" data-e data-l="Department">BSHM Department</span></p><small><svg class="i"><use href="#cap"/></svg><span data-k="degree" data-e data-l="Degree">Bachelor of Science in Hospitality Management</span></small><br><button type="button" class="lnk" id="rp" hidden>Remove photo</button></div></div>
+<div class="fl">
+<div class="f"><span class="ic"><svg class="i"><use href="#idc"/></svg></span><div><small>Employee ID</small><b>2018-0045</b></div></div>
+<div class="f"><span class="ic"><svg class="i"><use href="#mail"/></svg></span><div><small>Email Address</small><b data-k="email" data-e data-t="email" data-l="Email address">lsantos@acps.edu.ph</b></div></div>
+<div class="f"><span class="ic"><svg class="i"><use href="#mob"/></svg></span><div><small>Mobile Number</small><b data-k="mobile" data-e data-t="tel" data-l="Mobile number">+63 917 555 0142</b></div></div>
+<div class="f"><span class="ic"><svg class="i"><use href="#shield"/></svg></span><div><small>Employment</small><b data-k="employment" data-e data-t="select" data-l="Employment">Full-time</b></div></div>
+<div class="f"><span class="ic"><svg class="i"><use href="#pin"/></svg></span><div><small>Address</small><b data-k="address" data-e data-l="Address">Brgy. Gredu, Panabo City, Davao del Norte</b></div></div>
+</div></section>
+<section class="card"><div class="h"><svg class="i"><use href="#cap"/></svg>Teaching Information</div>
+<ul class="al">
+<li><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><small>Position</small><b data-k="position">Instructor</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#book"/></svg></span><div><small>Classes Handled</small><b>BSHM 101, BSHM 103, BSHM 104</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#grid"/></svg></span><div><small>Advisory Class</small><b data-k="advisory" data-e data-l="Advisory class">2nd Year · Section A</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div><small>Academic Year</small><b>2024 - 2025</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#task"/></svg></span><div><small>Quizzes &amp; exams created</small><b id="sA">0</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#check"/></svg></span><div><small>POS trainings created</small><b id="sP">0</b></div></li>
+<li><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div><small>Announcements posted</small><b id="sN">0</b></div></li>
+</ul></section>
+<section class="card pc"><div class="h"><svg class="i"><use href="#cap"/></svg>Profile Completion</div>
+<svg class="ring" viewBox="0 0 44 44" role="img" aria-label="85 percent complete"><circle cx="22" cy="22" r="18"/><circle class="v" cx="22" cy="22" r="18" stroke-dasharray="96.1 113.1" transform="rotate(-90 22 22)"/><text x="22" y="24">85%</text><text class="s" x="22" y="29.5">Complete</text></svg>
+<p id="pm">Your profile is almost complete!</p><button class="btn" type="button" id="ed">Edit Profile</button><button class="btn alt" type="button" id="cn" hidden>Cancel</button></section>
+</div></div></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var K='bshm.teacher.profile',$=function(i){return document.getElementById(i)};
+  var all=[].slice.call(document.querySelectorAll('[data-k]')),eds=[].slice.call(document.querySelectorAll('[data-e]'));
+  var FIELDS=['name','position','department','degree','email','mobile','address','employment','advisory'];
+  var REQ=['name','position','department','degree','email','mobile','address','employment'];
+  var EMP=['Full-time','Part-time','Contractual','Visiting'];
+  var D={};eds.forEach(function(e){D[e.getAttribute('data-k')]=e.textContent.trim()});   /* defaults come from the HTML */
+  var S=tlsGet(K)||{},editing=false,dirty=false,tm;
+  var val=function(k){return S[k]!==undefined?S[k]:D[k]};
+
+  function toast(m){var t=$('tt');t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on')},2400)}
+  function applyAll(){if(window.bshmApplyProfile)window.bshmApplyProfile()}
+
+  /* show saved values, ring %, remove-photo link */
+  function ring(){
+    var n=FIELDS.filter(function(k){var v=val(k);return v&&String(v).trim()}).length+(S.photo?1:0),
+        pct=Math.round(n/(FIELDS.length+1)*100),r=document.querySelector('.ring');
+    r.querySelector('.v').setAttribute('stroke-dasharray',(pct/100*113.1).toFixed(1)+' 113.1');
+    r.querySelector('text:not(.s)').textContent=pct+'%';r.setAttribute('aria-label',pct+' percent complete');
+    $('pm').textContent=pct>=100?'Your profile is complete!':pct>=70?'Your profile is almost complete!':'Add more details to complete your profile.';
+  }
+  function paint(){
+    all.forEach(function(e){var k=e.getAttribute('data-k'),v=val(k);e.textContent=v||(k==='advisory'?'None':'')});
+    $('rp').hidden=!S.photo;ring();applyAll();
+  }
+  paint();
+  $('sA').textContent=(tlsGet('bshm.act.custom')||[]).length;$('sP').textContent=(tlsGet('bshm.pos.custom')||[]).length;$('sN').textContent=(tlsGet('bshm.ann.custom')||[]).length;
+
+  /* edit mode */
+  function field(e){return e.querySelector('input,select')}
+  function startEdit(){
+    editing=true;dirty=false;
+    eds.forEach(function(e){
+      var k=e.getAttribute('data-k'),t=e.getAttribute('data-t'),cur=val(k)||'',i;
+      if(t==='select'){
+        i=document.createElement('select');
+        (EMP.indexOf(cur)<0&&cur?EMP.concat(cur):EMP).forEach(function(o){var op=document.createElement('option');op.value=op.textContent=o;i.appendChild(op)});
+        i.value=cur||EMP[0];
+      }else{i=document.createElement('input');i.type=t||'text';i.value=cur;i.maxLength=(k==='address'||k==='degree')?120:60}
+      i.setAttribute('aria-label',e.getAttribute('data-l'));
+      i.oninput=i.onchange=function(){dirty=true};
+      i.onkeydown=function(ev){if(ev.key==='Enter'){ev.preventDefault();save()}else if(ev.key==='Escape')cancel()};
+      e.textContent='';e.appendChild(i);
+    });
+    $('ed').textContent='Save Changes';$('cn').hidden=false;
+    var f=field(eds[0]);if(f)f.focus();
+  }
+  function stopEdit(){editing=false;dirty=false;$('ed').textContent='Edit Profile';$('cn').hidden=true;paint()}
+  function cancel(){stopEdit();toast('Changes discarded.')}
+  function save(){
+    var n={};
+    for(var i=0;i<eds.length;i++){
+      var e=eds[i],k=e.getAttribute('data-k'),f=field(e),v=f.value.trim();
+      if(!v&&REQ.indexOf(k)>-1){toast(e.getAttribute('data-l')+' cannot be empty.');f.focus();return}
+      n[k]=v;
+    }
+    if(!/^\S+@\S+\.\S+$/.test(n.email)){toast('Enter a valid email address.');field(eds.filter(function(e){return e.getAttribute('data-k')==='email'})[0]).focus();return}
+    if(!/^\+?[\d\s\-()]{7,20}$/.test(n.mobile)){toast('Enter a valid mobile number.');field(eds.filter(function(e){return e.getAttribute('data-k')==='mobile'})[0]).focus();return}
+    for(var k2 in n)S[k2]=n[k2];
+    tlsSet(K,S);stopEdit();toast('Profile updated.');
+  }
+  $('ed').onclick=function(){editing?save():startEdit()};
+  $('cn').onclick=cancel;
+  window.addEventListener('beforeunload',function(e){if(editing&&dirty){e.preventDefault();e.returnValue=''}});
+
+  /* profile photo: pick, crop to a square, shrink, save */
+  $('cam').onclick=function(){$('fi').click()};
+  $('fi').onchange=function(){
+    var f=this.files[0];this.value='';
+    if(!f)return;
+    if(!/^image\/(png|jpe?g|webp|gif)$/.test(f.type))return toast('Choose a PNG, JPG, WEBP or GIF image.');
+    if(f.size>5*1024*1024)return toast('Photo must be under 5 MB.');
+    var r=new FileReader();
+    r.onerror=function(){toast('Could not read that image.')};
+    r.onload=function(){
+      var im=new Image();
+      im.onerror=function(){toast('Could not read that image.')};
+      im.onload=function(){
+        var c=document.createElement('canvas'),s=Math.min(im.width,im.height);c.width=c.height=320;
+        c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,320,320);
+        S.photo=c.toDataURL('image/jpeg',.85);tlsSet(K,S);paint();toast('Profile photo updated.');
+      };
+      im.src=r.result;
+    };
+    r.readAsDataURL(f);
+  };
+  $('rp').onclick=function(){delete S.photo;tlsSet(K,S);paint();toast('Profile photo removed.')};
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script> <script src="teacher-prefs.js"></script></body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="settings.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+<script src="settings.js" defer></script>
+</head>
+<body data-role="student" data-nav="settings.html"><script src="auth-guard.js"></script>
+
+<!-- Icons used by this page. shell.js adds the navbar icons (home, book, task, cal, bell, search, user, gear, file, out, star, mega...) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="check" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+<symbol id="cam" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="pal" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2.5 1.5-2.5H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></symbol>
+<symbol id="edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></symbol>
+</defs></svg>
+
+<div class="app">
+<!-- shell.js inserts <header class="topnav"> here -->
+<main>
+<div class="wrap">
+  <div class="ph"><span class="tile"><svg class="i"><use href="#gear"/></svg></span><div><h1>Settings</h1><p>Manage your account preferences, security, and notification settings.</p></div></div>
+  <div class="tabs" role="tablist" aria-label="Settings categories"><button type="button" role="tab" id="t-account" data-t="account" aria-controls="p-account" aria-selected="true" class="on"><svg class="i"><use href="#user"/></svg>Account</button><button type="button" role="tab" id="t-notifications" data-t="notifications" aria-controls="p-notifications" aria-selected="false" class=""><svg class="i"><use href="#bell"/></svg>Notifications</button><button type="button" role="tab" id="t-privacy" data-t="privacy" aria-controls="p-privacy" aria-selected="false" class=""><svg class="i"><use href="#shield"/></svg>Privacy</button><button type="button" role="tab" id="t-appearance" data-t="appearance" aria-controls="p-appearance" aria-selected="false" class=""><svg class="i"><use href="#pal"/></svg>Appearance</button></div>
+
+  <section class="panel" id="p-account" role="tabpanel" aria-labelledby="t-account">
+    <div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><h2>Account Information</h2><p>View and update your personal details.</p></div><button type="button" class="ghost"><svg class="i"><use href="#edit"/></svg>Edit</button></div>
+      <div class="acc">
+        <div class="photo"><div class="big" aria-label="Profile photo">JD</div><button type="button" aria-label="Change profile photo"><svg class="i"><use href="#cam"/></svg></button></div>
+        <div class="dl"><div><small>Full Name</small><b>Juan Dela Cruz</b></div><div><small>Student ID</small><b>2024-0123</b></div><div><small>Email Address</small><b>juandelacruz@acps.edu.ph</b></div><div><small>Mobile Number</small><b>+63 912 345 6789</b></div></div>
+        <div class="dl"><div><small>Program</small><b>Bachelor of Science in Hospitality Management</b></div><div><small>Year Level</small><b>2nd Year</b></div><div><small>Section</small><b>A</b></div></div>
+      </div></div>
+  </section>
+
+  <section class="panel" id="p-notifications" role="tabpanel" aria-labelledby="t-notifications" hidden>
+    <div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div><h2>Notification Settings</h2><p>Choose what you want to be notified about.</p></div></div>
+      <div class="row"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><b>New Announcements</b><small>School and department announcements</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="New Announcements"></button></div><div class="row"><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div class="tx"><b>Upcoming Classes</b><small>Reminders before your classes start</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Upcoming Classes"></button></div><div class="row"><span class="ic"><svg class="i"><use href="#star"/></svg></span><div class="tx"><b>Grades Updates</b><small>When new grades are posted</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Grades Updates"></button></div><div class="row"><span class="ic"><svg class="i"><use href="#check"/></svg></span><div class="tx"><b>Attendance Reminders</b><small>Attendance and absence notices</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Attendance Reminders"></button></div><div class="row"><span class="ic"><svg class="i"><use href="#file"/></svg></span><div class="tx"><b>OJT / Internship Updates</b><small>Requirements and schedule changes</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="OJT / Internship Updates"></button></div><div class="row"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div class="tx"><b>System Updates</b><small>Portal maintenance and new features</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="System Updates"></button></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-privacy" role="tabpanel" aria-labelledby="t-privacy" hidden>
+    <div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#lock"/></svg></span><div><h2>Change Password</h2><p>Keep your account secure by using a strong password.</p></div></div>
+      <form id="pwf" novalidate><label class="fld"><span>Current Password</span><div class="pw"><input type="password" id="pw0" placeholder="Enter current password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide current password"><svg class="i"><use href="#eye"/></svg></button></div></label><label class="fld"><span>New Password</span><div class="pw"><input type="password" id="pw1" placeholder="Enter new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide new password"><svg class="i"><use href="#eye"/></svg></button></div></label><label class="fld"><span>Confirm New Password</span><div class="pw"><input type="password" id="pw2" placeholder="Confirm new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide confirm new password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+      <button class="btn" type="submit"><svg class="i"><use href="#lock"/></svg>Update Password</button><p class="msg" id="msg" role="status"></p></form></div>
+  </section>
+
+  <section class="panel" id="p-appearance" role="tabpanel" aria-labelledby="t-appearance" hidden>
+    <div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#pal"/></svg></span><div><h2>Theme</h2><p>Choose how the student portal looks.</p></div></div>
+      <div class="themes" role="radiogroup" aria-label="Theme"><label class="opt"><input type="radio" name="theme" value="light" checked>Light</label><label class="opt"><input type="radio" name="theme" value="dark">Dark</label><label class="opt"><input type="radio" name="theme" value="system">System Default</label></div></div>
+    <div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#gear"/></svg></span><div><h2>Interface Preferences</h2><p>Adjust spacing across the portal.</p></div></div>
+      <div class="row"><div class="tx"><b>Compact Interface</b><small>Use tighter spacing to fit more on screen</small></div><button type="button" class="sw" id="compact" role="switch" aria-checked="false" aria-label="Compact Interface"></button></div></div>
+  </section>
+
+</div>
+</main>
+</div>
+<script src="shell.js"></script>
+<link rel="stylesheet" href="courses-polish.css">
+<script src="prefs.js"></script>
+</body></html>

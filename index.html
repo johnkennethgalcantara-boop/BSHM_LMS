@@ -1,0 +1,101 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinelearn LMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Decorative background -->
+    <div class="bg-building" aria-hidden="true"></div>
+    <div class="bg-lines" aria-hidden="true"></div>
+    <div class="curve curve-tl" aria-hidden="true"></div>
+    <div class="curve curve-br" aria-hidden="true"></div>
+
+    <main class="page">
+      <header class="header">
+        <div class="logos">
+          <img src="assets/nbg (2).png" alt="ACES Polytechnic College logo" onerror="this.classList.add('missing')">
+          <span class="divider" aria-hidden="true"></span>
+          <img src="assets/nbghm (2).png" alt="Hospitality Management logo" onerror="this.classList.add('missing')">
+        </div>
+        <p class="welcome">WELCOME TO</p>
+        <h1 class="title"><span class="t-navy">DINE LEARN</span> <span class="t-purple">LMS</span></h1>
+        <p class="subtitle">Please choose your role to continue</p>
+        <span class="underline" aria-hidden="true"></span>
+      </header>
+
+      <section class="cards" aria-label="Choose your role">
+        <button class="card card-student" id="studentCard" data-role="student" type="button">
+          <span class="card-shape card-shape-a" aria-hidden="true"></span>
+          <span class="card-shape card-shape-b" aria-hidden="true"></span>
+          <span class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <polygon points="12,3 1,8.5 12,14 23,8.5"/>
+              <path d="M5 12.2v4.3c0 1.5 3.1 3 7 3s7-1.5 7-3v-4.3l-7 3.5z"/>
+              <rect x="21" y="9" width="1.6" height="6" rx=".8"/>
+            </svg>
+          </span>
+          <span class="card-title">STUDENT</span>
+          <span class="card-desc">Access your courses, activities,<br>and assessments.</span>
+          <span class="arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+
+        <button class="card card-teacher" id="teacherCard" data-role="teacher" type="button">
+          <span class="card-shape card-shape-a" aria-hidden="true"></span>
+          <span class="card-shape card-shape-b" aria-hidden="true"></span>
+          <span class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9.5" y="3" width="12.5" height="10" rx="1"/>
+              <circle cx="5" cy="6.5" r="2.3" fill="#fff"/>
+              <path d="M1.8 20v-5.5c0-1.5 1-2.5 2.5-2.5h2c1 0 1.8.5 2.3 1.3l2.4 2.2"/>
+              <path d="M15.5 13v7M12.5 20h6"/>
+            </svg>
+          </span>
+          <span class="card-title">TEACHER</span>
+          <span class="card-desc">Manage classes, content,<br>and student progress.</span>
+          <span class="arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </section>
+
+      <section class="security">
+        <span class="line"></span>
+        <div class="sec-inner">
+          <svg class="sec-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 1.5l8.5 3.2v6.6c0 5.2-3.6 9.3-8.5 11.2-4.9-1.9-8.5-6-8.5-11.2V4.7z" fill="#5420D6"/>
+            <rect x="8" y="10.5" width="8" height="6.5" rx="1.2" fill="#fff"/>
+            <path d="M9.6 10.5V8.8a2.4 2.4 0 014.8 0v1.7" fill="none" stroke="#fff" stroke-width="1.5"/>
+          </svg>
+          <div>
+            <strong>Secure BSHM LMS Access</strong>
+            <small>Authorized students and faculty only.</small>
+          </div>
+        </div>
+        <span class="line"></span>
+      </section>
+
+      <footer class="footer">
+        <svg class="foot-icon" viewBox="0 0 24 24" fill="#4A1FD0" aria-hidden="true">
+          <polygon points="12,1.5 22.5,7 22.5,9 1.5,9 1.5,7"/>
+          <rect x="3.5" y="10" width="2.6" height="7.5"/><rect x="8" y="10" width="2.6" height="7.5"/>
+          <rect x="13.4" y="10" width="2.6" height="7.5"/><rect x="17.9" y="10" width="2.6" height="7.5"/>
+          <rect x="2" y="18.5" width="20" height="2"/><rect x="1" y="21" width="22" height="2"/>
+        </svg>
+        <div class="foot-text">
+          <p class="foot-main">ACES POLYTECHNIC COLLEGE, INC.</p>
+          <p class="foot-sub">PANABO, DAVAO DEL NORTE</p>
+        </div>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  </html>

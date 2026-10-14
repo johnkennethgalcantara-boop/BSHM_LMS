@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Settings · BSHM LMS (Teacher)</title><meta name="color-scheme" content="light">
+<link rel="stylesheet" href="settings.css"><link rel="stylesheet" href="shell.css"></head>
+<body data-role="teacher" data-page="set" data-title="Settings"><script src="auth-guard.js"></script><div class="app"><main><div class="wrap">
+<div class="ph"><span class="tile"><svg class="i"><use href="#gear"/></svg></span><div><h1>Settings</h1><p>Manage your account, notifications, security and appearance.</p></div></div>
+<div class="tabs" role="tablist" aria-label="Settings categories">
+<button type="button" role="tab" data-t="account" class="on"><svg class="i"><use href="#user"/></svg>Account</button>
+<button type="button" role="tab" data-t="notifications"><svg class="i"><use href="#bell"/></svg>Notifications</button>
+<button type="button" role="tab" data-t="privacy"><svg class="i"><use href="#shield"/></svg>Privacy</button>
+<button type="button" role="tab" data-t="appearance"><svg class="i"><use href="#pal"/></svg>Appearance</button></div>
+
+<section class="panel" id="p-account" role="tabpanel"><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><h2>Account Information</h2><p>Your teacher account details.</p></div><a class="ghost" href="teacher-profile.html"><svg class="i"><use href="#edit"/></svg>Edit</a></div>
+<div class="acc"><div class="photo"><div class="big" aria-label="Profile photo">LS</div></div>
+<div class="dl"><div><small>Full Name</small><b>Prof. Liza Santos</b></div><div><small>Employee ID</small><b>2018-0045</b></div><div><small>Email Address</small><b id="em">lsantos@acps.edu.ph</b></div><div><small>Mobile Number</small><b id="mo">+63 917 555 0142</b></div></div>
+<div class="dl"><div><small>Position</small><b>Instructor</b></div><div><small>Department</small><b>BSHM Department</b></div><div><small>Classes Handled</small><b>BSHM 101, 103, 104</b></div></div></div></div></section>
+
+<section class="panel" id="p-notifications" role="tabpanel" hidden><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div><h2>Notification Settings</h2><p>Choose what you want to be notified about.</p></div></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#task"/></svg></span><div class="tx"><b>New Submissions</b><small>When students submit activities</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="New Submissions"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#alert"/></svg></span><div class="tx"><b>Anti-cheat Violations</b><small>When an exam attempt is restricted</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Anti-cheat Violations"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#check"/></svg></span><div class="tx"><b>POS Training Results</b><small>When students finish a POS training</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="POS Training Results"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div class="tx"><b>Class Schedule Reminders</b><small>Reminders before your classes start</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Class Schedule Reminders"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><b>School Announcements</b><small>Updates from the school and department</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="School Announcements"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><b>Chat Messages</b><small>Pop-up when a student or professor messages you</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Chat Messages"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div class="tx"><b>System Updates</b><small>Portal maintenance and new features</small></div><button type="button" class="sw" role="switch" aria-checked="false" aria-label="System Updates"></button></div>
+</div></section>
+
+<section class="panel" id="p-privacy" role="tabpanel" hidden><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#lock"/></svg></span><div><h2>Change Password</h2><p>Keep your account secure by using a strong password.</p></div></div>
+<form id="pwf" novalidate>
+<label class="fld"><span>Current Password</span><div class="pw"><input type="password" id="pw0" placeholder="Enter current password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide current password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<label class="fld"><span>New Password</span><div class="pw"><input type="password" id="pw1" placeholder="Enter new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide new password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<label class="fld"><span>Confirm New Password</span><div class="pw"><input type="password" id="pw2" placeholder="Confirm new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide confirm new password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<button class="btn" type="submit"><svg class="i"><use href="#lock"/></svg>Update Password</button><p class="msg" id="msg" role="status"></p></form></div></section>
+
+<section class="panel" id="p-appearance" role="tabpanel" hidden>
+<div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#pal"/></svg></span><div><h2>Theme</h2><p>Choose how the teacher portal looks. Only Light is available for now.</p></div></div>
+<div class="themes" role="radiogroup" aria-label="Theme"><label class="opt"><input type="radio" name="theme" value="light" checked>Light</label></div></div>
+<div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#gear"/></svg></span><div><h2>Interface Preferences</h2><p>Adjust spacing across the portal.</p></div></div>
+<div class="row"><div class="tx"><b>Compact Interface</b><small>Use tighter spacing to fit more on screen</small></div><button type="button" class="sw" id="compact" role="switch" aria-checked="false" aria-label="Compact Interface"></button></div></div></section>
+</div></main></div>
+<script src="teacher-shell.js"></script>
+<script>
+/* BSHM LMS · Teacher Settings (functional)
+   Replaces the first inline <script> on the Settings page. Needs teacher-shell.js (tlsGet/tlsSet). */
+(function () {
+  var K = 'bshm.teacher.settings', AUTH = 'bshm.teacher.auth';
+  var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var S = tlsGet(K) || { sw: {} }; S.sw = S.sw || {};
+  var P = tlsGet('bshm.teacher.profile') || {};
+  if (P.email) $('#em').textContent = P.email;
+  if (P.mobile) $('#mo').textContent = P.mobile;
+
+  /* "Saved" pill */
+  var pill = document.createElement('div'), pt;
+  pill.setAttribute('role', 'status');
+  pill.style.cssText = 'position:fixed;right:16px;top:84px;z-index:400;padding:8px 14px;border-radius:999px;background:#1B1B5E;color:#fff;font:600 13px Inter,sans-serif;opacity:0;transform:translateY(-6px);transition:opacity .2s,transform .2s;pointer-events:none';
+  document.body.appendChild(pill);
+  function saved(t) { pill.textContent = t || 'Saved'; pill.style.opacity = 1; pill.style.transform = 'none'; clearTimeout(pt); pt = setTimeout(function () { pill.style.opacity = 0; }, 1400); }
+  function store() { tlsSet(K, S); window.dispatchEvent(new Event('storage')); }
+
+  /* tabs (remember the last one) */
+  var tabs = $$('.tabs button');
+  function show(k) {
+    tabs.forEach(function (t) { var on = t.dataset.t === k; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
+    $$('.panel').forEach(function (p) { p.hidden = p.id !== 'p-' + k; });
+    S.tab = k; tlsSet(K, S);
+  }
+  tabs.forEach(function (t, i) {
+    t.onclick = function () { show(t.dataset.t); };
+    t.onkeydown = function (e) { var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (d) { var n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); show(n.dataset.t); } };
+  });
+  show(S.tab && $('#p-' + S.tab) ? S.tab : 'account');
+
+  /* switches: saved, and actually used (compact → whole portal; Chat Messages → chat pop-ups) */
+  $$('.sw').forEach(function (s) {
+    var l = s.getAttribute('aria-label');
+    if (s.id === 'compact') { s.setAttribute('aria-checked', !!S.compact); document.body.classList.toggle('compact', !!S.compact); }
+    else if (l in S.sw) s.setAttribute('aria-checked', !!S.sw[l]);
+    s.onclick = function () {
+      var on = s.getAttribute('aria-checked') !== 'true';
+      s.setAttribute('aria-checked', on);
+      if (s.id === 'compact') { S.compact = on; document.body.classList.toggle('compact', on); } else S.sw[l] = on;
+      store(); saved(s.id === 'compact' ? (on ? 'Compact on' : 'Compact off') : l + (on ? ' on' : ' off'));
+    };
+  });
+
+  /* show / hide password */
+  $$('.eye').forEach(function (b) { b.onclick = function () { var i = b.previousElementSibling; i.type = i.type === 'password' ? 'text' : 'password'; }; });
+
+  /* real password change: stored as a salted SHA-256 hash, never as plain text */
+  function hash(salt, pw) {
+    if (window.crypto && crypto.subtle) {
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + pw)).then(function (b) {
+        return [].map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      });
+    }
+    return Promise.resolve(btoa(unescape(encodeURIComponent(salt + pw))));   /* old browsers only */
+  }
+  $('#pwf').onsubmit = function (e) {
+    e.preventDefault();
+    var form = e.target, v = ['#pw0', '#pw1', '#pw2'].map(function (s) { return $(s).value; }), m = $('#msg'), auth = tlsGet(AUTH);
+    function say(t, ok) { m.textContent = t; m.className = 'msg ' + (ok ? 'ok' : 'err'); }
+    if (!v[1] || !v[2] || (auth && !v[0])) return say('Please fill in all password fields.');
+    if (v[1].length < 8) return say('New password must be at least 8 characters.');
+    if (!/[A-Za-z]/.test(v[1]) || !/\d/.test(v[1])) return say('Use at least one letter and one number.');
+    if (v[1] !== v[2]) return say('New password and confirmation do not match.');
+    if (v[1] === v[0]) return say('New password must be different from the current one.');
+    (auth ? hash(auth.salt, v[0]).then(function (h) { return h === auth.hash; }) : Promise.resolve(true)).then(function (ok) {
+      if (!ok) return say('Current password is incorrect.');
+      var salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      return hash(salt, v[1]).then(function (h) {
+        tlsSet(AUTH, { salt: salt, hash: h, at: Date.now() });
+        say('Password updated.', true); form.reset(); saved('Password updated');
+      });
+    });
+  };
+})();
+</script>
+<script src="shell.js"></script>
+<script src="chat.js"></script>
+<script src="teacher-prefs.js"></script>
+</body></html>

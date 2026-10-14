@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · BSHM LMS (Teacher)</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+<style>
+
+  /* ===== Mobile card sizing ===== */
+@media(max-width:560px){
+  /* Today's Classes */
+  body .tc-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  body .tc-card{padding:18px 16px 16px;gap:10px;border-radius:16px}
+  body .tc-top{gap:8px}
+  body .tc-top h3{margin:8px 0 2px;font-size:15.5px}
+  body .tc-top p{font-size:12px}
+  body .tc-code{padding:3px 9px;font-size:10.5px}
+  body .tc-st{padding:3px 10px;font-size:11px}
+  body .tc-meta{gap:6px}
+  body .tc-meta span{padding:4px 9px;font-size:11.5px}
+  body .tc-meta svg{width:13px;height:13px}
+  body .tc-view{height:38px;font-size:13px;border-radius:10px}
+
+  /* Class Overview: 2 columns para hindi sobrang haba */
+  .ov-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .ov-c{padding:12px;border-radius:14px}
+  .ov-c span{font-size:11.5px}
+  .ov-c b{font-size:21px;margin:3px 0 1px}
+  .ov-c b.sm{font-size:13px}
+  .ov-c small{font-size:11.5px}
+  .ov-c a{font-size:12px}
+  .ov-c:last-child{grid-column:1/-1} /* Top Performers: full width */
+
+  /* Other cards/panels */
+  .pn{padding:14px;border-radius:14px}
+  .sec-h h2{font-size:16px}
+  body .sec-h h2{font-size:16px}
+  body .sec-h span{font-size:12px}
+  .na li{padding:9px 0;gap:10px}
+  .na b{font-size:13px}
+  .na small{font-size:11.5px}
+}
+
+/* Napakaliit na phones */
+@media(max-width:360px){
+  .ov-grid{grid-template-columns:minmax(0,1fr)}
+  .ov-c:last-child{grid-column:auto}
+  body .tc-top h3{font-size:14.5px}
+}
+.dx{grid-column:1/-1;display:grid;gap:22px;min-width:0}.dx>*{min-width:0}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 12px}.sec-h h2{margin:0;font-size:17px;color:var(--ink)}.sec-h span{font-size:12.5px;color:var(--mute)}
+.tc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tc-card{display:flex;flex-direction:column;gap:12px;background:#fff;border:1px solid #E6E9F2;border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(15,26,36,.04)}
+.tc-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.tc-code{font-size:11.5px;font-weight:700;letter-spacing:.08em;color:#4F35D2}.tc-top h3{margin:3px 0 2px;font-size:16px;color:var(--ink);overflow-wrap:anywhere}.tc-top p{margin:0;font-size:12.5px;color:var(--mute)}
+.tc-st{flex:none;padding:3px 11px;border-radius:999px;font-size:12px;font-weight:700}.tc-st.up{background:#E4EEFF;color:#2F62C8}.tc-st.on{background:#E3F5EC;color:#14724C}.tc-st.dn{background:#EEF0F6;color:#4A5572}
+.tc-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink)}.tc-meta span{display:inline-flex;align-items:center;gap:6px}.tc-meta svg{width:15px;height:15px;fill:none;stroke:#6B4EF0;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.tc-view{margin-top:auto;font-weight:600;font-size:13.5px;color:var(--pri)}
+.tc-empty{background:#fff;border:1px dashed #D9DEEC;border-radius:16px;padding:28px;text-align:center;color:var(--mute);font-size:14px}
+.ov-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ov-c{background:#fff;border:1px solid #E6E9F2;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,26,36,.04)}.ov-c span{display:block;font-size:12.5px;color:var(--mute)}.ov-c b{display:block;margin:4px 0 2px;font-size:26px;line-height:1.1;color:var(--ink);overflow-wrap:anywhere}.ov-c b.sm{font-size:15px;line-height:1.35}.ov-c small{font-size:12.5px;color:var(--mute)}.ov-c a{font-size:13px;font-weight:600;color:var(--pri)}.ov-c.w{border-left:4px solid #E5484D}.ov-c.g{border-left:4px solid #17A673}
+.pos-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}
+.pn{background:#fff;border:1px solid #E6E9F2;border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(15,26,36,.04)}.pn .tl{list-style:none;margin:0;padding:0}.pn .tl li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #EEF0F6}.pn .tl li:first-child{border-top:0;padding-top:0}.pn .tl b{display:block;color:var(--ink);font-size:14px;overflow-wrap:anywhere}.pn .tl small,.pn .tl time{color:var(--mute);font-size:12.5px}
+.cta{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:10px;background:#fff;color:var(--pri);font-weight:600;font-size:14px}
+.pl{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}.pl.ok{background:#E3F5EC;color:#14724C}.pl.bad{background:#FDECEC;color:#B42318}.pl.sub{background:#EEF0F6;color:#4A5572}.pl.am{background:#FFF4E0;color:#B26A00}
+.rs-t{width:100%;border-collapse:collapse;font-size:13.5px}.rs-t th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:8px 10px;border-bottom:1px solid #EEF0F6;white-space:nowrap}.rs-t td{padding:10px;border-bottom:1px solid #F2F4F9;color:var(--ink)}.rs-w{overflow-x:auto}
+.na{list-style:none;margin:0;padding:0}.na li{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid #EEF0F6}.na li:first-child{border-top:0;padding-top:0}.na i{width:10px;height:10px;border-radius:50%}.na .r i{background:#E5484D}.na .o i{background:#F5A524}.na .g i{background:#17A673}.na b{display:block;font-size:14px;color:var(--ink)}.na small{font-size:12.5px;color:var(--mute);overflow-wrap:anywhere}.na a{font-size:13px;font-weight:600;color:var(--pri);white-space:nowrap}
+@media(max-width:1100px){.ov-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pos-row{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.ov-grid{grid-template-columns:minmax(0,1fr)}.tc-grid{grid-template-columns:minmax(0,1fr)}.na li{grid-template-columns:10px minmax(0,1fr)}.na a{grid-column:2}}
+
+/* ===== Today's Classes: modern ===== */
+body .tc-grid{gap:18px}
+body .tc-card{
+  position:relative;overflow:hidden;gap:14px;
+  padding:24px 22px 20px;border:1px solid #ECEBF5;border-radius:20px;
+  box-shadow:0 4px 14px rgba(79,53,210,.07);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+body .tc-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#6D3FEA,#9B7BFF)}
+body .tc-card:has(.tc-st.on)::before{background:linear-gradient(90deg,#16A34A,#4ADE80)}
+body .tc-card:has(.tc-st.up)::before{background:linear-gradient(90deg,#2563EB,#60A5FA)}
+body .tc-card:has(.tc-st.dn)::before{background:linear-gradient(90deg,#98A0B3,#C9CEDB)}
+body .tc-card:hover{transform:translateY(-3px);border-color:#D9D2F7;box-shadow:0 14px 32px rgba(79,53,210,.16)}
+body .tc-code{display:inline-block;padding:4px 10px;border-radius:999px;background:#F0EDFF;color:#6D3FEA!important;font-size:11.5px;font-weight:700;letter-spacing:.04em}
+body .tc-top h3{margin:10px 0 2px;font-size:18px;font-weight:700;color:#171B6B;letter-spacing:-.005em}
+body .tc-st{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;font-weight:600}
+body .tc-st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+body .tc-meta{gap:8px}
+body .tc-meta span{padding:6px 12px;border:1px solid #ECE8FF;border-radius:999px;background:#F8F7FF;font-size:12.5px;font-weight:500}
+body .tc-view{
+  display:flex;align-items:center;justify-content:center;height:42px;
+  border:1px solid #E1DAFB;border-radius:12px;background:#F0EDFF;
+  color:#6D3FEA!important;font-weight:600;text-decoration:none;
+  transition:background .15s,color .15s,box-shadow .15s;
+}
+body .tc-view:hover{background:#6D3FEA;color:#fff!important;box-shadow:0 6px 16px rgba(79,53,210,.25)}
+body .tc-empty{border:1px dashed #D9D2F7;border-radius:20px;background:#fff}
+@media (prefers-reduced-motion:reduce){body .tc-card{transition:none}body .tc-card:hover{transform:none}}
+
+/* ===== Enhancements: headings, chips, single-card layout, contrast ===== */
+body .sec-h h2{font-size:19px;font-weight:700;color:#171B6B;letter-spacing:-.01em}
+body .sec-h span{font-size:13px;color:#667085}
+body .tc-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+
+/* chips stay on one row */
+body .tc-meta{gap:6px}
+body .tc-meta span{padding:5px 10px;font-size:12px;white-space:nowrap}
+body .tc-meta svg{width:14px;height:14px}
+
+/* one class today: use the full width instead of leaving empty space */
+@media(min-width:760px){
+  body .tc-grid:has(.tc-card:only-child){grid-template-columns:minmax(0,1fr)}
+  body .tc-grid:has(.tc-card:only-child) .tc-card{
+    display:grid;grid-template-columns:minmax(0,1fr) 220px;column-gap:24px;row-gap:14px;align-items:center;
+  }
+  body .tc-grid:has(.tc-card:only-child) .tc-top{grid-column:1;grid-row:1}
+  body .tc-grid:has(.tc-card:only-child) .tc-meta{grid-column:1;grid-row:2}
+  body .tc-grid:has(.tc-card:only-child) .tc-view{grid-column:2;grid-row:1 / 3;margin:0;height:46px}
+}
+
+/* readable secondary text */
+body .tc-top p,body .ov-c span,body .ov-c small,body .na small,body .pn .tl small,body .pn .tl time{color:#667085}
+</style>
+</head>
+<body data-role="teacher" data-page="dashboard" data-title="Dashboard"><script src="auth-guard.js"></script>
+<div class="app">
+<main class="dash">
+  <div class="top">
+    <div class="wel"><div class="av">LS</div><div><h1 id="gr">Hello, Prof. Santos!</h1><p class="wp" id="wp">BSHM Department</p></div></div>
+    <div class="date"><svg class="i"><use href="#cal"/></svg><div id="dt"></div></div>
+  </div>
+  <div class="stats">
+    <div class="st"><span class="ic"><svg class="i"><use href="#book"/></svg></span><div class="sx"><div class="sn"><b id="sC">0</b><small>Classes</small></div><a id="sCl" href="teacher-courses.html">View Classes <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#task"/></svg></span><div class="sx"><div class="sn"><b id="sR">0</b><small>To Review</small></div><a id="sRl" href="teacher-results.html">Review <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#reg"/></svg></span><div class="sx"><div class="sn"><b id="nPos">0</b><small>POS Trainings</small></div><a id="sPl" href="teacher-pos.html">Manage <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#star"/></svg></span><div class="sx"><div class="sn"><b id="sA">–</b><small>Avg. Score</small></div><a href="teacher-results.html">View Results <span class="ar">→</span></a></div></div>
+  </div>
+
+  <section id="bnTeacher" style="display:none"></section>
+
+  <div class="dx">
+    <section id="today"><div class="sec-h"><h2>Today's Classes</h2><span id="todayN"></span></div><div class="tc-grid" id="tcg"></div></section>
+
+    <section><div class="sec-h"><h2>Class Overview</h2><span>Across all your classes</span></div><div class="ov-grid" id="ov"></div></section>
+
+    <div class="pos-row">
+      <section class="cont">
+        <svg class="wm"><use href="#reg"/></svg>
+        <span class="kick">POS Training</span>
+        <h2>Create a POS training for your class</h2>
+        <p class="mod">Set the customer order, payment method, discount, time limit and passing score. Students practice it in the POS simulator.</p>
+        <div class="cf" style="margin-top:16px"><a class="cta" href="teacher-pos.html">Create POS Training <span class="ar">→</span></a><span>Published trainings appear in students' Activities tab</span></div>
+      </section>
+      <section class="pn"><div class="sec-h"><h2>My POS Trainings</h2><a href="teacher-pos.html" style="font-size:13px;font-weight:600;color:var(--pri)">Manage →</a></div><ul class="tl" id="posList"></ul></section>
+    </div>
+
+    <section class="pn"><div class="sec-h"><h2>Recent Submissions</h2><a href="teacher-results.html" style="font-size:13px;font-weight:600;color:var(--pri)">View all →</a></div>
+      <div class="rs-w"><table class="rs-t"><thead><tr><th>Date</th><th>Student</th><th>Activity</th><th>Course</th><th>Status</th><th>Score</th></tr></thead><tbody id="rs"></tbody></table></div></section>
+
+    <section class="pn"><div class="sec-h"><h2>Needs Attention</h2><span id="naN"></span></div><ul class="na" id="na"></ul></section>
+  </div>
+</main>
+</div>
+
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},e=tesc,lc=function(s){return String(s==null?'':s).trim().toLowerCase()};
+  var DAYS={mon:1,tue:2,wed:3,thu:4,fri:5,sat:6,sun:0};
+  function parse(str){var ds=[],m,re=/\b(mon|tue|wed|thu|fri|sat|sun)[a-z]*/gi;while((m=re.exec(str)))ds.push(DAYS[m[1].toLowerCase()]);
+    var t=/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(str),st=null,en=null;
+    if(t){var pm=t[5].toUpperCase()==='PM',en0=(+t[3]%12+(pm?12:0))*60+ +t[4],s0=(+t[1]%12+(pm?12:0))*60+ +t[2];if(s0>=en0)s0-=720;st=s0;en=en0}
+    return {days:ds,start:st,end:en,label:str.indexOf('·')>-1?str.split('·').slice(1).join('·').trim():str}}
+  var avg=function(a){a=a.filter(function(x){return x!=null});return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length):null};
+  var list=function(a){return a.length>3?a.slice(0,3).join(', ')+' +'+(a.length-3)+' more':a.join(', ')};
+  function render(){
+    var R=tlsResults(),H=R.H,P=R.P,now=new Date(),mins=now.getHours()*60+now.getMinutes(),dow=now.getDay();
+    var ACT=tlsGet('bshm.act.custom')||[],POS=tlsGet('bshm.pos.custom')||[],ANN=tlsGet('bshm.ann.custom')||[];
+    var latest={};H.forEach(function(r){var k=r.exam_id+'|'+r.student_id;if(!latest[k]||r.attempt_number>latest[k])latest[k]=r.attempt_number});
+    var pend=H.filter(function(r){return r.status==='RESTRICTED'&&latest[r.exam_id+'|'+r.student_id]===r.attempt_number&&!tlsGet('bshm.retake.'+r.exam_id)}).length;
+    var inprog=H.filter(function(r){return r.status==='IN_PROGRESS'}).length;
+    /* per-class stats */
+    var ST={},fails=[],lowAtt=[],restr=[],finals={};
+    TLS_CLASSES.forEach(function(c){ST[c[0]]=tlsStudentStats(c[0]);ST[c[0]].forEach(function(s){
+      if(s.final!=null){finals[s.name]=Math.max(finals[s.name]||0,s.final);if(s.final<75&&fails.indexOf(s.name)<0)fails.push(s.name)}
+      if(s.att!=null&&s.att<80&&lowAtt.indexOf(s.name)<0)lowAtt.push(s.name);
+      if(s.restricted&&restr.indexOf(s.name)<0)restr.push(s.name)})});
+    var flagged=[];fails.concat(lowAtt,restr).forEach(function(n){if(flagged.indexOf(n)<0)flagged.push(n)});
+    /* missing submissions for teacher-created activities */
+    var missing=0;ACT.forEach(function(c){TLS_ROSTER.forEach(function(n){if(!H.some(function(r){return r.exam_id===c.act.id&&lc(r.student_id)===lc(n)&&(r.percentage!=null||r.submitted_at)}))missing++})});
+    /* only finished, graded attempts count toward the average */
+    var scores=H.filter(function(r){return r.percentage!=null&&r.status!=='IN_PROGRESS'}).map(function(r){return r.percentage})
+      .concat(P.filter(function(r){return r.score!=null&&r.status!=='IN_PROGRESS'}).map(function(r){return r.score}));
+
+    /* header + top cards */
+    $('wp').textContent=TLS_CLASSES.map(function(c){return c[0]}).join(' · ');
+    var today=TLS_CLASSES.map(function(c,i){var f=tlsClassInfo(i);return {c:c,f:f,p:parse(f.sched)}}).filter(function(x){return x.p.days.indexOf(dow)>-1}).sort(function(a,b){return (a.p.start==null?0:a.p.start)-(b.p.start==null?0:b.p.start)});
+    $('sC').textContent=TLS_CLASSES.length;$('sCl').innerHTML=(today.length?today.length+' meeting today':'None today')+' <span class="ar">→</span>';
+    $('sR').textContent=pend;$('sRl').innerHTML=(pend?'Retake requests':'All reviewed')+' <span class="ar">→</span>';
+    $('nPos').textContent=POS.length;$('sPl').innerHTML=(POS.length?'Manage':'Create your first')+' <span class="ar">→</span>';
+    $('sA').textContent=scores.length?avg(scores)+'%':'–';
+
+    /* Today's Classes */
+    $('todayN').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+    $('tcg').innerHTML=today.length?today.map(function(x){var c=x.c,p=x.p,n=TLS_ROSTER.length;
+      var stt=p.start==null?['up','Scheduled']:mins<p.start?['up','Upcoming']:mins<=p.end?['on','Ongoing']:['dn','Completed'];
+      return '<article class="tc-card'+(stt[0]==='dn'?' is-done':'')+'"><div class="tc-top"><div><span class="tc-code">'+e(c[0])+'</span><h3>'+e(c[1])+'</h3><p>'+e(c[2])+'</p></div><span class="tc-st '+stt[0]+'">'+stt[1]+'</span></div>'+
+        '<div class="tc-meta"><span><svg viewBox="0 0 24 24"><use href="#clock"/></svg>'+e(p.label)+'</span><span><svg viewBox="0 0 24 24"><use href="#pin"/></svg>'+e(x.f.room)+'</span><span><svg viewBox="0 0 24 24"><use href="#user"/></svg>'+n+' students</span></div>'+
+        '<a class="tc-view" href="teacher-courses.html#'+encodeURIComponent(c[0])+'">View Class →</a></article>'}).join(''):'<div class="tc-empty" style="grid-column:1/-1">No classes scheduled today.</div>';
+
+    /* Class Overview (6 cards: duplicates merged) */
+    var tops=Object.keys(finals).sort(function(a,b){return finals[b]-finals[a]}).slice(0,3),ga=avg(Object.keys(finals).map(function(k){return finals[k]}));
+    var card=function(l,v,s,cls,x,cta){var z=(v===0||v==='0')?' z':'';
+      return '<div class="ov-c '+(cls||'')+z+'"><span>'+l+'</span><b'+(x?' class="sm"':'')+'>'+v+'</b><small>'+s+'</small>'+(cta&&z?'<a class="cta-l" href="'+cta[1]+'">'+cta[0]+' →</a>':'')+'</div>'};
+    var attn=flagged.length+missing;
+    $('ov').innerHTML=
+      card('Total Students',TLS_CLASSES.length*TLS_ROSTER.length,'Enrolled across your '+TLS_CLASSES.length+' classes')+
+      card('Class Average',ga==null?'–':ga+'%','Gradebook final grades')+
+      card('Active Activities',ACT.length+POS.length,ACT.length+' quizzes/exams · '+POS.length+' POS','',0,['Create an activity','teacher-activities.html'])+
+      card('Needs Attention',attn,attn?flagged.length+' at risk · '+missing+' missing work':'All clear',attn?'w':'g')+
+      card('Announcements',ANN.length,'Active announcements')+
+      '<div class="ov-c"><span>Top Performers</span><b class="sm">'+(tops.length?tops.map(function(n){return e(n)+' ('+finals[n]+')'}).join('<br>'):'No grades yet')+'</b><a href="teacher-gradebook.html">View top students →</a></div>';
+
+    /* POS list */
+    $('posList').innerHTML=POS.length?POS.slice(-4).reverse().map(function(a){return '<li><div><b>'+e(a.title)+'</b><small>'+e(a.course)+' · '+a.time+' min · pass '+a.pass+'%</small></div><time>'+e(a.due||'No due date')+'</time></li>'}).join(''):'<li><div><b>No trainings yet</b><small>Create your first POS training to see it here.</small></div></li>';
+
+    /* Recent Submissions */
+    var cOf={};ACT.forEach(function(c){cOf[c.act.id]=c.act.course});var pOf={};POS.forEach(function(p){pOf[p.title]=p.course});
+    var rows=H.map(function(r){return {at:r.submitted_at||r.started_at,who:r.student_id,what:r.exam_title,c:r.course||cOf[r.exam_id]||'–',s:r.status,sc:r.percentage!=null?r.score+' / '+r.total+' ('+r.percentage+'%)':'–'}}).concat(P.map(function(r){return {at:r.at,who:r.student,what:r.title,c:r.course||pOf[r.title]||'–',s:r.status,sc:r.score!=null?r.score+'%':'–'}}));
+    rows.sort(function(a,b){return String(b.at).localeCompare(String(a.at))});
+    var pc={PASSED:'ok',FAILED:'bad',RESTRICTED:'bad','NOT PASSED':'bad',IN_PROGRESS:'am'};
+    $('rs').innerHTML=rows.length?rows.slice(0,6).map(function(r){return '<tr><td>'+(r.at?new Date(r.at).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'–')+'</td><td><b>'+e(r.who)+'</b></td><td>'+e(r.what)+'</td><td>'+e(r.c)+'</td><td><span class="pl '+(pc[r.s]||'sub')+'">'+e(String(r.s||'').replace('_',' '))+'</span></td><td>'+e(r.sc)+'</td></tr>'}).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:22px">No submissions yet. They appear here as soon as students finish.</td></tr>';
+
+    /* Needs Attention */
+    var N=[];
+    if(pend)N.push(['r',pend+' retake request'+(pend>1?'s':''),'Restricted attempts waiting for your decision','teacher-results.html','Open Results']);
+    if(inprog)N.push(['o',inprog+' unfinished attempt'+(inprog>1?'s':''),'Students started but have not submitted','teacher-results.html','Open Results']);
+    if(missing)N.push(['o',missing+' missing submission'+(missing>1?'s':''),'Across '+ACT.length+' quizzes/exams you created','teacher-results.html','Open Results']);
+    if(fails.length)N.push(['r',fails.length+' low-performing student'+(fails.length>1?'s':''),list(fails)+' (final grade below 75)','teacher-reports.html','Open Reports']);
+    if(lowAtt.length)N.push(['o',lowAtt.length+' with low attendance',list(lowAtt)+' (below 80%)','teacher-reports.html','Open Reports']);
+    if(restr.length)N.push(['r',restr.length+' student'+(restr.length>1?'s':'')+' needing intervention',list(restr)+' had restricted exam attempts','teacher-results.html','Open Results']);
+    $('naN').textContent=N.length?N.length+' item'+(N.length>1?'s':''):'';
+    $('na').innerHTML=N.length?N.map(function(n){return '<li class="'+n[0]+'"><i></i><div><b>'+e(n[1])+'</b><small>'+e(n[2])+'</small></div><a href="'+n[3]+'">'+n[4]+' →</a></li>'}).join(''):'<li class="g"><i></i><div><b>All clear</b><small>No missing work, retake requests or struggling students right now.</small></div></li>';
+  }
+  function clock(){var n=new Date(),h=n.getHours();
+    $('gr').textContent='Good '+(h<12?'morning':h<18?'afternoon':'evening')+', Prof. Santos!';
+    $('dt').innerHTML=n.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'<small>'+n.toLocaleDateString('en-US',{weekday:'long'})+', '+n.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})+'</small>'}
+  clock();render();window.addEventListener('storage',render);setInterval(function(){clock();render()},60000);
+})();
+</script>
+<script src="shell.js"></script>
+<link rel="stylesheet" href="dashboard-colors.css">
+<link rel="stylesheet" href="enhance.css">
+<link rel="stylesheet" href="teacher-modern.css">
+<script src="aces-store.js"></script>
+<script src="banners.js"></script>
+<script src="teacher-shell.js"></script>
+  <script src="chat.js"></script>
+  <script src="teacher-prefs.js"></script>
+</body></html>

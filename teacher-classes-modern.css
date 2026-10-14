@@ -1,0 +1,299 @@
+/* teacher-classes-modern.css
+   Soft-indigo style for teacher-courses.html ("My Classes"), matching the student courses page
+   and the teacher dashboard. Load LAST in teacher-courses.html (after shell.js, before </body>).
+   Paint-only: no HTML or JS changes. */
+
+/* ===== Tokens + background ===== */
+body[data-page="courses"]{
+  --ink:#1B1B5E;--navy:#171B6B;--body:#4A4A7A;--mute:#7C7CA8;--pri:#6D3FEA;
+  --t-sh:0 0 0 1px rgba(60,50,160,.05),0 1px 2px rgba(60,50,160,.04),0 14px 32px -16px rgba(75,59,214,.22);
+  --t-sh-hover:0 0 0 1px rgba(75,59,214,.12),0 18px 34px -16px rgba(75,59,214,.35);
+  --t-grad:linear-gradient(90deg,#4F3FD0,#8B63F0);
+  --t-ease:.2s ease;
+}
+body[data-page="courses"] .app:has(> main.pg){
+  background:
+    radial-gradient(55% 38% at 82% 0%,#E2DAFF 0%,rgba(226,218,255,0) 70%),
+    radial-gradient(40% 30% at 0% 100%,#EAE4FF 0%,rgba(234,228,255,0) 70%),
+    #F8F7FF;
+}
+body[data-page="courses"] main.pg{background:transparent}
+body[data-page="courses"] main.pg ::selection{background:#D9D5FA;color:var(--ink)}
+
+/* ===== Header ===== */
+body[data-page="courses"] .ph h1{font-size:clamp(26px,2.8vw,34px);font-weight:600;letter-spacing:-.03em;color:var(--ink);line-height:1.15}
+body[data-page="courses"] .ph p{font-size:14px;font-weight:500;color:var(--mute);max-width:620px}
+
+/* ===== Buttons: gradient pill, lavender secondary ===== */
+body[data-page="courses"] .bt{
+  height:44px;padding:0 20px;border-radius:999px;border:0;
+  background:var(--t-grad);color:#fff;
+  box-shadow:0 8px 18px -8px rgba(79,63,208,.65);
+  transition:filter var(--t-ease),box-shadow var(--t-ease),background var(--t-ease),color var(--t-ease),transform .15s ease;
+}
+body[data-page="courses"] .bt:hover{transform:none;filter:brightness(1.08);box-shadow:0 12px 22px -10px rgba(79,63,208,.8)}
+body[data-page="courses"] .bt:active{transform:scale(.97)}
+body[data-page="courses"] .bt.s{height:34px;padding:0 14px;font-size:12.5px}
+body[data-page="courses"] .bt.o{background:#F3F1FD;color:var(--ink);border:0;box-shadow:none;filter:none}
+body[data-page="courses"] .bt.o:hover{background:var(--t-grad);color:#fff;box-shadow:0 8px 18px -8px rgba(79,63,208,.65)}
+body[data-page="courses"] .bt.dg{background:#FDECEC;color:#B42318;border:0;box-shadow:none;filter:none}
+body[data-page="courses"] .bt.dg:hover{background:#B42318;color:#fff}
+body[data-page="courses"] .bt:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+
+/* ===== Class cards ===== */
+body[data-page="courses"] .g3{gap:20px}
+body[data-page="courses"] .cc{
+  padding:22px!important;gap:8px;
+  border:0;border-radius:24px;background:#fff;box-shadow:var(--t-sh);
+  transition:box-shadow var(--t-ease),transform var(--t-ease);
+}
+body[data-page="courses"] .cc::before{height:3px;background:linear-gradient(90deg,#6D3FEA,#B7A3FA)}
+body[data-page="courses"] .cc:hover{transform:translateY(-3px);border:0;box-shadow:var(--t-sh-hover)}
+body[data-page="courses"] .cc .cd{background:#F3F1FD;color:#6D3FEA;font-weight:700;letter-spacing:.03em}
+body[data-page="courses"] .cc .mine{background:#EAF6EF;color:#1F6B47;font-weight:600}
+body[data-page="courses"] .cc h3{font-size:18px;font-weight:650;color:var(--navy);letter-spacing:-.015em;margin:8px 0 0}
+body[data-page="courses"] .cc p{font-size:13px;font-weight:500;color:var(--mute)}
+
+/* schedule + room as chips */
+body[data-page="courses"] .ci{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+body[data-page="courses"] .ci span{
+  padding:5px 11px;border:1px solid #ECE8FF;border-radius:999px;background:#F8F7FF;
+  font-size:12.5px;font-weight:500;color:var(--body);
+}
+body[data-page="courses"] .ci b{font-weight:600;color:var(--ink)}
+
+/* students / activities line */
+body[data-page="courses"] .cc .mx{margin-top:10px!important;padding-top:12px;border-top:1px solid #F0EEFA;font-size:12.5px;color:var(--mute)}
+body[data-page="courses"] .cc .mx b{color:var(--ink);font-weight:600}
+
+/* inline edit row */
+body[data-page="courses"] .ed input{
+  height:40px;padding:0 14px;border:0;border-radius:999px;background:#F6F5FF;color:var(--ink);
+  font:500 13px Inter,"Segoe UI",system-ui,sans-serif;
+}
+body[data-page="courses"] .ed input:focus{outline:0;box-shadow:0 0 0 3px rgba(75,59,214,.2)}
+
+/* action buttons pinned to the bottom of each card */
+body[data-page="courses"] .cc > div:last-child{margin-top:auto!important;padding-top:12px;gap:8px!important}
+
+/* ===== Add class panel ===== */
+body[data-page="courses"] #af{padding:26px 28px;border:0;border-radius:24px;background:#fff;box-shadow:var(--t-sh)}
+body[data-page="courses"] #af .h{font-size:18px;font-weight:650;color:var(--ink);letter-spacing:-.015em;margin-bottom:16px}
+body[data-page="courses"] .fm label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+body[data-page="courses"] .fm input,
+body[data-page="courses"] .fm select,
+body[data-page="courses"] .fm textarea{
+  height:46px;padding:0 16px;border:0;border-radius:14px;background:#F6F5FF;box-shadow:none;color:var(--ink);
+}
+body[data-page="courses"] .fm input::placeholder{color:#A4A2C4}
+body[data-page="courses"] .fm input:focus,
+body[data-page="courses"] .fm select:focus,
+body[data-page="courses"] .fm textarea:focus{outline:0;background:#fff;box-shadow:0 0 0 3px rgba(75,59,214,.2)}
+body[data-page="courses"] .hp{color:var(--mute)}
+body[data-page="courses"] #ce{border-radius:14px}
+
+/* ===== Roster table ===== */
+body[data-page="courses"] #ro{padding:24px 26px;border:0;border-radius:24px;background:#fff;box-shadow:var(--t-sh)}
+body[data-page="courses"] #roh{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  font-size:18px;font-weight:650;color:var(--ink);letter-spacing:-.015em;
+}
+body[data-page="courses"] #roh::before{content:"";width:4px;height:20px;border-radius:99px;background:linear-gradient(180deg,#4F3FD0,#8B63F0)}
+body[data-page="courses"] #ro th{background:#F8F7FF;color:var(--mute);letter-spacing:.03em}
+body[data-page="courses"] #ro td{border-top-color:#F0EEFA}
+body[data-page="courses"] #ro tbody tr:hover td{background:#FBFAFF}
+body[data-page="courses"] .pl{padding:3px 11px;font-weight:600}
+body[data-page="courses"] .ok{background:#EAF6EF;color:#1F6B47}
+body[data-page="courses"] .bad{background:#FDECEC;color:#B42318}
+body[data-page="courses"] .inc{background:#F0EDFF;color:#4F35D2}
+
+/* ===== Toast ===== */
+body[data-page="courses"] .tt{border-radius:999px;padding:12px 20px;background:var(--ink);box-shadow:0 14px 32px -12px rgba(27,27,94,.5)}
+
+/* ===== Entrance (once) ===== */
+@keyframes tc-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+body[data-page="courses"] .g3 > .cc{animation:tc-rise .45s cubic-bezier(.22,.8,.3,1) both}
+body[data-page="courses"] .g3 > .cc:nth-child(2){animation-delay:.05s}
+body[data-page="courses"] .g3 > .cc:nth-child(3){animation-delay:.10s}
+body[data-page="courses"] .g3 > .cc:nth-child(n+4){animation-delay:.15s}
+
+@media (hover:none){body[data-page="courses"] .cc:hover{transform:none}}
+@media (max-width:767px){
+  body[data-page="courses"] #af,
+  body[data-page="courses"] #ro{padding:20px 18px}
+  body[data-page="courses"] .ph .bt{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  body[data-page="courses"] *,
+  body[data-page="courses"] *::before{animation:none!important;transition:none!important}
+  body[data-page="courses"] .cc:hover{transform:none}
+}
+
+/* =====================================================================
+   ENHANCED CONTAINERS (class cards, edit row, add panel, roster panel)
+   ===================================================================== */
+
+/* ---- per-class accent color (cycles every 3 cards) ---- */
+body[data-page="courses"] .g3 > .cc:nth-child(3n+1){--acc:#6D3FEA}
+body[data-page="courses"] .g3 > .cc:nth-child(3n+2){--acc:#3FA39B}
+body[data-page="courses"] .g3 > .cc:nth-child(3n){--acc:#B06BE0}
+
+/* ---- card: tinted header wash, accent strip, accent ring on hover ---- */
+body[data-page="courses"] .cc{
+  --acc:#6D3FEA;
+  gap:10px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 7%,#fff) 0,#fff 110px);
+}
+body[data-page="courses"] .cc::before{
+  height:4px;
+  background:linear-gradient(90deg,var(--acc),color-mix(in srgb,var(--acc) 30%,#fff));
+}
+body[data-page="courses"] .cc:hover{
+  box-shadow:0 0 0 1.5px color-mix(in srgb,var(--acc) 35%,transparent),0 18px 34px -16px color-mix(in srgb,var(--acc) 45%,transparent);
+}
+body[data-page="courses"] .cc .cd{
+  background:color-mix(in srgb,var(--acc) 12%,#fff);
+  color:var(--acc);
+}
+body[data-page="courses"] .cc h3{
+  font-size:19px;line-height:1.3;margin:10px 0 0;
+  transition:color var(--t-ease);
+}
+body[data-page="courses"] .cc:hover h3{color:color-mix(in srgb,var(--acc) 55%,var(--navy))}
+body[data-page="courses"] .cc p{margin:0;color:var(--mute)}
+
+/* ---- schedule + room chips take the card accent ---- */
+body[data-page="courses"] .ci svg{color:var(--acc)!important}
+body[data-page="courses"] .ci span{
+  background:#fff;border-color:color-mix(in srgb,var(--acc) 18%,#fff);
+}
+
+/* ---- students / activities: soft stat bar ---- */
+body[data-page="courses"] .cc .mx{
+  margin-top:6px!important;padding:11px 14px;
+  background:#F8F7FF;border:1px solid #ECE8FF;border-radius:14px;
+  font-size:12.5px;color:var(--body);
+}
+body[data-page="courses"] .cc .mx b{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-right:2px}
+
+/* ---- inline edit row becomes a tinted panel ---- */
+body[data-page="courses"] .ed.on{
+  padding:12px;background:#F8F7FF;border:1px solid #ECE8FF;border-radius:16px;
+  animation:tc-rise .25s cubic-bezier(.22,.8,.3,1) both;
+}
+body[data-page="courses"] .ed input{background:#fff;box-shadow:0 0 0 1px #ECE8FF}
+body[data-page="courses"] .ed input:focus{box-shadow:0 0 0 3px rgba(75,59,214,.2)}
+
+/* ---- buttons: primary on top, two equal secondaries below ---- */
+body[data-page="courses"] .cc > div:last-child{
+  display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important;
+  margin-top:auto!important;padding-top:14px;
+}
+body[data-page="courses"] .cc > div:last-child .bt{
+  width:100%;height:38px;padding:0 10px;font-size:12.5px;white-space:nowrap;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+body[data-page="courses"] .cc .bt[data-r]{
+  grid-column:1/-1;height:42px;font-size:13.5px;
+  background:var(--t-grad);color:#fff;
+  box-shadow:0 8px 18px -8px rgba(79,63,208,.65);
+}
+body[data-page="courses"] .cc .bt[data-r]:hover{filter:brightness(1.08)}
+body[data-page="courses"] .cc a.bt.s{
+  background:#F3F1FD;color:var(--ink);box-shadow:none;text-decoration:none;
+}
+body[data-page="courses"] .cc a.bt.s:hover{background:var(--t-grad);color:#fff;box-shadow:0 8px 18px -8px rgba(79,63,208,.65)}
+body[data-page="courses"] .cc .bt.dg{grid-column:1/-1}
+
+/* ---- "Add a class" panel: icon header + accent strip ---- */
+body[data-page="courses"] #af{position:relative;overflow:hidden}
+body[data-page="courses"] #af::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:4px;
+  background:var(--t-grad);
+}
+body[data-page="courses"] #af .h{display:flex;align-items:center;gap:12px}
+body[data-page="courses"] #af .h::before{
+  content:"";width:36px;height:36px;border-radius:12px;flex:none;
+  background:#F0EDFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236D4FE3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center/18px no-repeat;
+}
+body[data-page="courses"] #af{animation:tc-rise .3s cubic-bezier(.22,.8,.3,1) both}
+
+/* ---- roster panel: accent strip, rounded table, softer rows ---- */
+body[data-page="courses"] #ro{position:relative;overflow:hidden;animation:tc-rise .3s cubic-bezier(.22,.8,.3,1) both}
+body[data-page="courses"] #ro::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:4px;
+  background:linear-gradient(90deg,#6D3FEA,#B7A3FA);
+}
+body[data-page="courses"] #ro .tw{border:1px solid #F0EEFA;border-radius:16px;overflow:hidden}
+body[data-page="courses"] #ro th{border-radius:0!important;padding:12px 16px;font-size:11.5px}
+body[data-page="courses"] #ro td{padding:13px 16px}
+body[data-page="courses"] #ro tbody tr:nth-child(even) td{background:#FCFBFF}
+body[data-page="courses"] #ro tbody tr:hover td{background:#F5F2FF}
+body[data-page="courses"] #ro tbody tr:first-child td{border-top:0}
+
+/* =====================================================================
+   MOBILE CARD SIZING (My Classes)
+   ===================================================================== */
+@media (max-width:767px){
+  body[data-page="courses"] .g3{gap:14px}
+
+  /* class card */
+  body[data-page="courses"] .cc{
+    padding:16px!important;gap:8px;border-radius:18px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 7%,#fff) 0,#fff 90px);
+  }
+  body[data-page="courses"] .cc::before{height:3px}
+  body[data-page="courses"] .cc .top{gap:6px}
+  body[data-page="courses"] .cc .cd{padding:3px 9px;font-size:11px}
+  body[data-page="courses"] .cc .mine{font-size:10.5px;padding:2px 8px}
+  body[data-page="courses"] .cc h3{font-size:16px;margin:6px 0 0}
+  body[data-page="courses"] .cc p{font-size:12px}
+
+  /* schedule / room / join code chips */
+  body[data-page="courses"] .ci{gap:5px;margin:6px 0 0}
+  body[data-page="courses"] .ci span{padding:4px 9px;font-size:11.5px;border-radius:12px;line-height:1.35}
+  body[data-page="courses"] .ci svg{width:12px!important;height:12px!important;margin-right:3px!important}
+  body[data-page="courses"] .jc{font-size:11px;padding:2px 7px;word-break:break-all}
+
+  /* students / activities bar */
+  body[data-page="courses"] .cc .mx{padding:9px 12px;font-size:11.5px;border-radius:12px}
+  body[data-page="courses"] .cc .mx b{font-size:15px}
+
+  /* inline edit row */
+  body[data-page="courses"] .ed.on{padding:10px;border-radius:14px;gap:6px}
+  body[data-page="courses"] .ed input{height:36px;font-size:12.5px;min-width:0;flex:1 1 100%}
+  body[data-page="courses"] .ed .bt{width:100%}
+
+  /* buttons: View roster full width, 2 small buttons per row */
+  body[data-page="courses"] .cc > div:last-child{
+    grid-template-columns:1fr 1fr!important;gap:6px!important;padding-top:10px;
+  }
+  body[data-page="courses"] .cc > div:last-child .bt{
+    height:auto;min-height:34px;padding:6px 8px;
+    font-size:11.5px;line-height:1.2;white-space:normal;text-align:center;
+  }
+  body[data-page="courses"] .cc .bt[data-r]{min-height:38px;font-size:12.5px}
+  body[data-page="courses"] .cc .bt.dg{min-height:34px}
+
+  /* add-class panel */
+  body[data-page="courses"] #af{padding:18px 16px;border-radius:18px}
+  body[data-page="courses"] #af .h{font-size:16px;gap:10px;margin-bottom:12px}
+  body[data-page="courses"] #af .h::before{width:30px;height:30px;border-radius:10px;background-size:15px}
+  body[data-page="courses"] .fm label{font-size:12.5px;margin-bottom:4px}
+  body[data-page="courses"] .fm input{height:42px;font-size:14px;border-radius:12px}
+
+  /* roster panel: compact + scroll sideways if needed */
+  body[data-page="courses"] #ro{padding:16px 14px;border-radius:18px}
+  body[data-page="courses"] #roh{font-size:15px;margin-bottom:10px}
+  body[data-page="courses"] #ro .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  body[data-page="courses"] #ro table{min-width:520px}
+  body[data-page="courses"] #ro th{padding:10px 12px;font-size:11px;white-space:nowrap}
+  body[data-page="courses"] #ro td{padding:10px 12px;font-size:12.5px}
+}
+
+/* napakaliit na phones */
+@media (max-width:360px){
+  body[data-page="courses"] .cc{padding:14px!important}
+  body[data-page="courses"] .cc h3{font-size:15px}
+  body[data-page="courses"] .cc > div:last-child{grid-template-columns:1fr!important}
+}

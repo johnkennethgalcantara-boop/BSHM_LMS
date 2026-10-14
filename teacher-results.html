@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><link rel="stylesheet" href="student.css"><link rel="stylesheet" href="teacher.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css"><title>Results · BSHM LMS</title>
+<style>
+/* Summary cards (dashboard style: icon + title, big gradient number, link) */
+.rcs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.rc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:150px;padding:20px 22px 16px;background:#fff;border:1px solid #ECE8FF;border-radius:20px;box-shadow:0 8px 24px -16px rgba(79,63,208,.35);overflow:hidden}
+.rc::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--acc),transparent 70%)}
+.rc:nth-child(1){--acc:#2563EB}
+.rc:nth-child(2){--acc:#6D3FEA}
+.rc:nth-child(3){--acc:#DC2626}
+.rc:nth-child(4){--acc:#16A34A}
+.rc-h{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--ink)}
+.rc-h svg{width:20px;height:20px;flex:none;color:var(--acc);stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rc-f{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:18px}
+.rc-n{display:inline-block;font-size:clamp(38px,4vw,54px);font-weight:600;line-height:1.05;letter-spacing:-.02em;background:linear-gradient(90deg,#1B1B5E,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.rc-l{border:0;background:none;padding:0 0 4px;font:500 14px Inter,system-ui,sans-serif;color:var(--mute);cursor:pointer;white-space:nowrap}
+.rc-l:hover{color:var(--ink);text-decoration:underline}
+.rc-l:focus-visible{outline:2px solid #6D4FE3;outline-offset:3px;border-radius:4px}
+@media(max-width:1000px){.rcs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.rcs{grid-template-columns:minmax(0,1fr)}.rc{min-height:130px}}
+
+/* Table cards */
+#v-ex,#v-pos{padding:12px 16px 8px;border-radius:20px}
+#v-ex table,#v-pos table{min-width:760px}
+td small{display:block;margin-top:2px;font-size:12px;color:var(--mute)}
+td:first-child b{color:#171B6B}
+
+/* Status pills */
+.pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:12px;font-weight:600}
+.pill.ok{background:#E3F5EC;color:#14724C}
+.pill.pen{background:#FFF4E0;color:#B26A00}
+.pill.bad{background:#FDECEC;color:#B42318}
+.pill.sub{background:#F0EDFF;color:#4F35D2}
+.pill.vw{background:#EEF0F6;color:#4A5572}
+
+/* Empty message */
+td.none{border:0;background:transparent;padding:40px 16px}
+
+/* =====================================================================
+   MOBILE CARD SIZING (Results & Grades)
+   ===================================================================== */
+@media(max-width:700px){
+  /* 2 columns para mas siksik at hindi mahaba */
+  .rcs{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+
+  .rc{min-height:0!important;padding:12px 14px 12px;border-radius:16px}
+  .rc::before{height:3px}
+  .rc-h{font-size:12.5px;gap:7px}
+  .rc-h svg{width:16px;height:16px}
+
+  /* number sa taas, link sa baba (hindi magkatabi, para hindi sikip) */
+  .rc-f{flex-direction:column;align-items:flex-start;gap:4px;margin-top:8px}
+  .rc-n{font-size:28px}
+  .rc-l{padding:0;font-size:12px;text-align:left;white-space:normal;line-height:1.3}
+
+  /* tabs at table cards */
+  .tabs{gap:6px}
+  #v-ex,#v-pos{padding:8px 10px 6px;border-radius:16px}
+  #v-ex table,#v-pos table{font-size:12.5px}
+  td small{font-size:11px}
+  .pill{font-size:11px;padding:2px 9px}
+}
+
+/* napakaliit na phones */
+@media(max-width:360px){
+  .rcs{grid-template-columns:minmax(0,1fr)!important}
+  .rc-f{flex-direction:row;align-items:flex-end;justify-content:space-between}
+}
+</style></head>
+<body data-role="teacher" data-page="results" data-title="Results &amp; Grades"><script src="auth-guard.js"></script><div class="app"><main class="pg"><section class="vw">
+<div class="ph"><h1>Results &amp; Grades</h1><p>Review quiz, exam and POS training results. Approve retakes for restricted attempts.</p></div>
+<div class="rcs" id="sm"></div>
+<div class="tabs" id="tb"><button class="on" data-t="ex">Quizzes &amp; Exams</button><button data-t="pos">POS Training</button></div>
+<section class="card" id="v-ex"><div class="tw"><table><thead><tr><th>Student</th><th>Activity</th><th>Attempt</th><th>Score</th><th>Status</th><th>Violations</th><th>Submitted</th><th></th></tr></thead><tbody id="eb"></tbody></table></div></section>
+<section class="card" id="v-pos" hidden><div class="tw"><table><thead><tr><th>Student</th><th>Training</th><th>Score</th><th>Mistakes</th><th>Time</th><th>Status</th><th>Date</th></tr></thead><tbody id="pb"></tbody></table></div></section>
+</section></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},VL={TAB_SWITCH:'Tab switch',WINDOW_BLUR:'Window lost focus',EXIT_FULLSCREEN:'Fullscreen exited'};
+  var IC={
+    att:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5h6M9 13l2.2 2.2L15.5 11"/></svg>',
+    avg:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/></svg>',
+    res:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v5.5c0 4.6-3.2 8.2-8 9.5-4.8-1.3-8-4.9-8-9.5V6z"/><path d="M12 8.5v4M12 15.8v.1"/></svg>',
+    ret:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.4L4 8.5M4 4v4.5h4.5M4 13a8 8 0 0 0 14.3 4.4L20 15.5M20 20v-4.5h-4.5"/></svg>'
+  };
+  function keys(p){var o=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf(p)===0)o.push(k)}return o}
+  function when(s){return s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+new Date(s).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'In progress'}
+  function pill(s){var c={PASSED:'ok',FAILED:'pen',RESTRICTED:'bad',IN_PROGRESS:'vw','NOT PASSED':'pen'}[s]||'vw';return '<span class="pill '+c+'">'+s.replace('_',' ')+'</span>'}
+  function setTab(t){
+    [].forEach.call($('tb').children,function(b){b.className=b.getAttribute('data-t')===t?'on':''});
+    $('v-ex').hidden=t!=='ex';$('v-pos').hidden=t!=='pos';
+  }
+  function card(ic,title,val,link){
+    return '<article class="rc"><div class="rc-h">'+IC[ic]+'<span>'+title+'</span></div><div class="rc-f"><span class="rc-n">'+val+'</span><button type="button" class="rc-l" data-go="ex">'+link+'</button></div></article>';
+  }
+  function draw(){
+    var H=[];keys('bshm.hist.').forEach(function(k){(tlsGet(k)||[]).forEach(function(r){H.push(r)})});
+    H.sort(function(a,b){return String(b.started_at).localeCompare(String(a.started_at))});
+    var latest={};H.forEach(function(r){var k=r.exam_id+'|'+r.student_id;if(!latest[k]||r.attempt_number>latest[k])latest[k]=r.attempt_number});
+    var done=H.filter(function(r){return r.percentage!=null}),pend=keys('bshm.retake.').length;
+    var avg=done.length?Math.round(done.reduce(function(s,r){return s+r.percentage},0)/done.length):0;
+    $('sm').innerHTML=
+      card('att','Attempts',H.length,'View attempts')+
+      card('avg','Average',avg+'%','View scores')+
+      card('res','Restricted',H.filter(function(r){return r.status==='RESTRICTED'}).length,'Review restricted')+
+      card('ret','Retakes approved',pend,'View retakes');
+    $('eb').innerHTML=H.length?H.map(function(r){
+      var can=r.status==='RESTRICTED'&&latest[r.exam_id+'|'+r.student_id]===r.attempt_number,ap=tlsGet('bshm.retake.'+r.exam_id),act='';
+      if(can)act=ap?'<span class="pill sub">Retake approved</span><br><button class="bt o s" style="margin-top:6px" data-v="'+r.exam_id+'">Revoke</button>':'<button class="bt s" data-a="'+r.exam_id+'">Approve retake</button>';
+      var lg=(r.violation_log||[]).map(function(v){return (VL[v.type]||v.type)+' (Q'+v.question+')'}).join(', ');
+      return '<tr><td><b>'+tesc(r.student_id)+'</b></td><td>'+tesc(r.exam_title)+(r.is_retake?'<br><small>Retake</small>':'')+'</td><td>'+r.attempt_number+'</td><td>'+(r.percentage!=null?r.score+' / '+r.total+' ('+r.percentage+'%)':'–')+'</td><td>'+pill(r.status)+(r.violation_reason?'<br><small>'+tesc(r.violation_reason)+'</small>':'')+'</td><td>'+r.violation_count+(lg?'<br><small>'+tesc(lg)+'</small>':'')+'</td><td>'+when(r.submitted_at)+'</td><td>'+act+'</td></tr>'}).join(''):'<tr><td colspan="8" class="none">No attempts yet. Results appear after students take a quiz or exam in this browser.</td></tr>';
+    var P=[];keys('bshm.poshist.').forEach(function(k){(tlsGet(k)||[]).forEach(function(r){P.push(r)})});
+    P.sort(function(a,b){return String(b.at).localeCompare(String(a.at))});
+    $('pb').innerHTML=P.length?P.map(function(r){var s=Math.floor(r.time/1000);
+      return '<tr><td><b>'+tesc(r.student)+'</b></td><td>'+tesc(r.title)+'</td><td>'+r.score+'%</td><td>'+r.mistakes+'</td><td>'+Math.floor(s/60)+':'+('0'+s%60).slice(-2)+'</td><td>'+pill(r.status)+'</td><td>'+when(r.at)+'</td></tr>'}).join(''):'<tr><td colspan="7" class="none">No POS training results yet.</td></tr>';
+  }
+  $('sm').onclick=function(e){
+    if(!e.target.closest('[data-go]'))return;
+    setTab('ex');$('v-ex').scrollIntoView({behavior:'smooth',block:'start'});
+  };
+  $('eb').onclick=function(e){var a=e.target.getAttribute('data-a'),v=e.target.getAttribute('data-v');
+    if(a){tlsSet('bshm.retake.'+a,{by:'Prof. Liza Santos',at:new Date().toISOString()});ttoast('Retake approved. The student can take one more attempt.');draw()}
+    if(v){try{localStorage.removeItem('bshm.retake.'+v)}catch(x){}ttoast('Approval revoked.');draw()}};
+  $('tb').onclick=function(e){var t=e.target.getAttribute('data-t');if(t)setTab(t)};
+  window.addEventListener('storage',draw);draw();
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script></body></html>

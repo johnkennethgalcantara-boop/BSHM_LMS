@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<!-- Order matters: later files win. topnav.css + student-enhance.css must stay last. -->
+<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="dashboard-flat.css">
+<link rel="stylesheet" href="topnav.css">
+<link rel="stylesheet" href="student-enhance.css">
+<style>
+.top .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 6px}
+.top .chip{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:999px;
+  background:#efeafd;color:#4535c9;border:1px solid #ddd3fa;font-size:12.5px;font-weight:600;letter-spacing:.01em}
+.top .chip.role{background:linear-gradient(90deg,#4535c9,#6b4de6);color:#fff;border-color:transparent}
+.top .wq{display:block!important;margin:0;font-size:13.5px;font-style:italic;color:#7f85bd}
+</style>
+</head>
+<body data-role="student"><script src="auth-guard.js"></script>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z"/></symbol>
+<symbol id="task" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h6"/></symbol>
+<symbol id="mega" viewBox="0 0 24 24"><path d="M3 11v3a1 1 0 0 0 1 1h3l8 4V6L7 10H4a1 1 0 0 0-1 1zM19 9a4 4 0 0 1 0 6"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+<symbol id="out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></symbol>
+<symbol id="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="bars" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+<symbol id="bld" viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9 21V10M15 21V10M2 10l10-6 10 6z"/></symbol>
+<symbol id="help" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14h3v5H4zM17 14h3v5h-3z"/></symbol>
+<symbol id="fork" viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1-3 4-3 8h3"/></symbol>
+<symbol id="bed" viewBox="0 0 24 24"><path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/></symbol>
+<symbol id="plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></symbol>
+<symbol id="desk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+<symbol id="law" viewBox="0 0 24 24"><path d="M12 3v18M5 21h14M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></symbol>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></symbol>
+</defs></svg>
+
+<div class="app">
+<main class="dash">
+  <div class="top">
+    <div class="wel"><div class="av" id="avInit">&nbsp;</div><div><h1 id="gr">Good day!</h1><div class="chips" id="wpInfo"><span class="chip">BSHM</span></div><p class="wq">“The best preparation for tomorrow is doing your best today.”</p></div></div>
+    <div class="date"><svg class="i"><use href="#cal"/></svg><div id="dt">&nbsp;<small>&nbsp;</small></div></div>
+  </div>
+  <div class="stats">
+    <div class="st"><span class="ic"><svg class="i"><use href="#book"/></svg></span><div class="sx"><div class="sn"><b>5</b><small>Enrolled Courses</small></div><a href="courses.html">View Courses <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#task"/></svg></span><div class="sx"><div class="sn"><b id="sPend">–</b><small>Pending Activities</small></div><a href="activities.html">View Activities <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#star"/></svg></span><div class="sx"><div class="sn"><b id="sAvg">–</b><small>Current Average</small></div><a href="#">View Grades <span class="ar">→</span></a></div></div>
+    <div class="st"><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div class="sx"><div class="sn"><b id="sUp">0</b><small>Upcoming</small></div><a href="calendar.html">View Calendar <span class="ar">→</span></a></div></div>
+  </div>
+
+  <div class="col">
+    <section class="cont" id="o-cont">
+      <svg class="wm"><use href="#fork"/></svg>
+      <span class="kick">Continue learning</span>
+      <h2>Food &amp; Beverage Services <small>BSHM 101</small></h2>
+      <p class="mod">Module 4 — Table Setting &amp; Service</p>
+      <div class="cp"><div class="bar"><i style="width:78%"></i></div><b>78% complete</b></div>
+      <div class="cf"><a class="btn" href="courses.html">Continue Learning <span class="ar">→</span></a><span>Next: Practical Activity #4 · Due May 3</span></div>
+    </section>
+
+    <section class="card" id="o-courses"><div class="h"><svg class="i"><use href="#book"/></svg>My Courses<a href="courses.html">View All Courses <span class="ar">→</span></a></div>
+      <div class="courses" id="courses"></div></section>
+
+    <section class="card" id="o-ann"><div class="h"><svg class="i"><use href="#mega"/></svg>Announcements<a href="announcement.html">View All <span class="ar">→</span></a></div>
+      <ul id="annList">
+        <li class="an hi"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><em class="tg">Important</em><b>BSHM Practical Examination</b><small>The practical exam will be held on May 2.</small><a href="announcement.html">View Announcement <span class="ar">→</span></a></div><time>Apr 22</time></li>
+        <li class="an mid"><span class="ic"><svg class="i"><use href="#file"/></svg></span><div class="tx"><em class="tg">Attention</em><b>OJT Requirements</b><small>Please submit your complete documents.</small><a href="announcement.html">View Announcement <span class="ar">→</span></a></div><time>Apr 20</time></li>
+        <li class="an"><span class="ic"><svg class="i"><use href="#file"/></svg></span><div class="tx"><em class="tg">General</em><b>Enrollment for SY 2025–2026</b><small>The enrollment period is now open.</small><a href="announcement.html">View Announcement <span class="ar">→</span></a></div><time>Apr 24</time></li>
+      </ul></section>
+
+    <section class="card" id="o-rec"><div class="h"><svg class="i"><use href="#clock"/></svg>Recent Activities<a href="activities.html">View All <span class="ar">→</span></a></div>
+      <ul class="rec" id="recList">
+        <li class="hd"><span>Date</span><span>Activity</span><span>Course</span><span>Status</span></li>
+        <li><span></span><span class="ac">No activity yet. Your quiz and exam results will appear here.</span><span></span><span></span></li>
+      </ul></section>
+  </div>
+
+  <div class="col">
+    <section class="card dl" id="o-dl"><div class="h"><svg class="i"><use href="#task"/></svg>Upcoming Deadlines<a href="activities.html">View All <span class="ar">→</span></a></div>
+      <ul id="dlList">
+        <li class="g"><i></i><div><b>All caught up</b><small>No pending activities</small></div><time></time></li>
+      </ul>
+      <div class="up"><span>Today</span>2:00 PM — F&amp;B Practical Activity<span>Tomorrow</span>BSHM 102 Quiz</div></section>
+
+    <section class="card" id="o-perf"><div class="h"><svg class="i"><use href="#star"/></svg>Academic Performance<a href="#">View Grades <span class="ar">→</span></a></div>
+      <div class="pr"><svg viewBox="0 0 44 44" class="ring"><circle cx="22" cy="22" r="18"/><circle class="v" id="pfRing" cx="22" cy="22" r="18" stroke-dasharray="0 113.1" transform="rotate(-90 22 22)"/></svg>
+        <div><b id="pfPct">–</b><small class="up4" id="pfNote">No graded work yet</small></div></div>
+      <div class="hn"><div><small>Highest</small><b id="pfHi">–</b></div><div class="w"><small>Needs attention</small><b id="pfLo">–</b></div></div></section>
+
+    <section class="card" id="o-ql"><div class="h"><svg class="i"><use href="#link"/></svg>Quick Links</div>
+      <div class="ql">
+        <a href="courses.html"><svg class="i"><use href="#book"/></svg>My Courses</a>
+        <a href="activities.html"><svg class="i"><use href="#task"/></svg>Activities</a>
+        <a href="calendar.html"><svg class="i"><use href="#cal"/></svg>Calendar</a>
+        <a href="resources.html"><svg class="i"><use href="#file"/></svg>Resources</a>
+        <a href="announcement.html"><svg class="i"><use href="#mega"/></svg>Announcements</a>
+        <a href="profile.html"><svg class="i"><use href="#user"/></svg>Profile</a>
+      </div></section>
+
+    <div class="fw" id="o-feat">
+      <div class="fh"><span>Featured course</span><b>Food &amp; Beverage Services</b></div>
+      <div class="show" id="show" role="region" aria-roledescription="carousel" aria-label="BSHM highlights">
+        <div class="track" id="track"></div>
+        <button class="nav prev" id="prev" aria-label="Previous slide">‹</button>
+        <button class="nav next" id="next" aria-label="Next slide">›</button>
+        <div class="dots" id="dots"></div>
+      </div>
+      <div class="ff"><span>Module 4: Table Service · 78% complete</span><a href="courses.html">Continue Learning <span class="ar">→</span></a></div>
+    </div>
+
+    <section class="card" id="o-cal"><div class="h"><svg class="i"><use href="#cal"/></svg>Calendar<a href="calendar.html">Full Calendar <span class="ar">→</span></a></div>
+      <div class="mo"><span>‹</span><i id="calMonth">April 2025</i><span>›</span></div>
+      <div class="mg" id="mg"></div>
+      <div class="ev"><div><b>F&amp;B Services (Lecture)</b><small>10:00 AM – 12:00 PM</small></div></div>
+      <div class="ev"><div><b>Tourism Management (Discussion)</b><small>1:00 PM – 3:00 PM</small></div></div>
+      <div class="ev"><div><b>Practical: Table Setting</b><small>4:00 PM – 6:00 PM</small></div></div></section>
+  </div>
+</main>
+</div>
+<script src="aces-store.js"></script>
+<script src="banners.js"></script>
+<script src="student.js"></script>
+<script src="shell.js"></script>
+
+<!-- ===== Logged-in user: replaces the hardcoded "Juan Dela Cruz" everywhere on this page ===== -->
+<script>
+(function(){
+  function getSession(){
+    try{
+      if(window.ACES){
+        var fns=['getSession','session','currentUser','getUser','getCurrentUser'];
+        for(var i=0;i<fns.length;i++){
+          if(typeof ACES[fns[i]]==='function'){var s=ACES[fns[i]](); if(s) return s;}
+        }
+      }
+    }catch(e){}
+    return null;
+  }
+
+  function userInfo(){
+    var s=getSession();
+    if(!s) return null;
+    var parts=String(s.fullName||s.name||'').trim().split(/\s+/);
+    var first=s.firstName||parts[0]||'';
+    var last=s.lastName||(s.firstName?'':(parts.length>1?parts[parts.length-1]:''));
+    var initials=((first[0]||'')+(last[0]||'')).toUpperCase()||String(s.initials||'').toUpperCase();
+    return {
+      first:first,
+      last:last,
+      nav:last?(last+', '+first):first,
+      initials:initials||'?',
+      id:s.studentId||s.id||''
+    };
+  }
+  window.ACES_USER=userInfo;
+
+  var U=userInfo();
+  if(!U) return;
+
+  function patch(){
+    var av=document.getElementById('avInit');
+    if(av&&av.textContent!==U.initials) av.textContent=U.initials;
+
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null);
+    var list=[],n;
+    while((n=w.nextNode())){
+      var p=n.parentNode&&n.parentNode.nodeName;
+      if(p==='SCRIPT'||p==='STYLE') continue;
+      list.push(n);
+    }
+    list.forEach(function(t){
+      var v=t.nodeValue;
+      if(/Dela Cruz,\s*Juan/.test(v)) t.nodeValue=v.replace(/Dela Cruz,\s*Juan/g,U.nav);
+      else if(/Juan Dela Cruz/.test(v)) t.nodeValue=v.replace(/Juan Dela Cruz/g,(U.first+' '+U.last).trim());
+      else if(v.trim()==='JD'&&U.initials!=='JD') t.nodeValue=v.replace('JD',U.initials);
+    });
+  }
+
+  var queued=false;
+  function schedule(){
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(function(){queued=false;patch();});
+  }
+  patch();
+  document.addEventListener('DOMContentLoaded',patch);
+  window.addEventListener('load',patch);
+  new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
+<!-- ===== Welcome chips (BSHM · Student · ID) ===== -->
+<script>
+(function(){
+  var box=document.getElementById('wpInfo'),U=window.ACES_USER&&window.ACES_USER();
+  if(!box)return;
+  function chip(t,c){var s=document.createElement('span');s.className='chip'+(c?' '+c:'');s.textContent=t;box.appendChild(s)}
+  box.innerHTML='';
+  chip('BSHM');
+  chip('Student','role');
+  if(U&&U.id)chip('ID: '+U.id);
+})();
+</script>
+
+<!-- ===== Live data: reads the same localStorage the teacher pages write ===== -->
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  function get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var lc=function(s){return String(s==null?'':s).trim().toLowerCase()};
+  var avg=function(a){return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length):null};
+
+  /* Results are saved as "First Last". Take it from the logged-in session first,
+     and fall back to the navbar text ("Last, First") if there is no session. */
+  function me(){
+    var U=window.ACES_USER&&window.ACES_USER();
+    if(U&&U.first) return (U.first+' '+U.last).trim();
+    var u=document.querySelector('.user b'),n=u?u.textContent.trim():'',m=n.match(/^([^,]+),\s*(.+)$/);
+    return m?m[2]+' '+m[1]:n;
+  }
+
+  /* Built-in activities. Keep in sync with the list in activities.js. */
+  var BUILTIN=[
+    {id:'assignment-001',type:'assignment',title:'Food & Beverage Service Reflection',course:'BSHM 101',due:'May 3',st:'In Progress'},
+    {id:'assignment-002',type:'assignment',title:'Housekeeping Procedure Checklist',course:'BSHM 104',due:'May 8',st:'Completed'},
+    {id:'quiz-001',type:'quiz',title:'Hospitality Operations Quiz',course:'BSHM 102',due:'May 3'},
+    {id:'quiz-002',type:'quiz',title:'Tourism Basics Quiz',course:'BSHM 103',due:'May 6'},
+    {id:'exam-001',type:'exam',title:'Midterm Examination',course:'BSHM 103',due:'May 12'},
+    {id:'practical-001',type:'practical',title:'Table Setting Practical',course:'BSHM 101',due:'May 5',st:'Due Soon'},
+    {id:'practical-002',type:'practical',title:'Bed Making Demonstration',course:'BSHM 104',due:'May 10',st:'Not Started'}
+  ];
+
+  function allActs(){
+    var L=BUILTIN.slice();
+    (get('bshm.act.custom')||[]).forEach(function(c){
+      if(!c||!c.act||!c.act.id)return;
+      L.push({id:c.act.id,type:c.act.type,title:c.act.title,course:c.act.course,due:String(c.act.due||'').replace(/^Due\s*/i,''),custom:true});
+    });
+    (get('bshm.pos.custom')||[]).forEach(function(p){
+      if(!p||!p.title)return;
+      L.push({id:'pos:'+p.title,type:'pos',pos:true,title:p.title,course:p.course,due:String(p.due||'').replace(/^Due\s*/i,'')});
+    });
+    return L;
+  }
+
+  function isPending(a){
+    if(a.type==='quiz'||a.type==='exam'){
+      var s=get('bshm.exam.'+a.id);
+      if(!s||!s.submitted)return true;
+      return !!(s.result&&s.result.status==='RESTRICTED'&&get('bshm.retake.'+a.id));
+    }
+    return a.st!=='Completed';
+  }
+
+  function dueDate(str){
+    var m=/^([A-Za-z]{3,9})\.?\s+(\d{1,2})(?:,?\s*(\d{4}))?$/.exec(String(str||'').trim());
+    if(!m)return null;
+    var now=new Date(),y=m[3]?+m[3]:now.getFullYear(),d=new Date(m[1]+' '+m[2]+', '+y);
+    if(isNaN(d))return null;
+    if(!m[3]&&d<now-183*864e5)d.setFullYear(y+1);
+    return d;
+  }
+
+  function mine(){
+    var who=lc(me()),H=[],P=[];
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(k.indexOf('bshm.hist.')===0)(get(k)||[]).forEach(function(r){if(lc(r.student_id)===who)H.push(r)});
+      else if(k.indexOf('bshm.poshist.')===0)(get(k)||[]).forEach(function(r){if(lc(r.student)===who)P.push(r)});
+    }
+    return {H:H,P:P};
+  }
+
+  function gbFinals(){
+    var W=get('bshm.gb.w')||{q:30,e:40,p:30},t=W.q+W.e+W.p,who=lc(me()),out={};
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(k.indexOf('bshm.gb.')!==0||k==='bshm.gb.w')continue;
+      var G=get(k)||{},row=null;
+      Object.keys(G).forEach(function(n){if(lc(n)===who)row=G[n]});
+      if(row&&row.q!=null&&row.e!=null&&row.p!=null&&t)
+        out[k.slice(8)]=Math.round((row.q*W.q+row.e*W.e+row.p*W.p)/t*10)/10;
+    }
+    return out;
+  }
+
+  function render(){
+    var acts=allActs(),byId={};acts.forEach(function(a){byId[a.id]=a});
+    var R=mine(),now=new Date();
+
+    var h=now.getHours(),U=window.ACES_USER&&window.ACES_USER(),first=U?U.first:(me().split(' ')[0]||'');
+    $('gr').textContent='Good '+(h<12?'morning':h<18?'afternoon':'evening')+(first?', '+first:'')+'!';
+    $('dt').innerHTML=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+
+      '<small>'+now.toLocaleDateString('en-US',{weekday:'long'})+', '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})+'</small>';
+    var cm0=$('calMonth');if(cm0)cm0.textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+
+    var latest={};
+    R.H.forEach(function(r){
+      if(r.status==='IN_PROGRESS')return;
+      if(!latest[r.exam_id]||r.attempt_number>=latest[r.exam_id].attempt_number)latest[r.exam_id]=r;
+    });
+    var graded=Object.keys(latest).map(function(k){return latest[k]}).filter(function(r){return r.percentage!=null});
+    var posScores=R.P.filter(function(r){return r.score!=null&&r.status!=='IN_PROGRESS'}).map(function(r){return r.score});
+    var scores=graded.map(function(r){return r.percentage}).concat(posScores);
+
+    var gb=gbFinals(),gbKeys=Object.keys(gb);
+    var a=gbKeys.length?avg(gbKeys.map(function(k){return gb[k]})):avg(scores);
+
+    var donePos={};
+    R.P.forEach(function(r){if(r.status==='PASSED')donePos[r.title]=1});
+    var pend=acts.filter(function(x){return x.pos?!donePos[x.title]:isPending(x)});
+
+    $('sPend').textContent=pend.length;
+    $('sAvg').textContent=a==null?'–':a+'%';
+    $('sUp').textContent=pend.filter(function(x){
+      var d=dueDate(x.due);if(!d)return false;var days=(d-now)/864e5;return days>=-1&&days<=7;
+    }).length;
+
+    $('pfPct').textContent=a==null?'–':a+'%';
+    $('pfRing').setAttribute('stroke-dasharray',(a==null?0:Math.min(100,a)/100*113.1).toFixed(1)+' 113.1');
+    $('pfNote').textContent=(gbKeys.length||scores.length)?'Based on teacher gradebook & results':'No graded work yet';
+
+    var by={};
+    graded.forEach(function(r){
+      var c=r.course||(byId[r.exam_id]||{}).course;
+      if(c)(by[c]=by[c]||[]).push(r.percentage);
+    });
+    var cm={};Object.keys(by).forEach(function(c){cm[c]=avg(by[c])});
+    gbKeys.forEach(function(c){cm[c]=Math.round(gb[c])});
+    var cs=Object.keys(cm).map(function(c){return [c,cm[c]]}).sort(function(x,y){return y[1]-x[1]});
+    $('pfHi').textContent=cs.length?cs[0][0]+' — '+cs[0][1]+'%':'–';
+    $('pfLo').textContent=cs.length>1?cs[cs.length-1][0]+' — '+cs[cs.length-1][1]+'%':'–';
+
+    var far=8e15;
+    var dl=pend.map(function(x){var d=dueDate(x.due);return {a:x,d:d,t:d?d.getTime():far}}).sort(function(p,q){return p.t-q.t}).slice(0,3);
+    $('dlList').innerHTML=dl.length?dl.map(function(x){
+      var days=x.d?(x.d-now)/864e5:99,cls=days<=3?'r':days<=7?'o':'g';
+      return '<li class="'+cls+'"><i></i><div><b>'+esc(x.a.title)+'</b><small>'+esc(x.a.course)+'</small></div><time>'+(x.a.due?'Due '+esc(x.a.due):'No due date')+'</time></li>';
+    }).join(''):'<li class="g"><i></i><div><b>All caught up</b><small>No pending activities</small></div><time></time></li>';
+
+    var rows=R.H.map(function(r){
+      var t=(byId[r.exam_id]||{}).type||(/quiz/i.test(r.exam_id)?'quiz':'exam');
+      return {at:r.submitted_at||r.started_at,what:(t==='quiz'?'Quiz: ':'Exam: ')+r.exam_title,c:r.course||(byId[r.exam_id]||{}).course||'–',s:r.status};
+    }).concat(R.P.map(function(r){return {at:r.at,what:'POS: '+r.title,c:r.course||'–',s:r.status}}));
+    rows.sort(function(x,y){return String(y.at).localeCompare(String(x.at))});
+    var pill={PASSED:['ok','Passed'],FAILED:['pen','Failed'],RESTRICTED:['pen','Restricted'],PENDING:['sub','Submitted'],IN_PROGRESS:['pen','In Progress'],'NOT PASSED':['pen','Not passed']};
+    $('recList').innerHTML='<li class="hd"><span>Date</span><span>Activity</span><span>Course</span><span>Status</span></li>'+
+      (rows.length?rows.slice(0,5).map(function(r){
+        var p=pill[r.s]||['sub',String(r.s||'').replace('_',' ')];
+        return '<li><span>'+(r.at?new Date(r.at).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'–')+'</span><span class="ac">'+esc(r.what)+'</span><span>'+esc(r.c)+'</span><span class="pill '+p[0]+'">'+esc(p[1])+'</span></li>';
+      }).join(''):'<li><span></span><span class="ac">No activity yet. Your quiz and exam results will appear here.</span><span></span><span></span></li>');
+
+    var ul=$('annList');
+    Array.prototype.slice.call(ul.querySelectorAll('li[data-live]')).forEach(function(n){n.remove()});
+    (get('bshm.ann.custom')||[]).slice(-2).reverse().forEach(function(x){
+      var title=x.title||x.subject||x.heading;
+      if(!title)return;
+      var body=x.body||x.message||x.text||x.desc||x.content||'',
+          pr=lc(x.priority||x.tag||x.type||x.category),
+          cls=/import|urgent|high/.test(pr)?' hi':/attent|medium|mid/.test(pr)?' mid':'',
+          tag=/import|urgent|high/.test(pr)?'Important':/attent|medium|mid/.test(pr)?'Attention':'General',
+          dt=new Date(x.date||x.at||x.created||x.createdAt||''),
+          when=isNaN(dt)?'':dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      var li=document.createElement('li');
+      li.className='an'+cls;li.setAttribute('data-live','1');
+      li.innerHTML='<span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><em class="tg">'+tag+'</em><b>'+esc(title)+'</b><small>'+esc(String(body).slice(0,140))+'</small><a href="announcement.html">View Announcement <span class="ar">→</span></a></div><time>'+esc(when)+'</time>';
+      ul.insertBefore(li,ul.firstChild);
+    });
+  }
+
+  render();
+  window.addEventListener('storage',render);
+  window.addEventListener('pageshow',render);
+  setInterval(render,60000);
+})();
+</script>
+  <script src="chat.js"></script>
+  <script src="prefs.js"></script>
+</body></html>

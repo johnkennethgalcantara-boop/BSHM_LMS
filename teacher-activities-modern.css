@@ -1,0 +1,292 @@
+  /* teacher-activities-v2.css
+    Step-by-step Create Quiz / Exam wizard. Load AFTER teacher-activities-modern.css.
+    Everything is scoped to body[data-page="activities"], so no other page is affected. */
+
+  body[data-page="activities"] .wz [hidden],
+  body[data-page="activities"] .wz-mdl[hidden],
+  body[data-page="activities"] .wz-dbn[hidden]{display:none!important}
+
+  /* ===== Wizard card ===== */
+  body[data-page="activities"] .wz{
+    background:#fff;border:1px solid #ECE8FF;border-radius:20px;box-shadow:var(--t-sh);overflow:hidden;
+  }
+  body[data-page="activities"] .wz-pn{padding:22px 24px 24px}
+  body[data-page="activities"] .wz-hd{margin-bottom:16px}
+  body[data-page="activities"] .wz-hd.wz-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  body[data-page="activities"] .wz-hd h2{margin:0;font-size:18px;font-weight:650;letter-spacing:-.01em;color:var(--ink)}
+  body[data-page="activities"] .wz-hd p{margin:3px 0 0;font-size:13px;color:var(--mute)}
+
+  /* ===== Stepper ===== */
+  body[data-page="activities"] .wz-bar{padding:14px 24px;border-bottom:1px solid #F0EEFA;background:#FBFAFF}
+  body[data-page="activities"] .wz-steps{display:flex;align-items:center;list-style:none;margin:0;padding:0}
+  body[data-page="activities"] .wz-steps li{display:flex;align-items:center;flex:1}
+  body[data-page="activities"] .wz-steps li:last-child{flex:none}
+  body[data-page="activities"] .wz-steps li:not(:last-child)::after{content:"";flex:1;height:2px;margin:0 10px;border-radius:2px;background:#E6E1FA}
+  body[data-page="activities"] .wz-steps li.wz-dn::after{background:#6D3FEA}
+  body[data-page="activities"] .wz-step{
+    display:flex;align-items:center;gap:10px;padding:5px 10px 5px 5px;border:0;border-radius:999px;
+    background:transparent;color:var(--mute);font:600 13.5px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap;
+    transition:background .15s,color .15s;
+  }
+  body[data-page="activities"] .wz-step:hover{background:#F0EDFF;color:var(--ink)}
+  body[data-page="activities"] .wz-step .wz-num{
+    width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    background:#EEEAFE;color:#6D3FEA;font-weight:700;font-size:13px;
+  }
+  body[data-page="activities"] .wz-step.on{color:var(--ink)}
+  body[data-page="activities"] .wz-step.on .wz-num{background:var(--t-grad);color:#fff;box-shadow:0 4px 10px -4px rgba(79,63,208,.6)}
+  body[data-page="activities"] .wz-step.ok .wz-num{background:#16A34A;color:#fff;font-size:0}
+  body[data-page="activities"] .wz-step.ok .wz-num::before{content:"\2713";font-size:14px}
+  body[data-page="activities"] .wz-step.lk{opacity:.55}
+  body[data-page="activities"] .wz-step:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+  body[data-page="activities"] .wz-pm{display:none}
+
+  /* ===== Fields (shared by wizard + question editor) ===== */
+  body[data-page="activities"] .wf .fm{gap:14px 16px}
+  body[data-page="activities"] .wf .fm input:not([type="checkbox"]):not([type="radio"]),
+  body[data-page="activities"] .wf .fm select{height:44px}
+  body[data-page="activities"] .wf .fm textarea{min-height:68px;padding:11px 16px}
+  body[data-page="activities"] .wf .fm label{margin-bottom:6px}
+  body[data-page="activities"] .wz-opt{font-weight:500;color:var(--mute);font-size:12px;margin-left:4px}
+  body[data-page="activities"] .wz-lnk{
+    border:0;background:none;padding:0;color:#6D3FEA;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:2px;
+  }
+  body[data-page="activities"] .wz-lnk:hover{color:#4F35D2}
+
+  /* 6-column grid inside the wizard so fields can sit 3-up / 2-up / full */
+  body[data-page="activities"] .wz .fm{grid-template-columns:repeat(6,minmax(0,1fr))}
+  body[data-page="activities"] .wz .fm > *{grid-column:span 6}
+  body[data-page="activities"] .wz .fm > .wz-c2{grid-column:span 2}
+  body[data-page="activities"] .wz .fm > .wz-c3{grid-column:span 3}
+
+  /* ===== Step 3: anti-cheat ===== */
+  body[data-page="activities"] .fm label.ck{
+    display:flex;align-items:center;gap:12px;margin:0;height:46px;padding:0 16px;
+    border:1px solid #E4DDFB;border-radius:12px;background:#fff;box-shadow:none;line-height:1.2;
+    font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;
+  }
+  body[data-page="activities"] .fm label.ck:has(input:checked){background:#F4F0FF;border-color:#CFC2F7;box-shadow:none}
+  body[data-page="activities"] .fm label.ck input{margin:0;flex:none;width:20px;height:20px;padding:0;box-shadow:none}
+  body[data-page="activities"] .fm label.ck.wz-big{height:56px;font-size:15px;background:#F4F0FF;border-color:#CFC2F7}
+  body[data-page="activities"] #ac-more{display:flex;flex-direction:column;gap:12px}
+  body[data-page="activities"] #ac-more > .ck,
+  body[data-page="activities"] .wz .fm > .ck{align-self:stretch}
+  body[data-page="activities"] .wz-adv{border:1px solid #ECE8FF;border-radius:12px;background:#fff}
+  body[data-page="activities"] .wz-adv summary{
+    list-style:none;cursor:pointer;padding:12px 16px;font-size:14px;font-weight:600;color:var(--ink);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  body[data-page="activities"] .wz-adv summary::-webkit-details-marker{display:none}
+  body[data-page="activities"] .wz-adv summary::after{
+    content:"";width:8px;height:8px;border-right:2px solid #7C7CA8;border-bottom:2px solid #7C7CA8;
+    transform:rotate(45deg);margin-right:4px;transition:transform .15s;
+  }
+  body[data-page="activities"] .wz-adv[open] summary::after{transform:rotate(-135deg)}
+  body[data-page="activities"] .wz-adv .wz-inner{padding:2px 16px 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:14px 16px;align-items:start}
+  body[data-page="activities"] .wz-adv .wz-inner .ck{align-self:start;margin-top:25px}
+  body[data-page="activities"] .wz-note{margin:0;padding:12px 16px;border-radius:12px;background:#FFF6E8;color:#9A5B07;font-size:13px}
+
+  /* ===== Step 2: question cards ===== */
+  body[data-page="activities"] #ql{display:flex;flex-direction:column;gap:8px;max-height:max(230px,calc(100vh - 540px));overflow-y:auto;padding:2px}
+  body[data-page="activities"] .wz-qtb{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  body[data-page="activities"] .wz-qtb input,
+  body[data-page="activities"] .wz-qtb select{height:40px;border:0;border-radius:12px;background:#F6F5FF;color:var(--ink);font:500 13.5px Inter,system-ui,sans-serif;padding:0 14px;box-sizing:border-box}
+  body[data-page="activities"] .wz-qtb input{flex:1 1 220px;max-width:340px}
+  body[data-page="activities"] .wz-qtb select{-webkit-appearance:none;appearance:none;padding-right:32px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237C7CA8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+  body[data-page="activities"] .wz-qtb input:focus,
+  body[data-page="activities"] .wz-qtb select:focus{outline:0;background-color:#fff;box-shadow:0 0 0 3px rgba(75,59,214,.2)}
+  body[data-page="activities"] .wz-qtb span{font-size:12.5px;color:var(--mute)}
+  body[data-page="activities"] .wz-qc[draggable="true"]{cursor:grab}
+  body[data-page="activities"] .wz-qc.wz-drag{opacity:.45}
+  body[data-page="activities"] .wz-qc.wz-over{box-shadow:inset 0 0 0 2px #6D3FEA;background:#F4F0FF}
+  body[data-page="activities"] .wz-qc{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;
+    background:#fff;box-shadow:inset 0 0 0 1px #ECE8FF;transition:box-shadow .15s,background .15s;
+  }
+  body[data-page="activities"] .wz-qc:hover{background:#FBFAFF;box-shadow:inset 0 0 0 1px #CFC6F5}
+  body[data-page="activities"] .wz-qc .wz-qn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#EEEAFE;color:#6D3FEA;font-weight:700;font-size:13px}
+  body[data-page="activities"] .wz-qbody{
+    flex:1;min-width:0;text-align:left;border:0;background:none;padding:2px 4px;cursor:pointer;
+    font:inherit;color:inherit;border-radius:8px;
+  }
+  body[data-page="activities"] .wz-qbody b{display:block;font-size:14px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body[data-page="activities"] .wz-qbody small{display:block;margin-top:2px;font-size:12.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body[data-page="activities"] .wz-qbody:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+  body[data-page="activities"] .wz-tg{flex:none;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700}
+  body[data-page="activities"] .wz-tg.mc{background:#E8E0FF;color:#5B2FD6}
+  body[data-page="activities"] .wz-tg.es{background:#DDF3E5;color:#15803D}
+  body[data-page="activities"] .wz-ptx{flex:none;min-width:48px;text-align:right;font-size:12.5px;font-weight:600;color:var(--ink)}
+  body[data-page="activities"] .wz-qa{flex:none;display:flex;gap:4px}
+  body[data-page="activities"] .wz-ib{
+    height:30px;min-width:30px;padding:0 9px;border:0;border-radius:8px;background:#F3F1FD;color:#4A4A7A;
+    font:600 12px Inter,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s;
+  }
+  body[data-page="activities"] .wz-ib:hover:not(:disabled){background:#E4DDFB;color:var(--ink)}
+  body[data-page="activities"] .wz-ib.wz-dl:hover:not(:disabled){background:#FDECEC;color:#B42318}
+  body[data-page="activities"] .wz-ib:disabled{opacity:.35;cursor:default}
+  body[data-page="activities"] .wz-ib:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+  body[data-page="activities"] #ql .none{padding:28px 16px;line-height:2}
+
+  /* ===== Step 4: review ===== */
+  body[data-page="activities"] .wz-rv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+  body[data-page="activities"] .wz-rb{padding:14px 16px;border:1px solid #ECE8FF;border-radius:14px;background:#FDFCFF}
+  body[data-page="activities"] .wz-rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:14px;color:var(--ink)}
+  body[data-page="activities"] .wz-rb dl{margin:0}
+  body[data-page="activities"] .wz-rb dl > div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid #F3F1FB;font-size:13px}
+  body[data-page="activities"] .wz-rb dl > div:first-child{border-top:0}
+  body[data-page="activities"] .wz-rb dt{color:var(--mute);flex:none}
+  body[data-page="activities"] .wz-rb dd{margin:0;color:var(--ink);font-weight:600;text-align:right;overflow-wrap:anywhere}
+  body[data-page="activities"] .wz-rb .wz-adv{margin-top:8px}
+  body[data-page="activities"] .wz-rb .wz-adv summary{padding:9px 12px;font-size:13px}
+  body[data-page="activities"] .wz-rq{margin:0;padding:0 12px 10px 32px;max-height:150px;overflow:auto;font-size:12.5px;color:var(--body)}
+  body[data-page="activities"] .wz-rq li{padding:3px 0}
+  body[data-page="activities"] .wz-rq span{color:var(--mute);font-weight:600;margin-left:4px}
+
+  /* ===== Footer ===== */
+  body[data-page="activities"] .wz-ft{display:flex;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid #F0EEFA;background:#FBFAFF}
+  body[data-page="activities"] .wz-sp{flex:1}
+  body[data-page="activities"] .wz .bt,
+  body[data-page="activities"] .wz-mp .bt{height:42px;padding:0 20px}
+  body[data-page="activities"] .wz .bt.s{height:34px}
+  body[data-page="activities"] .wz .bt:disabled{opacity:.5;cursor:default}
+
+  /* ===== Draft banner ===== */
+  body[data-page="activities"] .wz-dbn{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    margin-bottom:14px;padding:10px 12px 10px 16px;border-radius:14px;background:#F4F0FF;box-shadow:inset 0 0 0 1px #DDD3FA;
+    font-size:13.5px;font-weight:600;color:var(--ink);
+  }
+  body[data-page="activities"] .wz-dba{display:flex;gap:8px}
+
+  /* ===== Question editor modal ===== */
+  body[data-page="activities"] .wz-mdl{
+    position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;background:rgba(27,27,94,.42);
+  }
+  body[data-page="activities"] .wz-mp{
+    width:100%;max-width:620px;max-height:calc(100vh - 48px);display:flex;flex-direction:column;
+    background:#fff;border-radius:20px;box-shadow:0 24px 60px -20px rgba(27,27,94,.55);overflow:hidden;
+  }
+  body[data-page="activities"] .wz-mh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #F0EEFA}
+  body[data-page="activities"] .wz-mh h2{margin:0;font-size:17px;font-weight:650;color:var(--ink)}
+  body[data-page="activities"] .wz-x{width:32px;height:32px;border:0;border-radius:50%;background:#F3F1FD;color:#4A4A7A;font-size:20px;line-height:1;cursor:pointer}
+  body[data-page="activities"] .wz-x:hover{background:#E4DDFB}
+  body[data-page="activities"] .wz-mb{padding:18px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+  body[data-page="activities"] .wz-mf{display:flex;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #F0EEFA;background:#FBFAFF}
+
+  body[data-page="activities"] .wz-seg{display:inline-flex;align-self:flex-start;padding:4px;gap:4px;border-radius:999px;background:#F3F1FD}
+  body[data-page="activities"] .wz-seg button{
+    height:34px;padding:0 16px;border:0;border-radius:999px;background:transparent;
+    font:600 13px Inter,system-ui,sans-serif;color:#6B6B9A;cursor:pointer;transition:background .15s,color .15s;
+  }
+  body[data-page="activities"] .wz-seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(75,59,214,.18)}
+  body[data-page="activities"] .wz-seg button:focus-visible{outline:2px solid #6D4FE3;outline-offset:2px}
+
+  body[data-page="activities"] .wz-ops{display:flex;flex-direction:column;gap:8px}
+  body[data-page="activities"] .wz-op{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center}
+  body[data-page="activities"] .wz-op .wz-ol{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#F0EDFF;color:#6D3FEA;font-weight:700;font-size:12.5px;transition:background .15s,color .15s}
+  body[data-page="activities"] .wz-op:has(input[type="radio"]:checked) .wz-ol{background:#16A34A;color:#fff}
+  body[data-page="activities"] .fm .wz-rd{
+    display:flex;align-items:center;gap:8px;margin:0;padding:0 12px;height:44px;border-radius:12px;
+    background:#F6F5FF;font-size:12.5px;font-weight:600;color:var(--mute);cursor:pointer;white-space:nowrap;
+  }
+  body[data-page="activities"] .fm .wz-rd input{width:18px;height:18px;margin:0;padding:0;border:0;box-shadow:none;background:none;accent-color:#16A34A;cursor:pointer}
+  body[data-page="activities"] .fm .wz-rd:has(input:checked){background:#E8F7EE;color:#15803D}
+
+  body[data-page="activities"] .tt{z-index:300;bottom:24px}
+
+  /* ===== Tablet ===== */
+  @media (max-width:1000px){
+    body[data-page="activities"] .wz-rv{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    body[data-page="activities"] .wz-rv .wz-rb:last-child{grid-column:1/-1}
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width:767px){
+    body[data-page="activities"] .wz-bar{padding:12px 16px}
+    body[data-page="activities"] .wz-step .wz-lbl{display:none}
+    body[data-page="activities"] .wz-step{padding:3px}
+    body[data-page="activities"] .wz-steps li:not(:last-child)::after{margin:0 4px}
+    body[data-page="activities"] .wz-pm{display:block;margin-top:10px}
+    body[data-page="activities"] .wz-pm span{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+    body[data-page="activities"] .wz-pm i{display:block;height:4px;border-radius:4px;background:#E6E1FA;overflow:hidden}
+    body[data-page="activities"] .wz-pm u{display:block;height:100%;border-radius:4px;background:var(--t-grad);text-decoration:none;transition:width .2s}
+    body[data-page="activities"] .wz-pn{padding:18px 16px 20px}
+    body[data-page="activities"] .wz .fm > .wz-c2,
+    body[data-page="activities"] .wz .fm > .wz-c3{grid-column:span 6}
+    body[data-page="activities"] .wz-adv .wz-inner{grid-template-columns:minmax(0,1fr)}
+    body[data-page="activities"] .wz-adv .wz-inner .ck{margin-top:0}
+    body[data-page="activities"] .wz-qc{flex-wrap:wrap}
+    body[data-page="activities"] .wz-qbody{flex:1 1 60%}
+    body[data-page="activities"] .wz-ptx{flex:1;min-width:0;text-align:left;padding-left:42px}
+    body[data-page="activities"] .wz-qa{margin-left:auto}
+    body[data-page="activities"] .wz-rv{grid-template-columns:minmax(0,1fr)}
+    body[data-page="activities"] .wz-ft{padding:12px 16px;flex-wrap:wrap}
+    body[data-page="activities"] .wz-ft .wz-sp{display:none}
+    body[data-page="activities"] .wz-ft .bt{flex:1 1 auto}
+    body[data-page="activities"] .wz-op{grid-template-columns:28px minmax(0,1fr)}
+    body[data-page="activities"] .wz-op .wz-rd{grid-column:2;justify-self:start;height:38px}
+    body[data-page="activities"] .wz-mf{flex-wrap:wrap}
+    body[data-page="activities"] .wz-mf .wz-sp{display:none}
+    body[data-page="activities"] .wz-mf .bt{flex:1 1 auto}
+    body[data-page="activities"] .tt{bottom:84px}
+  }
+
+  /* ===== FIX: active step number was invisible (white on white) =====
+   Paste at the very END of teacher-activities-v2.css */
+body[data-page="activities"] .wz-step.on .wz-num{
+  background-color:#5B3FE0 !important;
+  background-image:linear-gradient(135deg,#7C4DFF,#4F3FD0) !important;
+  color:#fff !important;
+  box-shadow:0 4px 10px -4px rgba(79,63,208,.6);
+}
+body[data-page="activities"] .wz-pm u{
+  background:linear-gradient(90deg,#7C4DFF,#4F3FD0) !important;
+}
+
+/* ===== Review step upgrades — paste at the END of teacher-activities-v2.css ===== */
+body[data-page="activities"] .wz-chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+body[data-page="activities"] .wz-chip.g{background:#E8F7EE;color:#15803D}
+body[data-page="activities"] .wz-chip.n{background:#F3F1FD;color:#6B6B9A}
+body[data-page="activities"] .wz-chip.p{background:#E8E0FF;color:#5B2FD6}
+body[data-page="activities"] .wz-chip.w{background:#FFF1DB;color:#9A5B07}
+
+/* readiness checklist */
+body[data-page="activities"] .wz-rv > .wz-ck{grid-column:1/-1;background:#FBFAFF}
+body[data-page="activities"] .wz-ck .wz-rh{margin-bottom:10px}
+body[data-page="activities"] .wz-cl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+body[data-page="activities"] .wz-cl li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink);line-height:1.4}
+body[data-page="activities"] .wz-ci{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800}
+body[data-page="activities"] .wz-ci.ok{background:#16A34A;color:#fff}
+body[data-page="activities"] .wz-ci.ok::before{content:"\2713"}
+body[data-page="activities"] .wz-ci.wn{background:#F59E0B;color:#fff}
+body[data-page="activities"] .wz-ci.wn::before{content:"!"}
+
+/* third column stack */
+body[data-page="activities"] .wz-rc{display:flex;flex-direction:column;gap:14px;min-width:0}
+body[data-page="activities"] .wz-plain{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:#F4F0FF;color:#4A4A7A;font-size:12.5px;line-height:1.5}
+
+/* question list */
+body[data-page="activities"] .wz-rl{list-style:none;margin:0;padding:0 12px 10px;max-height:220px;overflow:auto}
+body[data-page="activities"] .wz-rl li{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #F3F1FB;font-size:12.5px}
+body[data-page="activities"] .wz-rl li:first-child{border-top:0}
+body[data-page="activities"] .wz-rn{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#EEEAFE;color:#6D3FEA;font-weight:700;font-size:11.5px}
+body[data-page="activities"] .wz-rt{flex:1;min-width:0;color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-page="activities"] .wz-rp{flex:none;color:var(--mute);font-weight:600}
+body[data-page="activities"] .wz-rl .wz-tg{padding:2px 8px;font-size:11px}
+
+/* student preview */
+body[data-page="activities"] .wz-pvc{padding:14px;border:1px solid #E4DDFB;border-radius:14px;background:#fff;box-shadow:0 6px 16px -10px rgba(79,63,208,.35)}
+body[data-page="activities"] .wz-pvt{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:var(--mute)}
+body[data-page="activities"] .wz-pvc h4{margin:10px 0 4px;font-size:15px;font-weight:650;color:var(--ink);overflow-wrap:anywhere}
+body[data-page="activities"] .wz-pvc p{margin:0 0 8px;font-size:12.5px;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+body[data-page="activities"] .wz-pvm{font-size:12.5px;color:var(--ink);font-weight:600}
+body[data-page="activities"] .wz-pvd{margin-top:4px;font-size:12px;color:#B45309;font-weight:600}
+body[data-page="activities"] .wz-pvs{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;background:#F3F1FD;color:#6B6B9A;font-size:11.5px;font-weight:700}
+
+@media (max-width:1000px){
+  body[data-page="activities"] .wz-rv > .wz-rc{grid-column:1/-1}
+}
+@media (max-width:767px){
+  body[data-page="activities"] .wz-cl{grid-template-columns:minmax(0,1fr)}
+}

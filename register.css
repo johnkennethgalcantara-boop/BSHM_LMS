@@ -1,0 +1,321 @@
+/* ==========================================================
+   ACES Polytechnic College – BSHM LMS · Register page
+   Modern split card · shares the Sign In design system
+   ========================================================== */
+:root{
+  --navy:#171a78; --indigo:#4535c9; --purple:#6b4de6; --violet:#8055e8; --violet-2:#9b6cf2;
+  --bg:#f6f4fd; --text:#171b70; --text-2:#22235f; --muted:#7f85bd; --border:#e2def5;
+  --lav-1:#ece5fc; --lav-2:#d3c5f8; --err:#c2456f; --soft:#f8f7fe;
+  --radius-card:28px; --radius-field:12px;
+  --glow:0 0 0 4px rgba(107,77,230,.14);
+  --grad:linear-gradient(90deg,#4535c9 0%,#6b4de6 50%,#9b6cf2 100%);
+  --font:'Inter','Poppins','Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{min-height:100%}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;font-family:var(--font);color:var(--text);
+  background:radial-gradient(900px 520px at 50% 0%,#fff 0%,transparent 70%),var(--bg);
+  -webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button,input{font-family:inherit}
+svg{display:block}
+[hidden]{display:none!important}
+
+/* ---------- Background: grid + glow ---------- */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(107,77,230,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(107,77,230,.06) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+body::after{content:"";position:fixed;left:-160px;bottom:-200px;width:460px;height:460px;border-radius:50%;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 40% 40%,rgba(155,108,242,.22),rgba(155,108,242,0) 68%);
+  animation:drift 14s ease-in-out infinite alternate}
+
+/* ---------- Decorative lavender shapes ---------- */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.orb-a{right:-130px;top:-200px;width:340px;height:340px;background:linear-gradient(160deg,var(--lav-1),var(--lav-2))}
+.orb-b{right:-55px;top:-110px;width:230px;height:230px;background:linear-gradient(160deg,#d6cafa,#c3b2f6)}
+.orb-c{right:116px;top:134px;width:38px;height:38px;background:linear-gradient(160deg,#c3b2f6,#a98ff0);animation:float 7s ease-in-out infinite alternate}
+.orb-d{right:104px;top:105px;width:20px;height:20px;background:#cabdf6}
+.orb-e{right:-190px;bottom:-230px;width:400px;height:400px;background:linear-gradient(200deg,#e2d9fa,#cdbff6)}
+@keyframes drift{to{transform:translate(40px,-30px)}}
+@keyframes float{to{transform:translateY(8px)}}
+
+/* ---------- Layout ---------- */
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 20px;position:relative;z-index:2}
+.shell{width:100%;max-width:940px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- Back link (sits above the card, aligned to its left edge) ---------- */
+.back{
+  align-self:flex-start;
+  display:inline-flex;align-items:center;gap:10px;
+  height:42px;padding:0 20px 0 5px;
+  border-radius:999px;
+  font-size:14.5px;font-weight:600;line-height:1;letter-spacing:.005em;white-space:nowrap;
+  color:var(--indigo);
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:0 2px 6px rgba(80,70,200,.06);
+  transition:color .2s,border-color .2s,box-shadow .2s,transform .2s;
+}
+.back .ic{
+  flex:none;width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#ece8fb,#e0daf9);
+  transition:background .2s;
+}
+.back svg{
+  width:16px;height:16px;fill:none;stroke:currentColor;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .2s;
+}
+.back:hover{
+  color:var(--violet);border-color:#c9bff3;
+  box-shadow:0 6px 16px rgba(107,77,230,.14);
+  transform:translateY(-1px);
+}
+.back:hover .ic{background:linear-gradient(145deg,#e4ddfc,#d5cbf9)}
+.back:hover svg{transform:translateX(-2px)}
+.back:active{transform:translateY(0)}
+.back:focus-visible,.signin-link a:focus-visible,.eye:focus-visible,.btn-primary:focus-visible{outline:3px solid rgba(107,77,230,.45);outline-offset:3px}
+
+/* ---------- Card: brand panel + form panel ---------- */
+.card{position:relative;display:grid;grid-template-columns:300px 1fr;overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:var(--radius-card);
+  box-shadow:0 30px 70px rgba(80,60,200,.15),0 2px 10px rgba(80,70,200,.06);
+  animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* Brand panel */
+.aside{position:relative;overflow:hidden;color:#fff;padding:34px 30px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;
+  background:linear-gradient(160deg,#5a3be0 0%,#2a2bb4 42%,#171a78 100%)}
+.aside::before{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(181,138,255,.35),transparent 70%);pointer-events:none}
+.aside::after{content:"";position:absolute;left:-110px;bottom:-110px;width:320px;height:320px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);outline:1px solid rgba(255,255,255,.06);outline-offset:34px;pointer-events:none}
+.aside>*{position:relative;z-index:1}
+.cap{display:block;width:58px;height:58px;padding:14px;margin-bottom:16px;border-radius:16px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);box-shadow:0 8px 20px rgba(10,8,90,.25)}
+.brand b{display:block;font-weight:800;font-size:15px;line-height:1.3;letter-spacing:.04em}
+.brand span{display:block;font-size:12.5px;font-weight:500;color:rgba(233,226,255,.78);margin-top:4px}
+.tagline{font-weight:700;font-size:23px;line-height:1.25;letter-spacing:-.01em}
+.tagline em{font-style:normal;background:linear-gradient(90deg,#b58aff,#d9c3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.points{list-style:none;margin-top:20px;display:grid;gap:11px}
+.points li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;color:rgba(240,235,255,.9)}
+.pi{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center}
+.pi svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.aside-foot{font-weight:500;font-size:12px;letter-spacing:.24em;color:rgba(233,226,255,.7)}
+
+/* Form panel */
+.main{padding:32px 40px 24px;min-width:0}
+.head{margin-bottom:20px}
+.title{font-weight:800;font-size:28px;line-height:1.2;letter-spacing:-.02em;color:var(--text)}
+.sub{font-weight:500;font-size:14px;line-height:21px;color:var(--muted);margin-top:4px}
+
+/* ---------- Fields ---------- */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;align-items:start}
+.row .group{min-width:0}
+.group{margin-bottom:12px}
+.field{display:flex;align-items:center;height:48px;background:var(--soft);border:1.5px solid var(--border);border-radius:var(--radius-field);padding:0 10px 0 7px;
+  transition:border-color .2s,box-shadow .2s,background .2s;cursor:text}
+.field:hover{border-color:#c9c2ee}
+.field:focus-within{border-color:var(--purple);box-shadow:var(--glow);background:#fff}
+.group.invalid .field{border-color:#e3b3c6}
+.group.invalid .field:focus-within{border-color:var(--purple)}
+.fi{flex:none;width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#ece8fb,#e0daf9);display:grid;place-items:center;margin-right:10px;transition:background .2s}
+.field:focus-within .fi{background:linear-gradient(145deg,#e4ddfc,#d5cbf9)}
+.fi svg{width:18px;height:18px;fill:var(--indigo)}
+.fi .cut-f,.fi .hole{fill:#e9e5fb}
+.fi .cut-s{fill:none;stroke:#e9e5fb;stroke-width:1.8;stroke-linecap:round}
+.fi .lock-s{fill:none;stroke:var(--indigo);stroke-width:1.8;stroke-linecap:round}
+.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:14.5px;font-weight:500;color:var(--text-2)}
+.field input::placeholder{color:#a0a4d6}
+.eye{flex:none;position:relative;z-index:1;border:0;background:none;cursor:pointer;padding:5px;margin-right:0;border-radius:8px;transition:background .2s}
+.eye:hover{background:#f0ecfd}
+.eye svg{width:20px;height:20px;fill:none;stroke:var(--indigo);stroke-width:2;stroke-linejoin:round}
+.eye.on svg{stroke:var(--violet-2)}
+
+/* ---------- Messages / helper text ---------- */
+.msg{margin:4px 0 0 6px;font-size:12px;line-height:16px;font-weight:500;color:var(--err)}
+.msg:empty{display:none}
+.msg.hint{color:var(--muted);font-size:11.5px}
+.group.invalid .msg.hint{color:var(--err)}
+.group.valid .msg.hint{color:#6b4de6}
+.msg.ok{color:#1d8a4e;animation:pop .22s ease-out both}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+/* ---------- Password strength + requirements ---------- */
+.pw-extra{margin:0 0 12px;padding:10px 14px 11px;background:var(--soft);border:1px solid #ece8fb;border-radius:14px;--lvl:#a0a4d6}
+.pw-head{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:var(--muted)}
+.strength-lbl{min-width:44px;text-align:right;font-weight:700;color:var(--lvl);min-height:15px;transition:color .25s}
+.track{display:block;flex:1;height:5px;margin:0;border-radius:99px;background:#e8e4f7;overflow:hidden}
+.fill{display:block;height:100%;width:0;border-radius:inherit;background:var(--lvl);transition:width .25s ease,background-color .25s}
+.pw-extra[data-level="1"]{--lvl:#e5484d}
+.pw-extra[data-level="2"]{--lvl:#f59e0b}
+.pw-extra[data-level="3"]{--lvl:#22a45d}
+.pw-extra[data-level="1"] .fill{width:33%}
+.pw-extra[data-level="2"] .fill{width:66%}
+.pw-extra[data-level="3"] .fill{width:100%}
+
+.reqs-title{margin-top:8px;font-size:11.5px;font-weight:600;color:var(--muted)}
+.reqs{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-top:5px}
+.reqs li{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;line-height:16px;color:#c2593f;transition:color .2s}
+.reqs .ri{flex:none;width:16px;height:16px;border:1.5px solid currentColor;border-radius:50%;display:grid;place-items:center;
+  transition:background .2s,border-color .2s,box-shadow .2s}
+.reqs .ri svg{width:10px;height:10px;fill:none;stroke:#fff;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;
+  opacity:0;transform:scale(.4);transition:opacity .18s,transform .2s cubic-bezier(.3,1.5,.6,1)}
+.reqs li.met{color:#1d8a4e}
+.reqs li.met .ri{background:#22a45d;border-color:#22a45d;box-shadow:0 0 0 3px rgba(34,164,93,.14)}
+.reqs li.met .ri svg{opacity:1;transform:scale(1)}
+
+/* ---------- Terms checkbox ---------- */
+.terms{margin:4px 0 2px}
+.check{position:relative;display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+  font-size:13px;line-height:18px;font-weight:500;color:#5b5f9e}
+.check input{position:absolute;left:0;top:0;width:18px;height:18px;margin:0;opacity:0;cursor:pointer}
+.check .box{flex:none;width:18px;height:18px;border:1.5px solid #b9aeea;border-radius:5px;background:#fff;
+  display:grid;place-items:center;transition:background .18s,border-color .18s,box-shadow .18s}
+.check .box svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .2s ease .04s}
+.check:hover .box{border-color:var(--purple)}
+.check input:checked + .box{background:var(--grad);border-color:var(--purple)}
+.check input:checked + .box svg{stroke-dashoffset:0}
+.check input:focus-visible + .box{box-shadow:var(--glow);border-color:var(--purple)}
+.check a{color:var(--indigo);font-weight:700;border-bottom:1.5px solid rgba(69,53,201,.3)}
+.check a:hover{color:var(--violet);border-color:var(--violet)}
+
+/* ---------- Primary button ---------- */
+.btn-primary{position:relative;width:100%;height:50px;margin-top:12px;border:0;border-radius:999px;cursor:pointer;color:#fff;font-size:16.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:var(--grad);box-shadow:0 8px 18px rgba(86,62,215,.30);
+  transition:transform .2s,box-shadow .2s,filter .2s,opacity .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(86,62,215,.38);filter:brightness(1.06)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:0 4px 10px rgba(86,62,215,.18);filter:none}
+.btn-primary .arrow{width:21px;height:21px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.btn-primary:hover:not(:disabled) .arrow{transform:translateX(4px)}
+.spin{display:none;width:19px;height:19px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+.btn-primary.loading{pointer-events:none;filter:saturate(.85)}
+.btn-primary.loading .arrow{display:none}
+.btn-primary.loading .spin{display:block}
+.btn-primary.done{opacity:1}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---------- Verification panel ---------- */
+.notice{font-size:13px;line-height:19px;color:#4b4f94;background:#f3effd;border:1px dashed #c9bff3;border-radius:12px;padding:10px 14px;margin-bottom:14px}
+.notice strong{color:var(--indigo);letter-spacing:.12em;font-size:15px}
+
+/* ---------- Sign-in link ---------- */
+.signin-link{text-align:center;color:#8186c4;font-size:14px;font-weight:500;margin-top:16px;padding-top:14px;border-top:1px solid #efecfb}
+.signin-link a{color:var(--indigo);font-weight:700;margin-left:4px;border-bottom:1.5px solid rgba(69,53,201,.3);transition:color .2s,border-color .2s}
+.signin-link a:hover{color:var(--violet);border-color:var(--violet)}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:500;
+  opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:0 10px 24px rgba(23,26,120,.35)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Password behaviour hooks ---------- */
+.eye .slash{opacity:0;transition:opacity .2s}
+.eye.on .slash{opacity:1}
+.reqs .ri .x{display:none}
+.reqs li.bad .ri .tick{display:none}
+.reqs li.bad .ri .x{display:block}
+.reqs li.bad .ri svg{opacity:1;transform:none;stroke:currentColor;stroke-width:3}
+
+/* Hide the browser's built-in reveal/clear icons (Edge/IE) so only our eye button shows */
+input::-ms-reveal,input::-ms-clear{display:none}
+
+/* ---------- Short desktop screens: tighten spacing so it still fits ---------- */
+@media (min-width:861px) and (max-height:820px){
+  .page{padding:16px 20px}
+  .main{padding:24px 36px 18px}
+  .aside{padding:28px 28px 24px}
+  .head{margin-bottom:14px}
+  .title{font-size:25px}
+  .group{margin-bottom:9px}
+  .field{height:44px}
+  .pw-extra{margin-bottom:9px;padding:8px 12px 9px}
+  .btn-primary{height:46px;margin-top:9px}
+  .signin-link{margin-top:10px;padding-top:10px}
+}
+
+/* ---------- Tablet / mobile: brand panel becomes a compact header ---------- */
+@media (max-width:860px){
+  .page{padding:20px 16px 28px;align-items:flex-start}
+  .shell{max-width:560px}
+  .card{grid-template-columns:1fr}
+  .aside{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px;padding:20px 24px}
+  .aside-top{display:flex;align-items:center;gap:14px}
+  .cap{width:48px;height:48px;padding:11px;margin:0;border-radius:14px;flex:none}
+  .brand b{font-size:13px}
+  .brand span{font-size:12px}
+  .aside-mid,.aside-foot{display:none}
+  .main{padding:26px 28px 22px}
+  .orb-a{width:260px;height:260px}.orb-b{width:180px;height:180px}.orb-c,.orb-d{display:none}
+}
+@media (max-width:600px){
+  .page{padding:14px 12px 24px}
+  .back{font-size:14px}
+  .aside{padding:16px 18px}
+  .main{padding:22px 18px 20px}
+  .title{font-size:24px}
+  .sub{font-size:13.5px;line-height:19px}
+  .head{margin-bottom:16px}
+  .row{grid-template-columns:1fr}
+  .field input{font-size:16px}
+  .orb-a,.orb-b{opacity:.6}.orb-e{width:260px;height:260px;right:-130px;bottom:-150px}
+  body::before{background-size:32px 32px}
+}
+@media (max-width:380px){.reqs{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+}
+
+/* ---------- Brand panel decoration ---------- */
+.aside{
+  background:
+    linear-gradient(125deg,transparent 0 10%,rgba(155,108,242,.32) 10% 17%,transparent 17% 26%,rgba(120,90,240,.20) 26% 31%,transparent 31%),
+    linear-gradient(160deg,#5a3be0 0%,#2a2bb4 42%,#171a78 100%);
+}
+
+/* Photo fading in from the bottom */
+.aside>.aside-art{position:absolute;z-index:0;left:0;right:0;bottom:0;height:46%;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 55%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 55%)}
+.aside-art img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;opacity:.9}
+.aside-art::after{content:"";position:absolute;inset:0;mix-blend-mode:multiply;
+  background:linear-gradient(180deg,rgba(60,40,200,.10),rgba(23,26,120,.55))}
+
+/* Dot pattern, top right */
+.aside>.aside-dots{position:absolute;z-index:0;right:18px;top:20px;width:110px;height:110px;pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.35) 1.4px,transparent 1.8px) 0 0/14px 14px;
+  -webkit-mask-image:radial-gradient(circle at 100% 0,#000 20%,transparent 75%);
+  mask-image:radial-gradient(circle at 100% 0,#000 20%,transparent 75%)}
+
+/* Logo badge: frosted glass */
+.cap{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 10px 24px rgba(10,8,90,.30),inset 0 1px 0 rgba(255,255,255,.25);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* Tagline: soft glow + underline accent */
+.tagline{text-shadow:0 2px 14px rgba(20,10,120,.45)}
+.tagline::after{content:"";display:block;width:44px;height:3px;border-radius:3px;margin-top:14px;
+  background:linear-gradient(90deg,#b58aff,#d9c3ff)}
+
+/* Bullet points: glass pills */
+.points{gap:9px}
+.points li{padding:8px 12px 8px 8px;border-radius:999px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transition:background .2s,transform .2s}
+.points li:hover{background:rgba(255,255,255,.15);transform:translateX(3px)}
+.pi{background:linear-gradient(145deg,#8055e8,#b58aff);box-shadow:0 3px 8px rgba(20,10,120,.35)}
+
+/* Footer text stays readable over the photo */
+.aside-foot{color:rgba(255,255,255,.9);text-shadow:0 1px 8px rgba(10,8,90,.7)}
+
+/* Compact header on tablet / mobile: no photo or dots */
+@media (max-width:860px){
+  .aside>.aside-art,.aside>.aside-dots{display:none}
+}
+@media (prefers-reduced-motion:reduce){.points li{transition:none}}

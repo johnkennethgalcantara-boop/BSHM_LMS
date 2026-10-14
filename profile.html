@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Profile · BSHM LMS</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="profile.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="topnav.css">
+<script src="profile.js" defer></script>
+</head>
+<body data-role="student" data-nav="profile.html"><script src="auth-guard.js"></script>
+
+<!-- Icons used by this page. shell.js adds the navbar icons (home, book, task, cal, bell, search, user, gear, file, out, star, mega...) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="idc" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h4M7 14h3M15 10h2M15 14h2"/></symbol>
+<symbol id="mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="mob" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+<symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="heart" viewBox="0 0 24 24"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/></symbol>
+<symbol id="cam" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+</defs></svg>
+
+<div class="app">
+<!-- shell.js inserts <header class="topnav"> here -->
+<main>
+<div class="wrap">
+  <div class="ph"><span class="tile"><svg class="i"><use href="#user"/></svg></span><div><h1>My Profile</h1><p>View and manage your personal information and academic details.</p></div></div>
+  <div class="grid">
+    <section class="card">
+      <div class="pf">
+        <div class="photo"><div class="big" aria-label="Profile photo">JD</div><button type="button" aria-label="Change profile photo"><svg class="i"><use href="#cam"/></svg></button></div>
+        <div class="who"><h2>Juan Dela Cruz <span class="pill">Enrolled</span></h2><p>BSHM - 2nd Year | Section A</p><small><svg class="i"><use href="#cap"/></svg>Bachelor of Science in Hospitality Management</small></div>
+      </div>
+      <div class="fl">
+        <div class="f"><span class="ic"><svg class="i"><use href="#idc"/></svg></span><div><small>Student ID</small><b>2024-0123</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#mail"/></svg></span><div><small>Email Address</small><b>juandelacruz@acps.edu.ph</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div><small>Date of Birth</small><b>May 15, 2006</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#mob"/></svg></span><div><small>Mobile Number</small><b>+63 912 345 6789</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><small>Gender</small><b>Female</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#pin"/></svg></span><div><small>Address</small><b>Purok 5, Brgy. San Isidro, Panabo City, Davao del Norte</b></div></div>
+        <div class="f"><span class="ic"><svg class="i"><use href="#heart"/></svg></span><div><small>Civil Status</small><b>Single</b></div></div>
+      </div>
+    </section>
+    <section class="card"><div class="h"><svg class="i"><use href="#cap"/></svg>Academic Information</div>
+      <ul class="al">
+        <li><span class="ic"><svg class="i"><use href="#cap"/></svg></span><div><small>Program</small><b>Bachelor of Science in Hospitality Management</b></div></li>
+        <li><span class="ic"><svg class="i"><use href="#star"/></svg></span><div><small>Year Level</small><b>2nd Year</b></div></li>
+        <li><span class="ic"><svg class="i"><use href="#grid"/></svg></span><div><small>Section</small><b>A</b></div></li>
+        <li><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><small>Adviser</small><b>Prof. Maria Santos</b></div></li>
+        <li><span class="ic"><svg class="i"><use href="#shield"/></svg></span><div><small>Enrollment Status</small><b>Regular</b></div></li>
+        <li><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div><small>Academic Year</small><b>2024 - 2025</b></div></li>
+      </ul>
+    </section>
+    <section class="card pc"><div class="h"><svg class="i"><use href="#cap"/></svg>Profile Completion</div>
+      <svg class="ring" viewBox="0 0 44 44" role="img" aria-label="85 percent complete"><circle cx="22" cy="22" r="18"/><circle class="v" cx="22" cy="22" r="18" stroke-dasharray="96.1 113.1" transform="rotate(-90 22 22)"/><text x="22" y="24">85%</text><text class="s" x="22" y="29.5">Complete</text></svg>
+      <p>Your profile is almost complete!</p>
+      <button class="btn" type="button">Edit Profile</button>
+    </section>
+  </div>
+</div>
+</main>
+</div>
+<script src="shell.js"></script>
+<link rel="stylesheet" href="courses-polish.css">
+  <script src="chat.js"></script>
+  <script src="prefs.js"></script>
+</body></html>

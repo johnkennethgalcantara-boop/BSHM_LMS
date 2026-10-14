@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light"><link rel="stylesheet" href="student.css"><link rel="stylesheet" href="teacher.css"><link rel="stylesheet" href="shell.css"><link rel="stylesheet" href="topnav.css"><title>My Classes · BSHM LMS</title>
+<style>
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ci{margin:10px 0 0;font-size:13px;color:var(--mute);display:grid;gap:3px}.ci b{color:var(--ink)}
+.ed{display:none;gap:8px;margin-top:10px;flex-wrap:wrap}.ed.on{display:flex}
+.ed input{font:13px Inter,sans-serif;border:1px solid #E3E1F2;border-radius:12px;padding:8px 12px;flex:1;min-width:140px}
+.pl{display:inline-block;padding:3px 11px;border-radius:999px;font-size:12px;font-weight:600}
+.ok{background:#E3F5EC;color:#14724C}.bad{background:#FDECEC;color:#B42318}.inc{background:#EEF0F6;color:#4A5572}
+
+/* Add class panel */
+#af{padding:24px;margin-bottom:0}
+#af .h{margin-bottom:14px}
+#af .acts{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#ce{display:none;grid-column:1/-1;margin:0;padding:10px 14px;border:1px solid #F3CFCB;border-radius:12px;background:#FDF1F0;color:#A3332E;font-size:13px}
+#ce.on{display:block}
+.bt.dg{background:#FDECEC;color:#B42318;border:1px solid #F6CFCF;box-shadow:none}
+.bt.dg:hover{background:#B42318;color:#fff;border-color:#B42318;box-shadow:none}
+.cc .cnt{margin-left:auto;font-size:12px;color:var(--mute)}
+.cc .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cc .mine{font-size:11px;font-weight:600;color:#6D3FEA;background:#F0EDFF;padding:3px 9px;border-radius:999px}
+.emp{grid-column:1/-1}
+.jc{display:inline-block;padding:2px 8px;border-radius:8px;background:#F0EDFF;color:#4B2FC4;font-weight:700;letter-spacing:.03em;user-select:all}
+</style>
+<link rel="stylesheet" href="teacher-classes-modern.css">
+</head>
+<body data-role="teacher" data-page="courses" data-title="My Classes"><script src="auth-guard.js"></script><div class="app"><main class="pg"><section class="vw">
+<div class="ph">
+  <div><h1>My Classes</h1><p>Your classes this semester: schedule, room, and student roster with attendance and grades.</p></div>
+  <button type="button" class="bt" id="addb">+ Add class</button>
+</div>
+
+<section class="card" id="af" hidden>
+  <div class="h">Add a class</div>
+  <form class="fm" id="cf" novalidate>
+    <div><label for="f-code">Course code</label><input id="f-code" placeholder="e.g. BSHM 106" autocomplete="off" maxlength="20"></div>
+    <div><label for="f-name">Subject name</label><input id="f-name" placeholder="e.g. Events Management" autocomplete="off" maxlength="60"></div>
+    <div><label for="f-sec">Section</label><input id="f-sec" placeholder="e.g. Section A" autocomplete="off" maxlength="30"></div>
+    <div><label for="f-room">Room</label><input id="f-room" placeholder="e.g. Room 202" autocomplete="off" maxlength="40"></div>
+    <div class="w"><label for="f-sch">Schedule</label><input id="f-sch" placeholder="Mon &amp; Wed · 8:00–9:30 AM" autocomplete="off" maxlength="60"><p class="hp">Use this format so the class also shows in "Today's Classes" on your dashboard.</p></div>
+    <p id="ce" role="alert"></p>
+    <div class="acts"><button type="submit" class="bt">Save class</button><button type="button" class="bt o" id="cx">Cancel</button></div>
+  </form>
+</section>
+
+<div class="g3" id="cl"></div>
+<section class="card" id="ro" hidden><div class="h" id="roh"></div><div class="tw"><table><thead><tr><th>Student</th><th>Section</th><th>Attendance</th><th>Final grade</th><th>Remarks</th></tr></thead><tbody id="rob"></tbody></table></div></section>
+</section></main></div><div class="tt" id="tt" role="status"></div>
+<script src="teacher-shell.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},open=-1;
+  var KEY='bshm.class.custom';
+  var CUS=tlsGet(KEY)||[];
+
+  /* BSHM 106 -> BSHM-106-2026 (must match the student page) */
+  function jcode(code){return String(code).trim().toUpperCase().replace(/\s+/g,'-')+'-2026'}
+  /* names of students who joined this class with its code */
+  function joined(code){try{return (tlsGet('bshm.joined')||{})[code]||[]}catch(x){return []}}
+
+  /* make sure custom classes are in TLS_CLASSES on this page */
+  CUS.forEach(function(c){if(!TLS_CLASSES.some(function(x){return x[0]===c[0]}))TLS_CLASSES.push(c)});
+  function isCus(code){return CUS.some(function(c){return c[0]===code})}
+  function cusOf(code){return CUS.filter(function(c){return c[0]===code})[0]}
+
+  function info(i){
+    var c=TLS_CLASSES[i],f=null;
+    try{f=tlsClassInfo(i)}catch(x){}
+    if(!f||!f.sched){var m=cusOf(c[0]);f={sched:(m&&m[3])||'No schedule yet',room:(m&&m[4])||'No room yet'}}
+    return f}
+  /* base roster + students who joined with the class code */
+  function stats(code){
+    var base=[];
+    try{var s=tlsStudentStats(code);if(s&&s.length)base=s}catch(x){}
+    if(!base.length)base=TLS_ROSTER.map(function(n){return {name:n,att:null,final:null}});
+    return base.concat(joined(code).map(function(n){return {name:n,att:null,final:null}}));
+  }
+  function mine(code){
+    try{return (tlsGet('bshm.act.custom')||[]).filter(function(c){return c.act.course===code}).length+(tlsGet('bshm.pos.custom')||[]).filter(function(c){return c.course===code}).length}catch(x){return 0}}
+
+  /* Publish EVERY class so students can join any of them with its code */
+  function publish(){
+    try{tlsSet('bshm.class.all',TLS_CLASSES.map(function(c,i){return [c[0],c[1],c[2],info(i)]}))}catch(x){}
+  }
+
+  var ICON='style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;color:#6D4FE3"';
+
+  function cards(){
+    $('cl').innerHTML=TLS_CLASSES.map(function(c,i){var f=info(i),cu=isCus(c[0]);
+    return '<article class="card cc" style="padding:20px"><div class="top"><span class="cd">'+tesc(c[0])+'</span>'+(cu?'<span class="mine">Added by you</span>':'')+'</div><h3>'+tesc(c[1])+'</h3><p>'+tesc(c[2])+'</p>'+
+    '<div class="ci"><span><svg class="i" '+ICON+'><use href="#clock"/></svg><b>'+tesc(f.sched)+'</b></span><span><svg class="i" '+ICON+'><use href="#pin"/></svg><b>'+tesc(f.room)+'</b></span></div>'+
+    '<div class="ci" style="margin-top:6px"><span>Student join code: <b class="jc">'+tesc(jcode(c[0]))+'</b></span></div>'+
+    '<div class="mx" style="margin-top:8px"><b>'+(TLS_ROSTER.length+joined(c[0]).length)+'</b> students · <b>'+mine(c[0])+'</b> activities created</div>'+
+    '<div class="ed" id="ed'+i+'"><input id="s'+i+'" value="'+tesc(f.sched)+'" aria-label="Schedule"><input id="r'+i+'" value="'+tesc(f.room)+'" aria-label="Room"><button type="button" class="bt s" data-sv="'+i+'">Save</button></div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button type="button" class="bt o s" data-r="'+i+'">View roster</button><button type="button" class="bt o s" data-ei="'+i+'">Edit schedule / room</button><a class="bt s" href="teacher-activities.html">Add activity</a>'+(cu?'<button type="button" class="bt dg s" data-rm="'+i+'">Remove</button>':'')+'</div></article>'}).join('');
+    publish();   /* re-sync to students after every add / edit / remove */
+  }
+
+  function roster(i){open=i;var c=TLS_CLASSES[i];$('ro').hidden=false;$('roh').textContent=c[0]+' · '+c[1]+' roster';
+    $('rob').innerHTML=stats(c[0]).map(function(s){return '<tr><td><b>'+tesc(s.name)+'</b></td><td>'+tesc(c[2])+'</td><td>'+(s.att==null?'–':'<b style="color:'+(s.att<80?'#B42318':'#14724C')+'">'+s.att+'%</b>')+'</td><td>'+(s.final==null?'–':'<b>'+s.final+'</b>')+'</td><td>'+(s.final==null?'<span class="pl inc">Incomplete</span>':s.final>=75?'<span class="pl ok">Passed</span>':'<span class="pl bad">Failed</span>')+'</td></tr>'}).join('')}
+
+  /* ---- add class form ---- */
+  function showErr(m){var e=$('ce');e.textContent=m;e.className=m?'on':''}
+  function openForm(){$('af').hidden=false;showErr('');$('f-code').focus();$('af').scrollIntoView({behavior:'smooth',block:'start'})}
+  function closeForm(){$('af').hidden=true;$('cf').reset();showErr('')}
+  $('addb').onclick=function(){$('af').hidden?openForm():closeForm()};
+  $('cx').onclick=closeForm;
+  $('cf').onsubmit=function(ev){
+    ev.preventDefault();
+    var code=$('f-code').value.trim().replace(/\s+/g,' ').toUpperCase(),name=$('f-name').value.trim(),
+        sec=$('f-sec').value.trim()||'Section A',room=$('f-room').value.trim()||'No room yet',sch=$('f-sch').value.trim()||'No schedule yet';
+    if(!code){showErr('Enter the course code, for example BSHM 106.');$('f-code').focus();return}
+    if(!name){showErr('Enter the subject name.');$('f-name').focus();return}
+    if(TLS_CLASSES.some(function(c){return String(c[0]).toUpperCase()===code})){showErr(code+' is already in your classes. Use a different code.');$('f-code').focus();return}
+    var entry=[code,name,sec,sch,room];
+    CUS.push(entry);tlsSet(KEY,CUS);TLS_CLASSES.push(entry);
+    try{var o=tlsGet('bshm.class.info')||{};o[code]={sched:sch,room:room};tlsSet('bshm.class.info',o)}catch(x){}
+    closeForm();cards();ttoast(code+' added. Student join code: '+jcode(code));
+    var last=$('cl').lastElementChild;if(last)last.scrollIntoView({behavior:'smooth',block:'center'})};
+
+  /* ---- card buttons ---- */
+  $('cl').onclick=function(e){var t=e.target,g=function(k){return t.getAttribute(k)};
+    if(g('data-r')!==null){roster(+g('data-r'));$('ro').scrollIntoView({behavior:'smooth',block:'start'})}
+    if(g('data-ei')!==null)$('ed'+g('data-ei')).classList.toggle('on');
+    if(g('data-sv')!==null){var i=+g('data-sv'),o=tlsGet('bshm.class.info')||{};o[TLS_CLASSES[i][0]]={sched:$('s'+i).value.trim(),room:$('r'+i).value.trim()};tlsSet('bshm.class.info',o);
+      var m=cusOf(TLS_CLASSES[i][0]);if(m){m[3]=o[m[0]].sched;m[4]=o[m[0]].room;tlsSet(KEY,CUS)}
+      cards();ttoast('Class info saved.');if(open>=0)roster(open)}
+    if(g('data-rm')!==null){var k=+g('data-rm'),code=TLS_CLASSES[k][0];
+      if(!confirm('Remove '+code+' from your classes?'))return;
+      CUS=CUS.filter(function(c){return c[0]!==code});tlsSet(KEY,CUS);TLS_CLASSES.splice(k,1);
+      $('ro').hidden=true;open=-1;cards();ttoast(code+' removed.')}};
+
+  cards();
+  if(location.hash){var n=decodeURIComponent(location.hash.slice(1)),ix=-1;TLS_CLASSES.forEach(function(c,j){if(c[0]===n)ix=j});if(ix>=0)roster(ix)}
+})();
+</script><script src="shell.js"></script>  <script src="chat.js"></script><script src="teacher-prefs.js"></script></body></html>
