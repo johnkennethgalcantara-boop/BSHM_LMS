@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="en"><head>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Settings · BSHM LMS (Teacher)</title><meta name="color-scheme" content="light">
+<link rel="stylesheet" href="assets/css/settings.css"><link rel="stylesheet" href="assets/css/shell.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body data-role="teacher" data-page="set" data-title="Settings"><script src="assets/js/auth-guard.js"></script><div class="app"><main><div class="wrap">
+<div class="ph"><span class="tile"><svg class="i"><use href="#gear"/></svg></span><div><h1>Settings</h1><p>Manage your account information, security, and notifications.</p></div></div>
+<div class="tabs" role="tablist" aria-label="Settings categories">
+<button type="button" role="tab" data-t="account" class="on"><svg class="i"><use href="#user"/></svg>Account</button>
+<button type="button" role="tab" data-t="notifications"><svg class="i"><use href="#bell"/></svg>Notifications</button>
+<button type="button" role="tab" data-t="privacy"><svg class="i"><use href="#shield"/></svg>Privacy</button>
+</div>
+
+<section class="panel" id="p-account" role="tabpanel"><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#user"/></svg></span><div><h2>Account Information</h2><p>Your teacher account details.</p></div><a class="ghost" href="teacher-profile.html"><svg class="i"><use href="#edit"/></svg>Edit</a></div>
+<div class="acc"><div class="photo"><div class="big" aria-label="Profile photo">LS</div></div>
+<div class="dl"><div><small>Full Name</small><b id="teacherName">Prof. Liza Santos</b></div><div><small>Employee ID</small><b id="teacherEmpId">2018-0045</b></div><div><small>Email Address</small><b id="em">lsantos@acps.edu.ph</b></div><div><small>Mobile Number</small><b id="mo">+63 917 555 0142</b></div></div>
+<div class="dl"><div><small>Position</small><b id="teacherPosition">Instructor</b></div><div><small>Department</small><b id="teacherDepartment">BSHM Department</b></div><div><small>Classes Handled</small><b id="teacherClasses">BSHM 101, 103, 104</b></div></div></div></div></section>
+
+<section class="panel" id="p-notifications" role="tabpanel" hidden><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div><h2>Notification Settings</h2><p>Choose what you want to be notified about.</p></div></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#task"/></svg></span><div class="tx"><b>New Submissions</b><small>When students submit activities</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="New Submissions"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#alert"/></svg></span><div class="tx"><b>Anti-cheat Violations</b><small>When an exam attempt is restricted</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Anti-cheat Violations"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#check"/></svg></span><div class="tx"><b>POS Training Results</b><small>When students finish a POS training</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="POS Training Results"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#cal"/></svg></span><div class="tx"><b>Class Schedule Reminders</b><small>Reminders before your classes start</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Class Schedule Reminders"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><b>School Announcements</b><small>Updates from the school and department</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="School Announcements"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#mega"/></svg></span><div class="tx"><b>Chat Messages</b><small>Pop-up when a student or professor messages you</small></div><button type="button" class="sw" role="switch" aria-checked="true" aria-label="Chat Messages"></button></div>
+<div class="row"><span class="ic"><svg class="i"><use href="#bell"/></svg></span><div class="tx"><b>System Updates</b><small>Portal maintenance and new features</small></div><button type="button" class="sw" role="switch" aria-checked="false" aria-label="System Updates"></button></div>
+</div></section>
+
+<section class="panel" id="p-privacy" role="tabpanel" hidden><div class="card"><div class="ch"><span class="ic"><svg class="i"><use href="#lock"/></svg></span><div><h2>Change Password</h2><p>Keep your account secure by using a strong password.</p></div></div>
+<form id="pwf" novalidate>
+<label class="fld"><span>Current Password</span><div class="pw"><input type="password" id="pw0" placeholder="Enter current password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide current password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<label class="fld"><span>New Password</span><div class="pw"><input type="password" id="pw1" placeholder="Enter new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide new password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<label class="fld"><span>Confirm New Password</span><div class="pw"><input type="password" id="pw2" placeholder="Confirm new password" autocomplete="off"><button type="button" class="eye" aria-label="Show or hide confirm new password"><svg class="i"><use href="#eye"/></svg></button></div></label>
+<button class="btn" type="submit"><svg class="i"><use href="#lock"/></svg>Update Password</button><p class="msg" id="msg" role="status"></p></form></div></section>
+
+</div></main></div>
+<script src="assets/js/teacher-shell.js"></script>
+<script>
+/* BSHM LMS · Teacher Settings */
+(function () {
+  var K = 'bshm.teacher.settings';
+  var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var S = tlsGet(K) || { sw: {} }; S.sw = S.sw || {};
+  var P = tlsTeacherProfileGet();
+  var session = null, accounts = [];
+  try { session = JSON.parse(sessionStorage.getItem('aces_session') || 'null'); accounts = JSON.parse(localStorage.getItem('bshm.accounts') || '[]'); } catch (e) {}
+  var teacher = Array.isArray(accounts) && session ? accounts.find(function (a) { return a && a.role === 'teacher' && String(a.id) === String(session.id); }) : null;
+  var name = P.name || (teacher && teacher.name) || (session && session.fullName) || 'Teacher';
+  var assigned = tlsGet('bshm.assignments') || {}, classes = assigned[session && session.id] || window.TLS_CLASSES || [];
+  $('#teacherName').textContent = name;
+  $('#teacherEmpId').textContent = (teacher && teacher.empId) || '—';
+  $('#em').textContent = P.email || (teacher && teacher.email) || '—';
+  $('#mo').textContent = P.mobile || '—';
+  $('#teacherPosition').textContent = P.position || (teacher && teacher.position) || 'Instructor';
+  $('#teacherDepartment').textContent = P.department || (teacher && teacher.dept) || 'BSHM Department';
+  $('#teacherClasses').textContent = classes.length ? classes.map(function (c) { return c[0]; }).filter(function (c, i, all) { return all.indexOf(c) === i; }).join(', ') : 'No classes assigned';
+  var avatar = $('.photo .big');
+  avatar.textContent = name.split(/\s+/).filter(Boolean).map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
+  if (P.photo) { avatar.style.backgroundImage = 'url("' + P.photo + '")'; avatar.style.backgroundSize = 'cover'; avatar.style.backgroundPosition = 'center'; avatar.style.color = 'transparent'; }
+
+  /* "Saved" pill */
+  var pill = document.createElement('div'), pt;
+  pill.setAttribute('role', 'status');
+  pill.style.cssText = 'position:fixed;right:16px;top:84px;z-index:400;padding:8px 14px;border-radius:999px;background:#1B1B5E;color:#fff;font:600 13px Inter,sans-serif;opacity:0;transform:translateY(-6px);transition:opacity .2s,transform .2s;pointer-events:none';
+  document.body.appendChild(pill);
+  function saved(t) { pill.textContent = t || 'Saved'; pill.style.opacity = 1; pill.style.transform = 'none'; clearTimeout(pt); pt = setTimeout(function () { pill.style.opacity = 0; }, 1400); }
+  function store() {
+    try { localStorage.setItem(K, JSON.stringify(S)); window.dispatchEvent(new Event('storage')); return true; }
+    catch (e) { saved('Could not save settings. Browser storage may be full or blocked.'); return false; }
+  }
+
+  /* tabs (remember the last one) */
+  var tabs = $$('.tabs button');
+  function show(k) {
+    tabs.forEach(function (t) { var on = t.dataset.t === k; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
+    $$('.panel').forEach(function (p) { p.hidden = p.id !== 'p-' + k; });
+    S.tab = k;
+    if (!store()) saved('Could not save settings');
+  }
+  tabs.forEach(function (t, i) {
+    t.onclick = function () { show(t.dataset.t); };
+    t.onkeydown = function (e) { var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (d) { var n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); show(n.dataset.t); } };
+  });
+  show(S.tab && $('#p-' + S.tab) ? S.tab : 'account');
+
+  /* Notification preferences are shared with the teacher chat and activity surfaces. */
+  $$('.sw').forEach(function (s) {
+    var l = s.getAttribute('aria-label');
+    if (l in S.sw) s.setAttribute('aria-checked', !!S.sw[l]);
+    s.onclick = function () {
+      var previous = s.getAttribute('aria-checked') === 'true';
+      var on = s.getAttribute('aria-checked') !== 'true';
+      s.setAttribute('aria-checked', on);
+      S.sw[l] = on;
+      if (!store()) { S.sw[l] = previous; s.setAttribute('aria-checked', previous); return; }
+      saved(l + (on ? ' on' : ' off'));
+    };
+  });
+
+  /* show / hide password */
+  $$('.eye').forEach(function (b) { b.onclick = function () { var i = b.previousElementSibling; i.type = i.type === 'password' ? 'text' : 'password'; }; });
+
+  /* Update the same teacher account credentials used by login. */
+  function hash(salt, pw) {
+    if (!(window.crypto && crypto.subtle && window.TextEncoder)) return Promise.reject(new Error('crypto-unavailable'));
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + pw)).then(function (b) {
+      return [].map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function newSalt() {
+    if (!(window.crypto && crypto.getRandomValues)) throw new Error('crypto-unavailable');
+    return [].map.call(crypto.getRandomValues(new Uint8Array(16)), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+  }
+  $('#pwf').onsubmit = function (e) {
+    e.preventDefault();
+    var form = e.target, v = ['#pw0', '#pw1', '#pw2'].map(function (s) { return $(s).value; }), m = $('#msg');
+    function say(t, ok) { m.textContent = t; m.className = 'msg ' + (ok ? 'ok' : 'err'); }
+    if (!v[0] || !v[1] || !v[2]) return say('Please fill in all password fields.');
+    if (v[1].length < 8 || !/[A-Z]/.test(v[1]) || !/\d/.test(v[1]) || !/[^A-Za-z0-9\s]/.test(v[1])) return say('Use 8+ characters, one uppercase letter, one number, and one special character.');
+    if (v[1] !== v[2]) return say('New password and confirmation do not match.');
+    if (v[1] === v[0]) return say('New password must be different from the current one.');
+    if (!teacher || !teacher.salt || !teacher.hash) return say('Could not find the signed-in teacher account. Sign out and sign in again.');
+    var submit = form.querySelector('[type="submit"]'); submit.disabled = true;
+    hash(teacher.salt, v[0]).then(function (currentHash) {
+      if (currentHash !== teacher.hash) throw new Error('wrong-password');
+      var salt = newSalt();
+      return hash(salt, v[1]).then(function (newHash) {
+        var latest;
+        try { latest = JSON.parse(localStorage.getItem('bshm.accounts') || '[]'); } catch (e) { throw new Error('storage-failed'); }
+        var current = Array.isArray(latest) && latest.find(function (a) { return a && a.role === 'teacher' && String(a.id) === String(session.id); });
+        if (!current || current.status === 'disabled') throw new Error('account-unavailable');
+        current.salt = salt;
+        current.hash = newHash;
+        current.mustChange = false;
+        try { localStorage.setItem('bshm.accounts', JSON.stringify(latest)); }
+        catch (e) { throw new Error('storage-failed'); }
+        teacher = current;
+        say('Password updated.', true); form.reset(); saved('Password updated');
+      });
+    }).catch(function (err) {
+      say(err.message === 'wrong-password' ? 'Current password is incorrect.'
+        : err.message === 'crypto-unavailable' ? 'Secure password updates require HTTPS or localhost.'
+        : err.message === 'account-unavailable' ? 'Teacher account is no longer active. Contact the administrator.'
+        : err.message === 'storage-failed' ? 'Could not save the new password. Browser storage may be full or blocked.'
+        : 'Could not update the password. Please try again.');
+    }).then(function () { submit.disabled = false; });
+  };
+})();
+</script>
+<script src="assets/js/shell.js"></script>
+<script src="assets/js/chat.js"></script>
+<script src="assets/js/teacher-prefs.js"></script>
+</body></html>

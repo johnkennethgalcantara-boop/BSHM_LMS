@@ -1,0 +1,124 @@
+/* assets/css/enhance.css - load LAST on teacher.html and student.html (after assets/css/dashboard-colors.css) */
+
+/* ---------- Teacher: Class Overview (6 cards, 3 columns) ---------- */
+body[data-role="teacher"] .ov-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1100px){body[data-role="teacher"] .ov-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){body[data-role="teacher"] .ov-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Zero values fade back so real numbers stand out */
+.ov-c.z b{color:#98A2B3}
+.ov-c .cta-l{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:#6D3FEA}
+.ov-c .cta-l:hover{text-decoration:underline}
+.ov-c.g small::before{content:"✓ ";color:#16A34A;font-weight:700}
+
+/* ---------- Teacher: Today's Classes ---------- */
+/* Finished class: calmer card so upcoming/ongoing ones stand out */
+.tc-card.is-done{background:#FAFAFD;box-shadow:0 2px 8px rgba(79,53,210,.04)}
+.tc-card.is-done::before{opacity:.45}
+.tc-card.is-done .tc-top h3{color:#475467}
+.tc-card.is-done .tc-view{background:#fff}
+
+/* Single class: keep the button next to the content instead of floating away */
+@media(min-width:760px){
+  body .tc-grid:has(.tc-card:only-child) .tc-card{grid-template-columns:minmax(0,1fr) auto}
+  body .tc-grid:has(.tc-card:only-child) .tc-view{padding:0 32px;height:44px;align-self:center}
+}
+
+/* ---------- Student: deadline legend + days-left ---------- */
+.dl .lg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:-6px 0 12px;font-size:12px;color:#667085}
+.dl .lg span{display:inline-flex;align-items:center;gap:6px}
+.dl .lg i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dl .lg .r i{background:var(--r)}.dl .lg .o i{background:var(--amber)}.dl .lg .g i{background:var(--g)}
+.dl time small{display:block;font-size:12px;font-weight:600}
+.dl .r time small{color:#B42318}
+.dl .o time small{color:#B26A00}
+.dl .g time small{color:#14724C}
+.dl li{grid-template-columns:8px minmax(0,1fr) 84px}
+
+/* ---------- Contrast for small gray text (both roles) ---------- */
+.st small,.dl small,.nx,.ins,.an time,.ev small,.hn small{color:#596273}
+
+/* Today's Classes: single-card layout fix */
+@media(min-width:760px){
+  body .tc-grid:has(.tc-card:only-child) .tc-card{grid-template-columns:minmax(0,1fr) auto;align-items:end;row-gap:16px}
+  body .tc-grid:has(.tc-card:only-child) .tc-top{display:contents}
+  body .tc-grid:has(.tc-card:only-child) .tc-top>div{grid-column:1;grid-row:1}
+  body .tc-grid:has(.tc-card:only-child) .tc-st{grid-column:2;grid-row:1;justify-self:end;align-self:start}
+  body .tc-grid:has(.tc-card:only-child) .tc-meta{grid-column:1;grid-row:2}
+  body .tc-grid:has(.tc-card:only-child) .tc-view{grid-column:2;grid-row:2;justify-self:end;height:44px;padding:0 32px}
+}
+
+/* Finished class: no top bar, soft left edge instead */
+.tc-card.is-done::before{display:none}
+.tc-card.is-done{border-left:4px solid #C9CEDB}
+
+/* ACES BSHM LMS · assets/css/learning-analytics.css
+   Learning Analytics card (replaces "Continue learning"). Load after enhance.css. */
+
+.card.la{padding:20px 22px 22px}
+.la-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.la-ic{width:36px;height:36px;border-radius:11px;background:#F0EDFF;color:#6D3FEA;display:grid;place-items:center;flex:none}
+.la-head h2{font-size:17px;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-.005em}
+.la-head p{font-size:12.5px;color:var(--mute)}
+.la-badge{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:#E8F5EE;color:#1B6B43;font-size:12px;font-weight:600;white-space:nowrap}
+.la-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.la-badge.warn{background:#FEF3C7;color:#92400E}
+
+.la-body{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.la-main{min-width:0}
+
+/* mini stats */
+.la-mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.la-mini>div{display:grid;grid-template-columns:30px 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center;padding:10px;border:1px solid #ECEBF5;border-radius:14px;background:#FAF9FF}
+.la-mini .mi{grid-row:1/3;width:30px;height:30px;border-radius:9px;display:grid;place-items:center}
+.la-mini .mi svg{width:16px;height:16px}
+.la-mini .mi.b{background:#EAF1FF;color:#2563EB}
+.la-mini .mi.p{background:#EFEAFF;color:#6D3FEA}
+.la-mini .mi.g{background:#E4F6EC;color:#16A34A}
+.la-mini .mi.o{background:#FFF3D6;color:#D97706}
+.la-mini b{font-size:18px;font-weight:800;color:#171B6B;line-height:1.1}
+.la-mini small{font-size:10.5px;line-height:1.2;color:var(--mute)}
+
+/* course progress bars */
+.la-ph{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.la-ph b{font-size:14px;font-weight:600;color:var(--ink)}
+.la-ph select{height:32px;padding:0 28px 0 12px;border:1px solid #E3DEFA;border-radius:999px;background:#fff;color:var(--ink);font:500 12.5px Inter,"Segoe UI",sans-serif;cursor:pointer}
+.la-bars{display:flex;flex-direction:column;gap:14px}
+.la-row{display:grid;grid-template-columns:minmax(110px,170px) minmax(0,1fr) 42px;gap:12px;align-items:center;font-size:12.5px}
+.la-row span{color:var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.la-row .bar{height:10px}
+.la-row .bar i{background:linear-gradient(90deg,#6D3FEA,#9B7BFF);transition:width .5s ease}
+.la-row em{font-style:normal;font-weight:600;color:var(--ink);text-align:right}
+.la-empty{font-size:13px;color:var(--mute);padding:8px 0}
+
+/* course details panel */
+.la-side{border:1px solid #ECEBF5;border-radius:16px;background:#FAF9FF;padding:14px}
+.la-side>b{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.la-side li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px solid #EEEBFB}
+.la-side li:first-child{border-top:0}
+.la-side .ci{width:28px;height:28px;border-radius:8px;background:#fff;color:#6D3FEA;display:grid;place-items:center;grid-row:1/3}
+.la-side .ci svg{width:15px;height:15px}
+.la-side .cn{font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.la-side .cp2{font-size:11.5px;color:var(--mute)}
+.la-side .stt{justify-self:end;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:600;background:#F0EDFF;color:#4F35D2}
+.la-side .stt.done{background:#E8F5EE;color:#1B6B43}
+.la-side .stt.new{background:#EFF1F6;color:var(--body)}
+.la-side .go{justify-self:end;padding:3px 12px;border-radius:999px;background:linear-gradient(135deg,#8B5CF6,#4F35D2);color:#fff;font-size:11px;font-weight:600;box-shadow:0 4px 10px -4px rgba(79,53,210,.5)}
+.la-side .go.alt{background:#fff;color:#6D3FEA;box-shadow:inset 0 0 0 1px #E3DEFA}
+.la-side .go:hover{filter:brightness(1.08)}
+
+/* responsive */
+@media (max-width:1100px){.la-body{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:767px){
+  main.dash .card.la{padding:16px 14px}
+  .la-head{flex-wrap:wrap}
+  .la-head h2{font-size:16px}
+  .la-badge{margin-left:0}
+  .la-mini{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .la-row{grid-template-columns:minmax(0,1fr) 40px;gap:4px 10px}
+  .la-row span{grid-column:1/2}
+  .la-row em{grid-column:2/3;grid-row:1}
+  .la-row .bar{grid-column:1/-1}
+  .la-side .go{min-height:32px;display:inline-flex;align-items:center}
+}
+@media (prefers-reduced-motion:reduce){.la-row .bar i{transition:none}}

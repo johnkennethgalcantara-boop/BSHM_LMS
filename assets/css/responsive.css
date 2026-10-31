@@ -1,0 +1,193 @@
+/* Shared mobile layout refinements for all LMS pages. */
+@media (max-width: 767px) {
+  :root {
+    --mobile-gutter: clamp(14px, 4vw, 20px);
+  }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  img,
+  video,
+  canvas,
+  iframe {
+    max-width: 100%;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    max-width: 100%;
+  }
+
+  .app,
+  .app > main,
+  .app > main > *,
+  main.pg,
+  .vw,
+  .wrap,
+  .grid,
+  .ly,
+  .mn,
+  .pad {
+    min-width: 0;
+  }
+
+  .app > main {
+    padding-right: var(--mobile-gutter);
+    padding-left: var(--mobile-gutter);
+    padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  body main.pg {
+    padding: 20px var(--mobile-gutter) calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .vw {
+    width: 100%;
+    gap: 16px;
+  }
+
+  .ph {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ph h1 {
+    font-size: clamp(20px, 5.5vw, 24px);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .ph p {
+    line-height: 1.5;
+  }
+
+  .card,
+  .cd,
+  .panel,
+  .wrap > section {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .fm,
+  .g3,
+  .ag,
+  .ov,
+  .ov.wide,
+  .two,
+  .sim {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fm > *,
+  .g3 > *,
+  .ag > *,
+  .ov > *,
+  .two > *,
+  .sim > * {
+    min-width: 0;
+  }
+
+  .fm .w {
+    grid-column: 1;
+  }
+
+  .tabs,
+  .flt,
+  .tb,
+  .tbr,
+  .hd,
+  .ac,
+  .ma {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .tw {
+    max-width: 100%;
+  }
+
+  .tw table {
+    min-width: 600px;
+  }
+
+  .none,
+  .empty,
+  .sh-empty {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .app > main {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  body main.pg {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .vw {
+    gap: 14px;
+  }
+
+  .card,
+  .cd {
+    border-radius: 14px;
+  }
+
+  .fm {
+    gap: 12px;
+  }
+
+  .fm input,
+  .fm select,
+  .fm textarea,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .bt,
+  .go,
+  .btn,
+  .btn-primary {
+    min-height: 44px;
+  }
+
+  .st,
+  .sum {
+    gap: 10px;
+  }
+
+  .st div,
+  .sum div,
+  .sum div + div {
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .st b,
+  .sum b {
+    overflow-wrap: anywhere;
+  }
+
+  .sh-toasts {
+    width: calc(100vw - 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

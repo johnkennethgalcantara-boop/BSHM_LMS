@@ -1,0 +1,146 @@
+/* ==========================================================
+   ACES Polytechnic College – BSHM LMS · Role Selection page
+   Single-purpose stylesheet (no register/password/form rules)
+   Everything is sized in rem; rem scales with the viewport so the
+   layout keeps the screenshot's proportions (1366x768 → 1920x1080).
+   Reference: 1rem = 16px at the 1011px-wide screenshot.
+   ========================================================== */
+:root{
+  --navy:#16165f; --purple:#5b2bd6; --violet:#7a4be8;
+  --text-2:#3a3a78; --muted:#7a7aa6; --border:#ece8f8;
+  --font:'Poppins','Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:max(14px,calc(min(100vw,176vh) / 63.2))}
+body{
+  min-height:100vh;min-height:100dvh;position:relative;overflow-x:hidden;
+  font-family:var(--font);color:var(--navy);
+  background:linear-gradient(180deg,#ffffff 0%,#f8f6fe 55%,#f3effd 100%);
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;border:0;background:none;color:inherit;cursor:pointer;text-align:center}
+img{display:block}
+.missing{display:none}
+
+/* ---------- Decorative background ---------- */
+.bg-building,.bg-lines,.curve{position:fixed;pointer-events:none;z-index:0}
+.bg-building{inset:0;
+  background:radial-gradient(60rem 30rem at 50% 45%,rgba(255,255,255,.9),rgba(255,255,255,0) 70%)}
+.bg-lines{inset:0;opacity:.5;
+  background:radial-gradient(45rem 25rem at 100% 100%,rgba(155,120,240,.10),transparent 70%)}
+.curve{border-radius:50%}
+.curve-tl{width:36.25rem;height:36.25rem;left:-20.6rem;top:-23.75rem;
+  background:linear-gradient(135deg,#e6defb 0%,#d9cdf8 100%)}
+.curve-br{width:43.1rem;height:43.1rem;right:-23.4rem;bottom:-29.5rem;
+  background:linear-gradient(200deg,#e4dafb 0%,#cdbcf7 100%)}
+.curve-br::before{content:"";position:absolute;inset:3rem;border-radius:50%;
+  background:linear-gradient(200deg,rgba(255,255,255,.35),rgba(255,255,255,0))}
+
+/* ---------- Page ---------- */
+.page{
+  position:relative;z-index:1;min-height:100vh;min-height:100dvh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.5rem 1rem;
+}
+
+/* ---------- Header ---------- */
+.header{display:flex;flex-direction:column;align-items:center;text-align:center}
+.logos{display:flex;align-items:center;justify-content:center;gap:1.25rem}
+.logos img{height:2.9rem;width:auto;object-fit:contain}
+.divider{display:block;width:1px;height:2.5rem;background:linear-gradient(180deg,rgba(91,43,214,.2),var(--purple),rgba(91,43,214,.2))}
+.welcome{margin-top:.85rem;font-size:.72rem;font-weight:500;letter-spacing:.32em;text-indent:.32em;color:var(--navy)}
+.title{margin-top:.5rem;font-size:2.75rem;font-weight:800;line-height:1.05;letter-spacing:-.01em}
+.t-navy{color:#14145c}
+.t-purple{background:linear-gradient(90deg,#6a3fe0,#8a5cf2);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.subtitle{margin-top:.55rem;font-size:.95rem;font-weight:400;color:var(--text-2)}
+.underline{display:block;width:4.1rem;height:.25rem;margin-top:.65rem;border-radius:99px;background:var(--purple)}
+
+/* ---------- Role cards ---------- */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1.06rem;width:37.2rem;max-width:100%;margin-top:.9rem}
+.card{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;
+  height:12.4rem;padding:.95rem 1rem .9rem;border-radius:1rem;
+  background:#fff;border:1px solid var(--border);
+  box-shadow:0 .5rem 1.5rem rgba(91,60,200,.08),0 1px .25rem rgba(91,60,200,.05);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.card>span{position:relative;z-index:1;display:block}
+.card:hover{transform:translateY(-.2rem);box-shadow:0 .8rem 2rem rgba(91,60,200,.15)}
+.card:focus-visible{outline:3px solid rgba(91,43,214,.45);outline-offset:3px}
+.card-shape{position:absolute!important;z-index:0!important;border-radius:50%;background:#f1edfc}
+.card-shape-a{width:6.3rem;height:6.3rem;left:-1.9rem;top:-3rem}
+.card-shape-b{width:7rem;height:7rem;right:-1.9rem;bottom:-3.1rem;background:#f4f1fd}
+
+.icon-circle{width:3.5rem;height:3.5rem;border-radius:50%;display:grid!important;place-items:center;
+  background:linear-gradient(145deg,#7d4cf0,#5a28d4);box-shadow:0 .4rem .9rem rgba(91,43,214,.35)}
+.icon-circle svg{width:1.75rem;height:1.75rem}
+.card-title{margin-top:.8rem;font-size:1.12rem;font-weight:800;letter-spacing:.01em;color:var(--navy)}
+.card-desc{margin-top:.6rem;font-size:.78rem;line-height:1.55;font-weight:400;color:#6b6b9a}
+.arrow-btn{margin-top:auto;width:2.1rem;height:2.1rem;border-radius:50%;display:grid!important;place-items:center;
+  color:var(--purple);background:#fff;border:1.5px solid var(--purple);transition:background .2s,color .2s}
+.arrow-btn svg{width:1rem;height:1rem}
+.card:hover .arrow-btn{background:var(--purple);color:#fff}
+
+/* ---------- Security ---------- */
+.security{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:1rem;
+  width:37.2rem;max-width:100%;margin:1rem auto 0}
+.security .line{display:block;height:1px;width:100%}
+.security .line:first-child{background:linear-gradient(90deg,rgba(91,43,214,0),rgba(91,43,214,.5))}
+.security .line:last-child{background:linear-gradient(90deg,rgba(91,43,214,.5),rgba(91,43,214,0))}
+.sec-inner{display:flex;align-items:center;justify-content:center;gap:.55rem;text-align:left}
+.sec-icon{width:1.4rem;height:1.4rem;flex:none}
+.sec-inner strong{display:block;font-size:.7rem;font-weight:600;color:var(--navy);line-height:1.3;white-space:nowrap}
+.sec-inner small{display:block;font-size:.6rem;font-weight:400;color:var(--muted);line-height:1.3;white-space:nowrap}
+
+/* ---------- Footer ---------- */
+.footer{display:flex;align-items:center;justify-content:center;gap:.65rem;margin-top:.95rem}
+.foot-icon{width:1.5rem;height:1.5rem;flex:none}
+.foot-text{text-align:center}
+.foot-main{font-size:.6rem;font-weight:600;letter-spacing:.28em;color:#2d1fb0}
+.foot-sub{margin-top:.25rem;font-size:.47rem;font-weight:400;letter-spacing:.22em;color:var(--muted)}
+
+/* ---------- Tablet / mobile ---------- */
+@media (max-width:900px){
+  html{font-size:16px}
+  .page{padding:2rem 1rem}
+}
+@media (max-width:640px){
+  .page{padding:1.25rem 1rem}
+  .logos img{height:2.4rem}
+  .divider{height:2rem}
+  .welcome{font-size:.68rem;margin-top:.7rem}
+  .title{font-size:2.1rem}
+  .subtitle{font-size:.85rem}
+
+  /* compact horizontal cards */
+  .cards{grid-template-columns:1fr;width:100%;max-width:22rem;gap:.75rem;margin-top:1rem}
+  .card{
+    display:grid;
+    grid-template-columns:3rem 1fr 2rem;
+    grid-template-rows:auto auto;
+    column-gap:.85rem;align-items:center;
+    height:auto;min-height:0;
+    padding:.8rem 1rem;text-align:left;
+    border-radius:.9rem;
+  }
+  .card-shape-a{width:4rem;height:4rem;left:-1.5rem;top:-2rem}
+  .card-shape-b{width:4.5rem;height:4.5rem;right:-1.5rem;bottom:-2.2rem}
+  .icon-circle{grid-row:1 / 3;width:3rem;height:3rem}
+  .icon-circle svg{width:1.5rem;height:1.5rem}
+  .card-title{grid-column:2;margin-top:0;font-size:1rem;text-align:left}
+  .card-desc{grid-column:2;margin-top:.15rem;font-size:.75rem;line-height:1.4;text-align:left}
+  .card-desc br{display:none}
+  .arrow-btn{grid-column:3;grid-row:1 / 3;margin:0;width:2rem;height:2rem}
+  .arrow-btn svg{width:.9rem;height:.9rem}
+
+  .security{max-width:22rem;column-gap:.6rem;margin-top:.9rem}
+  .sec-inner strong{font-size:.75rem}
+  .sec-inner small{font-size:.65rem}
+  .foot-main{font-size:.62rem;letter-spacing:.2em}
+  .foot-sub{font-size:.52rem}
+  .curve-tl{width:24rem;height:24rem;left:-14rem;top:-15rem}
+  .curve-br{width:28rem;height:28rem;right:-15rem;bottom:-17rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}

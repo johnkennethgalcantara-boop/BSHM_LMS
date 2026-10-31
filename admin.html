@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Admin · ACES DineLearn</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('bshm.admin.theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#5B35C9;--p2:#7A55E6;--pd:#3E2291;--pt:#5B35C9;--ink:#17133A;--mu:#6E6B8F;--bd:#E7E4F5;--bg:#F6F5FB;--cd:#fff;--soft:#F9F8FE;--tint:#F0ECFF;--hov:#FAF9FF;--ok:#0F7B53;--okb:#E2F6EC;--bad:#C0332A;--badb:#FDECEA;--bdb:#F3CFCB;--in:#DDD9F0;--tp:rgba(255,255,255,.85);--sh:0 1px 2px rgba(23,19,58,.05),0 4px 16px rgba(23,19,58,.05);--shl:0 12px 40px rgba(23,19,58,.25);color-scheme:light}
+[data-theme=dark]{--pt:#B9A8FF;--ink:#ECEAFB;--mu:#9C98C4;--bd:#2E2A63;--bg:#0E0B26;--cd:#181440;--soft:#1F1A4D;--tint:#2B2570;--hov:#1D1948;--ok:#4FD6A0;--okb:#12382C;--bad:#FF8A80;--badb:#3A1B24;--bdb:#5A2A33;--in:#363070;--tp:rgba(24,20,64,.85);--sh:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 'Plus Jakarta Sans',Inter,system-ui,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}button,input,select{font:inherit;color:inherit}
+svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ly{display:grid;grid-template-columns:256px minmax(0,1fr);min-height:100vh}
+.sb{background:#1D1250;color:#fff;padding:20px 14px 40px;position:sticky;top:0;height:100vh;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+[data-theme=dark] .sb{background:#120B36;border-right:1px solid var(--bd)}
+.sb h1{display:flex;flex-direction:column;font-size:16px;font-weight:800;margin:2px 8px 18px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb h1 small{margin-top:3px;font-size:12px;font-weight:500;opacity:.6}
+.sb p{margin:18px 10px 6px;font-size:12px;font-weight:600;opacity:.5}
+.sb a{position:relative;display:flex;align-items:center;gap:11px;margin:2px 0;padding:9px 12px;border-radius:10px;color:#fff;text-decoration:none;font-weight:500;font-size:14px;opacity:.78;transition:background .15s,opacity .15s}
+.sb a:hover{background:rgba(255,255,255,.09);opacity:1}
+.sb a.on{background:#fff;color:#3E2291;opacity:1;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.sb a.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:4px;border-radius:0 4px 4px 0;background:var(--p2)}
+.mn{min-width:0}
+.tp{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 32px;background:var(--tp);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--bd)}
+.tp>b{font-size:15px}.tp>div{display:flex;align-items:center;gap:8px}.tp span{color:var(--mu);font-size:13.5px;margin-right:6px}
+.pad{padding:32px;display:grid;gap:22px;max-width:1500px}
+h2{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}.sub{margin:2px 0 0;color:var(--mu)}h3{margin:0 0 10px;font-size:16px;font-weight:700}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cd{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:22px;box-shadow:var(--sh)}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 18px;border:0;border-radius:11px;background:var(--p);color:#fff;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(62,34,145,.25),0 4px 10px rgba(91,53,201,.22);transition:transform .12s,background .15s,border-color .15s}
+.b:hover{background:var(--pd);transform:translateY(-1px)}.b:active{transform:scale(.98)}.b:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.b.o{background:var(--cd);color:var(--pt);border:1px solid var(--bd);box-shadow:none}.b.o:hover{background:var(--tint)}
+.b.d{background:var(--cd);color:var(--bad);border:1px solid var(--bdb);box-shadow:none}.b.d:hover{background:var(--badb)}
+.b.s{min-height:34px;padding:0 12px;font-size:13px;border-radius:9px}
+.mb,.ov{display:none}
+button:focus-visible,a:focus-visible{outline:3px solid rgba(122,85,230,.5);outline-offset:2px}
+.fm{display:grid;gap:12px}.fm label{display:grid;gap:5px;font-weight:600;font-size:13px}
+input,select{min-height:44px;padding:8px 12px;border:1.5px solid var(--in);border-radius:11px;background:var(--cd);color:var(--ink);width:100%;transition:border-color .15s,box-shadow .15s}
+input:hover,select:hover{border-color:var(--p2)}input:focus,select:focus{outline:0;border-color:var(--p2);box-shadow:0 0 0 4px rgba(122,85,230,.18)}
+input::placeholder{color:var(--mu);opacity:.7}input:disabled{background:var(--soft);color:var(--mu)}
+#q{max-width:360px;margin-bottom:16px;padding-left:40px;background:var(--cd) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238A87AD' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 13px center}
+.tw{overflow-x:auto}.year-level-table{min-width:0;table-layout:auto}table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px}
+th{text-align:left;font-size:12.5px;font-weight:700;color:var(--mu);padding:11px 14px;background:var(--soft)}th:first-child{border-radius:10px 0 0 10px}th:last-child{border-radius:0 10px 10px 0}
+td{padding:14px;border-bottom:1px solid var(--bd);vertical-align:middle;transition:background .12s}td small{display:block;color:var(--mu);font-size:12.5px}
+tbody tr:hover td{background:var(--hov)}tbody tr:last-child td{border-bottom:0}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:13px;color:#fff;background:hsl(var(--h) 52% 46%);flex:none}
+.ac{display:flex;gap:6px;flex-wrap:wrap}.none{text-align:center;color:var(--mu);padding:48px 20px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-size:12px;font-weight:600;background:var(--soft);color:var(--mu);border:1px solid var(--bd)}
+.pill.a{background:var(--okb);color:var(--ok);border-color:transparent}.pill.a::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.mini{display:inline-block;margin:2px 4px 2px 0;padding:2px 10px;border-radius:99px;background:var(--tint);color:var(--pt);font-size:12px;font-weight:600}
+.err{margin:0;padding:9px 12px;border-radius:10px;background:var(--badb);color:var(--bad);border:1px solid var(--bdb);font-size:13px;font-weight:500}
+.mdl{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(14,11,38,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fi .15s ease-out}
+.mp{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:var(--cd);color:var(--ink);border:1px solid var(--bd);border-radius:20px;padding:28px;box-shadow:var(--shl);animation:pop .18s ease-out}
+.mp h3{font-size:19px;font-weight:800;margin-bottom:6px}
+.ft{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.cr{margin:12px 0;padding:16px;border-radius:14px;background:var(--soft);border:1px solid var(--bd);display:grid;gap:8px}
+.cr div{display:flex;justify-content:space-between;align-items:center;gap:12px}.cr span{color:var(--mu)}.cr code{font-weight:700;font-size:15px;overflow-wrap:anywhere;background:var(--cd);padding:3px 9px;border-radius:7px;border:1px solid var(--bd)}
+.note{padding:10px 12px;border-radius:10px;background:#FFF6E8;color:#9A5B07;border:1px solid #F7DFB5;font-size:13px}
+[data-theme=dark] .note{background:#3A2C10;color:#F2C26B;border-color:#5A4318}
+.gstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.gstats.activity-summary{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.gstat{padding:16px;border:1px solid var(--bd);border-radius:12px;background:var(--cd)}.gstat span,.gstat small{display:block;color:var(--mu)}.gstat b{display:block;font-size:22px;margin:3px 0}
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:radial-gradient(900px 500px at 15% 10%,#5B35C9,transparent 60%),#1D1250}
+.gate .mp{max-width:400px;padding:34px}.gate .mp h3{font-size:22px}
+.tt{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:#17133A;color:#fff;border:1px solid #3A3480;padding:12px 20px;border-radius:12px;font-weight:600;box-shadow:var(--shl);opacity:0;pointer-events:none;transition:.2s;z-index:120}.tt.on{opacity:1;transform:translate(-50%,0)}
+.bnr{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--bd)}.bnr:last-child{border-bottom:0}
+.bnt{aspect-ratio:16/4.6;border-radius:12px;background:#1E1B4B;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}.bni b{display:block;font-size:15px}.bni small{display:block;color:var(--mu);margin-bottom:4px}.bni .pill{margin-right:4px}
+@keyframes fi{from{opacity:0}}@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}}
+@media screen and (max-width:800px){
+html,body{font-size:15px}
+.ly{grid-template-columns:minmax(0,1fr)}
+.sb{position:fixed;left:0;top:0;bottom:0;width:280px;max-width:84vw;height:100%;z-index:50;transform:translateX(-100%);transition:transform .22s ease;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+body.mo .sb{transform:none;box-shadow:var(--shl)}body.mo{overflow:hidden}
+body.mo .ov{display:block;position:fixed;inset:0;z-index:40;background:rgba(14,11,38,.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.mb{display:inline-flex;padding:0 10px}
+.tp{padding:10px 14px;gap:8px;justify-content:flex-start}.tp>b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.tp span{display:none}
+.pad{padding:16px;gap:16px}h2{font-size:22px}.cd{padding:16px}
+.hd>.b,.hd>.ac{width:100%}.hd .ac .b{flex:1}
+.bnr{grid-template-columns:minmax(0,1fr);gap:10px}
+input,select{font-size:16px}#q{max-width:none}.b.s{min-height:38px}
+.tw{overflow:visible}table{min-width:0}thead{display:none}table,tbody,tr,td{display:block;width:100%}
+tr{border:1px solid var(--bd);border-radius:12px;padding:6px 14px;margin-bottom:10px;background:var(--cd)}
+td{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;padding:10px 0;border-bottom:1px solid var(--bd);text-align:right}td:last-child{border-bottom:0}
+td::before{content:attr(data-l);color:var(--mu);font-size:12.5px;font-weight:600;text-align:left;flex:none}
+td[data-l=""]::before,td:has(.who)::before{display:none}
+td:has(.who){justify-content:flex-start;text-align:left}td:has(.ac){display:block}td.none{display:block;text-align:center}
+tbody tr:hover td{background:none}.ac .b{flex:1 1 auto}
+.mdl{place-items:end center;padding:0}
+.mp{max-width:none;border-radius:20px 20px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));max-height:92vh}
+.gate{padding:14px}.gate .mp{border-radius:20px;padding:26px 20px}.ft .b{flex:1}
+.tt{width:calc(100% - 32px);text-align:center}}
+@media(max-width:800px){.gstats{grid-template-columns:repeat(2,minmax(0,1fr))}.gstats.activity-summary{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+@media(max-width:420px){.gstats.activity-summary{grid-template-columns:minmax(0,1fr)}}
+@media print{.sb,.tp,.ov,.hd .b,.hd button{display:none}.ly{display:block}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== Enhanced look (dashboard style) ===== */
+:root{--r:18px;--sh:0 2px 4px rgba(62,34,145,.04),0 10px 30px rgba(62,34,145,.08)}
+[data-theme=dark]{--sh:0 2px 4px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.28)}
+body{background:radial-gradient(900px 420px at 85% -10%,rgba(122,85,230,.12),transparent 60%),var(--bg)}
+.tp{margin:14px 24px 0;padding:10px 16px;border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)}
+.tp>b{font-weight:800}
+.sb{border-radius:0 24px 24px 0}
+.sb a{border-radius:12px;padding:10px 14px}
+.sb a.on{box-shadow:0 8px 20px rgba(0,0,0,.28)}
+.sb a.on svg{color:var(--p)}
+.cd{border-radius:var(--r);box-shadow:var(--sh);border-color:transparent}
+.b{border-radius:12px}
+.b.o{border-color:var(--in)}
+input,select{border-radius:12px}
+#q{max-width:420px;border-radius:99px;background-color:var(--soft)}
+th{font-size:12px;letter-spacing:.01em;padding:12px 14px}
+th:first-child{border-radius:12px 0 0 12px}th:last-child{border-radius:0 12px 12px 0}
+.pill{padding:4px 12px}
+.pill.w{background:#FFF3DC;color:#A5610A;border-color:transparent}
+[data-theme=dark] .pill.w{background:#3A2C10;color:#F2C26B}
+.kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kc{display:flex;gap:14px;align-items:center;padding:18px;background:var(--cd);border-radius:var(--r);box-shadow:var(--sh);transition:transform .15s}
+.kc:hover{transform:translateY(-2px)}
+.ki{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--tint);color:var(--pt);flex:none}
+.ki svg{width:20px;height:20px}
+.kc small{display:block;color:var(--mu);font-weight:600;font-size:12.5px}
+.kc b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.kc em{font-style:normal;font-size:12px;font-weight:700;color:var(--ok)}
+.kc em.w{color:#C07A10}
+.dg{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.dg .col{display:grid;gap:20px;min-width:0}
+.ch .sub{margin:0 0 10px;font-size:13px}
+.ch svg.cv{width:100%;height:auto;display:block;stroke:none}
+.ch svg.cv text{fill:var(--mu);font:600 11px 'Plus Jakarta Sans',system-ui,sans-serif}
+.ch svg.cv .tip{fill:var(--p)}
+.ch svg.cv .tipt{fill:#fff;font-weight:700}
+.dnw{position:relative;display:grid;place-items:center;padding:6px 0}
+.dnw svg{width:150px;height:150px;transform:rotate(-90deg)}
+.dnw .c{position:absolute;text-align:center}
+.dnw .c b{display:block;font-size:26px;font-weight:800}
+.dnw .c small{color:var(--mu)}
+.lg{display:grid;gap:8px;margin-top:12px;font-size:13px}
+.lg div{display:flex;justify-content:space-between;color:var(--mu)}
+.lg b{color:var(--ink)}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+@media(max-width:1100px){.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}.dg{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:800px){.tp{margin:10px 12px 0}.sb{border-radius:0 20px 20px 0}.kc{padding:14px}.kc b{font-size:22px}}
+</style>
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/admin-responsive.css">
+<style>
+.gate{overflow:auto;grid-template-columns:minmax(0,1fr);align-content:center;justify-items:center;padding:28px 20px;background:linear-gradient(135deg,rgba(54,35,151,.91),rgba(65,41,174,.86) 50%,rgba(83,53,192,.78)),url("assets/images/hero.jpg") center/cover fixed,#38249b}
+.gate::before,.gate::after{position:fixed;z-index:0;border:1px solid rgba(255,255,255,.12);border-radius:50%;content:"";pointer-events:none}
+.gate::before{top:-240px;left:-180px;width:560px;height:560px;box-shadow:0 0 0 38px rgba(255,255,255,.035),0 0 0 86px rgba(255,255,255,.025)}
+.gate::after{right:-210px;bottom:-330px;width:650px;height:650px;background:rgba(255,255,255,.035)}
+.gate-shell{position:relative;z-index:1;display:grid;width:min(100%,430px);justify-items:center;gap:18px;margin:auto}
+.gate-brand{text-align:center;color:#fff}
+.gate-logos{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px}
+.gate-brand img{display:block;width:88px;height:88px;object-fit:contain;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.gate-brand img.gate-hm-logo{border-radius:0;padding:0}
+.gate-school{display:block;font-size:13px;font-weight:800;letter-spacing:.08em}
+.gate-location{display:block;margin-top:3px;color:rgba(255,255,255,.72);font-size:9px;font-weight:700;letter-spacing:.22em}
+.gate-brand h1{margin:18px 0 0;font-size:34px;font-weight:800;letter-spacing:.015em;line-height:1.15}
+.gate-department{margin:3px 0 0;color:rgba(255,255,255,.82);font-size:14px}
+.gate-access{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:6px 12px;border:1px solid rgba(255,255,255,.2);border-radius:99px;background:rgba(255,255,255,.12);color:#fff;font-size:12px;font-weight:700}
+.gate-access svg{width:15px;height:15px}
+.gate-description{margin:5px 0 0;color:rgba(255,255,255,.82);font-size:11px}
+.gate .mp{width:100%;max-width:430px;padding:26px 28px;border:1px solid rgba(255,255,255,.68);border-radius:16px;background:rgba(255,255,255,.97);box-shadow:0 24px 70px rgba(22,13,72,.3);color:#20164e}
+.gate .mp h3{margin:0;font-size:19px;letter-spacing:-.02em}
+.gate .mp>.sub{margin:4px 0 0;color:#716b90;font-size:11.5px;line-height:1.5}
+.gate .fm{gap:14px;margin-top:16px}
+.gate .fm label{gap:6px;color:#302260;font-size:11.5px;font-weight:700}
+.gate .fm input{min-height:43px;padding:9px 12px;border:1px solid #e3def7;border-radius:9px;background:#faf9ff;color:#251b53;font-size:12px}
+.gate .fm input[readonly]{cursor:default}
+.gate .fm input:focus{border-color:#8055e8;box-shadow:0 0 0 3px rgba(122,85,230,.13)}
+.gate-field{position:relative;display:block}
+.gate-field>svg{position:absolute;top:50%;left:12px;width:15px;height:15px;transform:translateY(-50%);color:#7043d6}
+.gate .fm .gate-field input{padding-left:36px}
+.gate-password{display:flex;align-items:center}
+.gate-password input{padding-right:42px!important}
+.gate-password button{position:absolute;right:6px;display:grid;width:32px;height:32px;place-items:center;border:0;border-radius:7px;background:transparent;color:#797293;cursor:pointer}
+.gate-password button:hover{background:#f0ecff;color:#5b35c9}
+.gate-password button svg{width:16px;height:16px}
+.gate .fm .b{min-height:43px;border-radius:9px;background:linear-gradient(100deg,#6538d2,#7540e9);font-size:12px;box-shadow:0 5px 13px rgba(91,53,201,.2)}
+.gate .fm .b:hover{background:#512aaE}
+.gate-secure{display:flex;align-items:center;justify-content:center;gap:8px;margin:17px 0 0;padding-top:13px;border-top:1px solid #eeebf6;color:#77728e;font-size:9px}
+.gate-secure::before,.gate-secure::after{height:1px;flex:1;background:#eeebf6;content:""}
+.gate-secure-note{display:flex;align-items:center;justify-content:center;gap:6px;margin:8px 0 0;color:#89849d;font-size:9px}
+.gate-secure-note svg{width:13px;height:13px;color:#6840d0}
+.gate-footer{color:rgba(255,255,255,.78);text-align:center}
+.gate-footer span{display:block;font-size:8px;font-weight:800;letter-spacing:.18em}
+.gate-footer small{display:block;margin-top:3px;font-size:8px;letter-spacing:.14em}
+@media(max-width:560px){
+ .gate{min-height:100svh;padding:22px 16px;background-attachment:scroll}
+ .gate-shell{gap:15px}
+ .gate-brand img{width:72px;height:72px}
+ .gate-logos{gap:10px}
+ .gate-brand h1{margin-top:13px;font-size:29px}
+ .gate-school{font-size:11px}
+ .gate .mp{padding:23px 20px;border-radius:14px}
+ .gate .mp h3{font-size:18px}
+ .gate-footer{margin-top:2px}
+}
+@media(max-height:700px){
+ .gate{align-content:start}
+ .gate-shell{margin:auto}
+ .gate-brand img{width:62px;height:62px}
+ .gate-brand h1{margin-top:10px;font-size:27px}
+ .gate .mp{padding-top:20px;padding-bottom:20px}
+}
+@media(max-height:820px) and (min-width:561px){
+ .gate{padding-top:18px;padding-bottom:18px}
+ .gate-shell{gap:13px}
+ .gate-brand img{width:72px;height:72px}
+ .gate-brand h1{margin-top:10px;font-size:29px}
+ .gate-access{margin-top:9px;padding:5px 11px}
+ .gate .mp{padding:21px 26px}
+ .gate .fm{gap:11px;margin-top:12px}
+ .gate-secure{margin-top:12px;padding-top:10px}
+}
+</style>
+</head>
+<body>
+<div class="gate" id="gate"><div class="gate-shell">
+<header class="gate-brand"><div class="gate-logos"><img src="assets/images/nbg%20(2).png" alt="ACES Polytechnic College logo"><img class="gate-hm-logo" src="assets/images/nbghm%20(2).png" alt="Hospitality Management department logo"></div><span class="gate-school">ACES POLYTECHNIC COLLEGE, INC.</span><span class="gate-location">PANABO, DAVAO DEL NORTE</span><h1>BSHM LMS</h1><p class="gate-department">Hospitality Management Department</p><span class="gate-access"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>Admin Access</span><p class="gate-description">Manage the system, users, and academic resources.</p></header>
+<form class="mp" id="gf" autocomplete="off"><h3 id="gt"></h3><p class="sub" id="gp"></p>
+<div class="fm"><label>Username<span class="gate-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg><input value="admin" readonly aria-label="Username" autocomplete="username"></span></label><label>Password<span class="gate-field gate-password"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3"></path><path d="M12 14v3"></path></svg><input id="gpw" type="password" required autocomplete="current-password"><button type="button" id="toggleAdminPassword" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></button></span></label>
+<label id="gcw" hidden>Confirm password<span class="gate-field"><input id="gpw2" type="password" autocomplete="new-password"></span></label><p class="err" id="gerr" hidden></p><button class="b" id="gb"></button></div><p class="gate-secure">Secure BSHM LMS Access</p><p class="gate-secure-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>Authorized administrators only.</p></form>
+<footer class="gate-footer"><span>ACES POLYTECHNIC COLLEGE, INC.</span><small>PANABO, DAVAO DEL NORTE</small></footer>
+</div></div>
+
+<div class="ly" id="app" hidden>
+<aside class="sb" id="sb"><h1><img class="sb-brand-mark" src="assets/images/nbg%20(2).png" alt=""><span>ACES DINELEARN<small>Department Admin</small></span></h1><nav id="nav"></nav><div class="sb-footer"><img src="assets/images/nbg%20(2).png" alt=""><span><b>ACES POLYTECHNIC COLLEGE, INC.</b><small>Panabo City, Davao del Norte</small></span></div></aside>
+<section class="mn"><header class="tp"><button class="b o s mb" id="mb" type="button" aria-label="Open menu" aria-controls="sb" aria-expanded="false"></button><div class="tp-crumb"><span class="crumb-home" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5.5 9v11h13V9M9 20v-6h6v6"></path></svg></span><b id="sch"></b></div><div class="global-search" id="globalSearch"><label class="global-search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="globalSearchInput" type="search" placeholder="Search students, faculty, subjects, or features..." aria-label="Search students, faculty, subjects, or features" autocomplete="off"><kbd>Ctrl K</kbd></label><div class="global-search-results" id="globalSearchResults" role="listbox" hidden></div></div><span id="dt" hidden></span><div class="tp-actions"><button class="b o s notification-button" id="notifications" type="button" aria-label="View student approvals"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg><i id="notificationCount" hidden></i></button><span class="tp-divider" aria-hidden="true"></span><div class="admin-profile"><span class="profile-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg></span><span class="profile-copy"><b>Admin</b><small>System Administrator</small></span></div><button class="b o s" id="th" type="button" aria-label="Switch light or dark mode" title="Switch light or dark mode"></button><button class="b o s" id="out">Sign out</button></div></header><div class="pad" id="pg"></div></section>
+</div>
+<div class="ov" id="ov"></div>
+<div id="mr"></div><div class="tt" id="tt" role="status" aria-live="polite"></div>
+
+<script src="assets/js/banners.js"></script>
+<script>
+/* Prototype: browser storage only (not real security).
+   Teacher accounts keep the SAME format as before under  bshm.accounts
+   (hash = SHA-256(salt + ':' + password)), so your login page still works.
+   Other admin data (settings, enrollment, assignments, activity log) is in  bshm.db  */
+(function(){'use strict';
+const $=i=>document.getElementById(i),KEY='bshm.accounts',CRED='bshm.admin.cred',SESS='bshm.admin.session',DBK='bshm.db',UK='aces_users',TK='bshm.admin.theme';
+let ACC=[],USR=[],BNL=[],D,pg='dash',q='',yearFilter='',studentPage=1,facultyPage=1,reportPage=1,RW,RP,AF,tt,gradeClass='all',gradeYear='all',dashboardActivityFilter='all',settingsLogoDraft='';
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=m=>{const t=$('tt');t.textContent=m;t.className='tt on';clearTimeout(tt);tt=setTimeout(()=>t.className='tt',2800)};
+const jget=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Could not save. Browser storage may be full or blocked.');return false}};
+const hex=u=>Array.from(u,x=>('0'+x.toString(16)).slice(-2)).join('');
+const rnd=n=>crypto.getRandomValues(new Uint8Array(n));
+const uid=()=>'i'+Date.now().toString(36)+hex(rnd(2));
+const hashPw=(salt,pw)=>{const s=salt+':'+pw;
+ if(crypto.subtle&&window.TextEncoder)return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(b=>hex(new Uint8Array(b)));
+ let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return Promise.resolve('f'+(h>>>0).toString(16))};
+const genPw=()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789',r=rnd(10);return Array.from(r,x=>c[x%c.length]).join('')};
+const dstr=i=>{const d=new Date(i);if(isNaN(d))return '';const f=D&&D.set&&D.set.dateFormat||'MMM d, yyyy';if(f==='MM/DD/YYYY')return d.toLocaleDateString('en-US');if(f==='DD/MM/YYYY')return d.toLocaleDateString('en-GB');if(f==='YYYY-MM-DD')return [d.getFullYear(),('0'+(d.getMonth()+1)).slice(-2),('0'+d.getDate()).slice(-2)].join('-');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
+const showErr=(id,m)=>{const e=$(id);e.textContent=m||'';e.hidden=!m};
+
+/* ---- icons, avatars, theme ---- */
+const IC={dash:'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z',ann:'M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8',logs:'M12 8v4l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5',menu:'M3 6h18M3 12h18M3 18h18',students:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',years:'M4 5h16M4 12h16M4 19h16M8 3v4M16 10v4M10 17v4',fac:'M3 7h18v13H3zM8 7V4h8v3M3 13h18',ban:'M3 3h18v18H3zM8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM21 15l-5-5L5 21',act:'M8 5h12M8 12h12M8 19h12M3 5h.01M3 12h.01M3 19h.01',materials:'M4 3h12l4 4v14H4zM16 3v5h4M8 12h8M8 16h8',r3:'M23 6l-9.5 9.5-5-5L1 18M17 6h6v6',set:'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6',moon:'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z',sun:'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4'};
+const ic=k=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(IC[k]||'')+'"/></svg>';
+const av=(n,photo)=>{n=String(n||'?').trim();const w=n.split(/\s+/),i=(w[0][0]||'?')+(w.length>1?w[w.length-1][0]:'');
+ const image=photo?'background-image:url(\''+esc(photo)+'\');background-size:cover;background-position:center;color:transparent;':'';
+ return '<i class="av" style="--h:'+(Array.from(n).reduce((a,c)=>a+c.charCodeAt(0),0)*7%360)+';'+image+'">'+esc(i.toUpperCase())+'</i>'};
+const personKey=n=>{n=String(n||'').replace(/^prof\.?\s*/i,'').trim();if(n.includes(','))n=n.split(',').map(x=>x.trim()).reverse().join(' ');
+ const w=n.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(Boolean);return w.length>1?w[0]+' '+w[w.length-1]:(w[0]||'')};
+const photoFor=(role,id,name)=>{
+ const profile=role==='student'?jget('bshm.student.profile.'+id):jget('bshm.teacher.profile.'+encodeURIComponent(String(id)));
+ if(profile&&profile.photo)return profile.photo;
+ const directory=jget('bshm.directory')||{};
+ for(const key of Object.keys(directory)){
+  const entry=directory[key];if(!entry||!entry.photo)continue;
+  if(role==='student'&&entry.role==='student'&&String(entry.studentId)===String(id))return entry.photo;
+  if(role==='teacher'&&entry.role==='teacher'&&
+    (entry.teacherId?String(entry.teacherId)===String(id):personKey(entry.name||key)===personKey(name)))return entry.photo;
+ }
+ return '';
+};
+const who=(n,s,photo)=>'<div class="who">'+av(n,photo)+'<div><b>'+esc(n)+'</b><small>'+esc(s)+'</small></div></div>';
+const setTh=t=>{document.documentElement.dataset.theme=t;$('th').innerHTML=ic(t==='dark'?'sun':'moon')+'<span class="sr" style="display:none">Theme</span>';try{localStorage.setItem(TK,t)}catch(e){}};
+$('th').onclick=()=>setTh(document.documentElement.dataset.theme==='dark'?'light':'dark');
+setTh(document.documentElement.dataset.theme==='dark'?'dark':'light');
+
+/* ---- mobile menu (sidebar drawer) ---- */
+const menu=o=>{document.body.classList.toggle('mo',!!o);$('mb').setAttribute('aria-expanded',o?'true':'false');$('mb').setAttribute('aria-label',o?'Close menu':'Open menu')};
+$('mb').innerHTML=ic('menu');
+$('mb').onclick=()=>menu(!document.body.classList.contains('mo'));
+$('ov').onclick=()=>menu(false);
+window.addEventListener('resize',()=>{if(innerWidth>800)menu(false)});
+
+/* ---- data ---- */
+const load=()=>{const v=jget(KEY);ACC=Array.isArray(v)?v:[];const uv=jget(UK);USR=Array.isArray(uv)?uv:[];BNL=ACESBanners.all();
+ D=Object.assign({years:['1st Year','2nd Year','3rd Year','4th Year'].map((n,i)=>({id:'y'+i,name:n})),sections:[],subjects:[],students:[],staff:[],enroll:[],assign:[],log:[],set:{}},jget(DBK)||{});
+ D.set=Object.assign({school:'ACES Polytechnic College, Inc.',address:'',email:'',phone:'',department:'Hospitality Management Department',logo:'',ay:'2025-2026',dateFormat:'MMM d, yyyy'},D.set||{});
+ if(!['MMM d, yyyy','MM/DD/YYYY','DD/MM/YYYY','YYYY-MM-DD'].includes(D.set.dateFormat))D.set.dateFormat='MMM d, yyyy'};
+const save=()=>jset(DBK,D),saveAcc=()=>jset(KEY,ACC);
+const sfull=u=>[u.firstName,u.middleName,u.lastName].filter(Boolean).join(' ');
+const teachers=()=>ACC.filter(a=>a&&a.role==='teacher'),byId=id=>ACC.find(a=>String(a.id)===String(id));
+const taken=(f,v,skip)=>{v=String(v).trim().toLowerCase();return ACC.some(a=>a&&String(a.id)!==String(skip)&&String(a[f]||'').toLowerCase()===v)};
+const syncClasses=()=>{const m={};D.assign.forEach(x=>{if(!x.facultyId)return;const sb=D.subjects.find(z=>z.code===x.subject)||{};(m[x.facultyId]=m[x.facultyId]||[]).push([x.subject,sb.title||x.subject,x.section])});jset('bshm.assignments',m)};
+const lg=(a,d)=>{D.log.unshift({t:new Date().toISOString(),a,d});D.log=D.log.slice(0,200);save()};
+const NAV=[['dash','Dashboard'],['students','Students'],['years','Year Levels'],['fac','Faculty / Teachers'],['acts','Activities'],['materials','Learning Materials'],['r3','Grades & Reports'],['logs','Activity Logs'],['set','Settings'],['ann','Announcements'],['ban','Homepage Banners']];
+
+/* ---- modal ---- */
+const mod=h=>{$('mr').innerHTML='<div class="mdl" id="md"><div class="mp" role="dialog" aria-modal="true">'+h+'</div></div>';const f=$('mr').querySelector('input,select,button');if(f)f.focus()};
+const close=()=>{$('mr').innerHTML=''};
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){close();menu(false);$('globalSearchResults').hidden=true}
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('globalSearchInput').focus()}
+});
+$('mr').addEventListener('click',e=>{if(e.target.closest('[data-close]'))close();const g=e.target.closest('[data-gen]');if(g)$('pw').value=genPw()});
+function form(t,body,ok,btn){mod('<h3>'+t+'</h3><form class="fm" id="mf" novalidate>'+body+'<p class="err" id="me" hidden></p><div class="ft"><button class="b o" type="button" data-close>Cancel</button><button class="b" type="submit">'+(btn||'Save changes')+'</button></div></form>');
+ $('mf').onsubmit=ev=>{ev.preventDefault();const fd={};new FormData($('mf')).forEach((v,k)=>fd[k]=String(v).trim());
+  Promise.resolve(ok(fd)).then(m=>{if(m)return showErr('me',m);close();render();if(AF){AF();AF=null}})}}
+const inp=(k,l,v,x)=>'<label>'+l+'<input name="'+k+'" value="'+esc(v||'')+'" '+(x||'')+'></label>';
+const head=(t,s,btn)=>'<div class="hd"><div><h2>'+t+'</h2><p class="sub">'+s+'</p></div>'+(btn||'')+'</div>';
+
+/* ---- faculty (teacher accounts) ---- */
+const LIST_PAGE_SIZE=8;
+const pageCount=count=>Math.max(1,Math.ceil(count/LIST_PAGE_SIZE));
+const peopleIcon=name=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+({edit:'m4 16.5-.8 4.3 4.3-.8L20 7.5 16.5 4 4 16.5ZM14.8 5.7l3.5 3.5',lock:'M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5zM12 14v3',mail:'M3 5h18v14H3zM3 6l9 7 9-7',disable:'M5 5l14 14M19 5 5 19',check:'m5 12 4 4L19 6',print:'M6 9V3h12v6M6 18H4v-7h16v7h-2M6 14h12v7H6z',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',info:'M12 11v5m0-9h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',checklist:'M9 5h11v16H4V5h3m1 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0m1 7 2 2 4-4m-6 8 2 2 4-4',shield:'M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3zm-4 9 3 3 5-6',gradeUsers:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M20 8v6m3-3h-6',gradeClipboard:'M9 5H6a2 2 0 0 0-2 2v13h16V7a2 2 0 0 0-2-2h-3M9 5a3 3 0 0 1 6 0v2H9V5zm0 9 2 2 4-4',gradeTrend:'M3 17l6-6 4 4 8-9M15 6h6v6',gradeAward:'M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3zm-4 9 3 3 5-6',calendar:'M7 3v4m10-4v4M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1z',plus:'M12 5v14M5 12h14',trash:'M4 7h16M10 11v6m4-6v6M5 7l1 14h12l1-14M9 7V4h6v3'}[name]||'')+'"></path></svg>';
+const peopleHeader=(title,sub,actions,isFaculty)=>'<div class="people-page-head"><div class="people-page-title"><span class="people-title-icon">'+(isFaculty?ic('fac'):'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z"></path><path d="M6 11v5c3.6 2.6 8.4 2.6 12 0v-5M22 9v6"></path></svg>')+'</span><span><h2>'+esc(title)+'</h2><p>'+esc(sub)+'</p></span></div>'+actions+'</div>';
+const listPager=(kind,count,page)=>'<div class="list-footer" id="listPager"><span>'+ (count?'Showing '+((page-1)*LIST_PAGE_SIZE+1)+'–'+Math.min(page*LIST_PAGE_SIZE,count)+' of '+count+' '+(kind==='students'?'students':'teachers'):'No '+(kind==='students'?'students':'teachers')+' to show')+'</span><div class="list-pagination"><button class="list-page-button" data-a="list-page" data-kind="'+kind+'" data-step="-1" aria-label="Previous page" '+(page<=1?'disabled':'')+'>‹</button><b>'+page+'</b><button class="list-page-button" data-a="list-page" data-kind="'+kind+'" data-step="1" aria-label="Next page" '+(page>=pageCount(count)?'disabled':'')+'>›</button></div></div>';
+function filteredFaculty(){return teachers().filter(a=>!q||(a.name+a.email+a.username+(a.empId||'')).toLowerCase().includes(q)).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')))}
+function rowsF(){const list=filteredFaculty(),start=(facultyPage-1)*LIST_PAGE_SIZE;
+ return list.slice(start,start+LIST_PAGE_SIZE).map((a,index)=>{const off=a.status==='disabled';
+ return '<article class="people-row faculty-row"><span class="people-main"><span class="people-index">'+(start+index+1)+'</span>'+av(a.name,photoFor('teacher',a.id,a.name))+
+ '<span class="people-identity"><b>'+esc(a.name)+'</b><small>'+esc(a.email)+'</small></span></span>'+
+ '<span class="people-id"><b>'+esc(a.username)+'</b><small>'+esc(a.empId||'Username')+'</small></span>'+
+ '<span class="people-status '+(off?'status-disabled':'status-active')+'"><i></i>'+(off?'Disabled':'Active')+'</span>'+
+ '<span class="people-actions"><button class="people-action" data-a="fe" data-id="'+esc(a.id)+'">'+peopleIcon('edit')+'<span>Edit</span></button><button class="people-action" data-a="rp" data-id="'+esc(a.id)+'">'+peopleIcon('lock')+'<span>Reset password</span></button><button class="people-action '+(off?'action-enable':'action-disable')+'" data-a="tg" data-id="'+esc(a.id)+'">'+peopleIcon(off?'check':'disable')+'<span>'+(off?'Enable':'Disable')+'</span></button><button class="people-action action-delete" data-a="fx" data-id="'+esc(a.id)+'">'+peopleIcon('disable')+'<span>Delete</span></button></span></article>'}).join('')||'<div class="people-empty">No teacher accounts yet. Select Create teacher account.</div>'}
+function fac(){RW=rowsF;const count=filteredFaculty().length;facultyPage=Math.min(facultyPage,pageCount(count));return peopleHeader('Faculty / Teachers','Create teacher accounts and manage who can sign in.','<button class="b" data-a="add">Create teacher account</button>',true)+
+ '<section class="people-panel"><div class="people-toolbar faculty-toolbar"><label class="people-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="q" type="search" placeholder="Search name, email or username..." aria-label="Search faculty and teachers" value="'+esc(q)+'"></label><button class="people-reset" data-a="list-reset" type="button">'+ic('set')+'<span>Reset</span></button></div>'+
+ '<div class="people-table-head faculty-head"><span>#</span><span class="people-head-person">Faculty / Teacher</span><span>Username</span><span>Status</span><span>Actions</span></div><div class="people-list" id="tb">'+rowsF()+'</div>'+listPager('faculty',count,facultyPage)+'</section>'}
+function reveal(t,a,pw,lb,who){lb=lb||'Username';who=who||'teacher';const identity=who==='student'?a.studentId:a.username;mod('<h3>'+t+'</h3><p class="sub">Share these sign-in details with the '+who+'.</p><div class="cr"><div><span>Name</span><b>'+esc(who==='student'?sfull(a):a.name)+'</b></div><div><span>'+lb+'</span><code>'+esc(identity)+'</code></div><div><span>Temporary password</span><code>'+esc(pw)+'</code></div></div><p class="note">This password is not stored and cannot be shown again. If it is lost, use Reset password.</p><div class="ft"><button class="b o" id="cp">Copy details</button><button class="b" data-close>Done</button></div>');
+ $('cp').onclick=()=>{const x='ACES DineLearn '+who+' account\nName: '+(who==='student'?sfull(a):a.name)+'\n'+lb+': '+identity+'\nTemporary password: '+pw;
+  (navigator.clipboard?navigator.clipboard.writeText(x).then(()=>toast('Details copied.'),()=>toast('Could not copy. Select the text manually.')):toast('Copy is not available here.'))}}
+function facNew(){form('Create teacher account',inp('name','Full name','','placeholder="e.g. Liza Santos"')+inp('email','Email','','type="email"')+inp('username','Username','','autocapitalize="none" placeholder="e.g. lsantos"')+inp('empId','Employee ID (optional)')+
+ '<label>Temporary password<span style="display:flex;gap:8px"><input id="pw" name="pw" value="'+genPw()+'" autocomplete="off"><button class="b o s" type="button" data-gen>Generate</button></span></label>',fd=>{
+  const u=fd.username.toLowerCase();
+  if(!fd.name)return 'Enter the teacher’s full name.';
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+  if(!/^[a-z0-9._-]{3,30}$/.test(u))return 'Username must be 3–30 characters: letters, numbers, dot, dash or underscore.';
+  if(taken('username',u))return 'That username is already used.';
+  if(taken('email',fd.email))return 'An account with that email already exists.';
+  if(fd.pw.length<8)return 'The password needs at least 8 characters.';
+  const salt=hex(rnd(8));
+  return hashPw(salt,fd.pw).then(h=>{const a={id:'t'+Date.now().toString(36)+hex(rnd(2)),role:'teacher',name:fd.name,email:fd.email,username:u,empId:fd.empId,dept:'BSHM Department',courses:[],salt,hash:h,status:'active',mustChange:true,created:new Date().toISOString()};
+   ACC.push(a);if(!saveAcc()){ACC.pop();return 'Could not save.'}lg('Faculty','Account created for '+a.name);AF=()=>reveal('Account created',a,fd.pw);return 0})},'Create account')}
+function facEdit(a){form('Edit teacher',inp('name','Full name',a.name)+inp('email','Email',a.email,'type="email"')+inp('empId','Employee ID',a.empId),fd=>{
+ if(!fd.name)return 'Enter the full name.';if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+ if(taken('email',fd.email,a.id))return 'Another account uses that email.';
+ const p=Object.assign({},a);D.assign.forEach(x=>{if(x.facultyId===a.id)x.faculty=fd.name});Object.assign(a,fd);if(!saveAcc()){Object.assign(a,p);return 'Could not save.'}save();return 0})}
+
+/* ---- students (read from aces_users: the same records used by registration/login) ---- */
+const studentById=id=>USR.find(u=>String(u.studentId)===String(id));
+const studentNamePassword=(first,middle,last,suffix)=>[first,middle,last].map(n=>String(n||'').replace(/\s+/g,'')).filter(Boolean).join('')+suffix;
+function filteredStudents(){return USR.filter(u=>(!yearFilter||u.yearLevel===yearFilter)&&(!q||(sfull(u)+u.email+u.studentId+(u.yearLevel||'')).toLowerCase().includes(q))).sort((a,b)=>{
+ const ai=D.years.findIndex(y=>y.name===a.yearLevel),bi=D.years.findIndex(y=>y.name===b.yearLevel);
+ return (ai<0?D.years.length:ai)-(bi<0?D.years.length:bi)||sfull(a).localeCompare(sfull(b));
+})}
+function rowsT(){const list=filteredStudents(),start=(studentPage-1)*LIST_PAGE_SIZE;
+ return list.slice(start,start+LIST_PAGE_SIZE).map((u,index)=>{const st=u.status==='disabled'?'Disabled':u.status==='verified'?'Active':'Pending';
+ return '<article class="people-row student-row"><span class="people-main"><span class="people-index">'+(start+index+1)+'</span>'+av(sfull(u),photoFor('student',u.studentId,sfull(u)))+
+ '<span class="people-identity"><b>'+esc(sfull(u))+'</b><small>'+peopleIcon('mail')+esc(u.email)+'</small></span></span>'+
+ '<span class="people-id">'+esc(u.studentId)+'</span><span class="people-year">'+esc(u.yearLevel||'—')+'</span>'+
+ '<span class="people-status status-'+st.toLowerCase()+'"><i></i>'+st+'</span>'+
+ '<span class="people-actions">'+(st==='Pending'?'<button class="people-action action-approve" data-a="sp" data-id="'+esc(u.studentId)+'"><span>Approve</span></button>':'')+
+ '<button class="people-action" data-a="se" data-id="'+esc(u.studentId)+'">'+peopleIcon('edit')+'<span>Edit</span></button><button class="people-action" data-a="sr" data-id="'+esc(u.studentId)+'">'+peopleIcon('lock')+'<span>Reset password</span></button>'+
+ (st==='Active'||st==='Disabled'?'<button class="people-action '+(st==='Disabled'?'action-enable':'action-disable')+'" data-a="st" data-id="'+esc(u.studentId)+'">'+peopleIcon(st==='Disabled'?'check':'disable')+'<span>'+(st==='Disabled'?'Enable':'Disable')+'</span></button>':'')+
+ '</span></article>'}).join('')||'<div class="people-empty">'+(yearFilter?'No students belong to '+esc(yearFilter)+'.':q?'No students match your search.':'No registered students yet.')+'</div>'}
+function stud(){RW=rowsT;const selectedYear=yearFilter&&D.years.find(y=>y.name===yearFilter),count=filteredStudents().length;studentPage=Math.min(studentPage,pageCount(count));return peopleHeader(selectedYear?'Students · '+selectedYear.name:'Students',selectedYear?'Showing students who belong to '+selectedYear.name+'.':'Manage student details and account access.',(selectedYear?'<button class="b o" data-a="year-all">Show all students</button>':'')+'<button class="b" data-a="add">Create student</button>',false)+
+ '<section class="people-panel"><div class="people-toolbar"><label class="people-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="q" type="search" placeholder="Search name, email or student ID..." aria-label="Search students" value="'+esc(q)+'"></label><label class="people-year-filter">'+ic('years')+'<select id="yearLevelFilter" aria-label="Filter by year level"><option value="">All Year Levels</option>'+D.years.map(y=>'<option value="'+esc(y.name)+'"'+(yearFilter===y.name?' selected':'')+'>'+esc(y.name)+'</option>').join('')+'</select></label><button class="people-reset" data-a="list-reset" type="button">'+ic('set')+'<span>Reset</span></button></div>'+
+ '<div class="people-table-head student-head"><span>#</span><span class="people-head-person">Student</span><span>Student ID</span><span>Year level</span><span>Account</span><span>Actions</span></div><div class="people-list" id="tb">'+rowsT()+'</div>'+listPager('students',count,studentPage)+
+ '<p class="people-note"><span class="year-level-info" aria-hidden="true">i</span><span>Year levels appear in order in the Students list and account forms.</span></p></section>'}
+function studentNew(){form('Create student account',
+ '<label>Student ID<input name="studentId" autocomplete="off" placeholder="e.g. 2026-00001"></label>'+
+ inp('firstName','First name')+inp('middleName','Middle name (optional)')+inp('lastName','Last name')+
+ inp('email','Email','', 'type="email"')+
+ '<label>Year level<select name="yearLevel" required><option value="">Select year level</option>'+D.years.map(y=>'<option value="'+esc(y.name)+'">'+esc(y.name)+'</option>').join('')+'</select></label>'+
+ '<label>Temporary password<input id="pw" name="pw" readonly autocomplete="off"><small>Name with no spaces, followed by six random digits.</small></label>',
+ async fd=>{
+  const sid=fd.studentId.trim(),email=fd.email.trim();
+  if(!/^[A-Za-z0-9][A-Za-z0-9-]{3,19}$/.test(sid))return 'Enter a valid Student ID (4–20 letters, numbers or hyphens).';
+  if(!fd.firstName||!fd.lastName)return 'Enter the student’s first and last name.';
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))return 'Enter a valid email address.';
+  if(!D.years.some(y=>y.name===fd.yearLevel))return 'Select a valid year level.';
+  if(USR.some(u=>String(u.studentId||'').trim().toLowerCase()===sid.toLowerCase()))return 'That Student ID is already in use.';
+  if(USR.some(u=>String(u.email||'').trim().toLowerCase()===email.toLowerCase()))return 'That email is already in use.';
+  if(fd.pw!==studentNamePassword(fd.firstName,fd.middleName,fd.lastName,passwordSuffix))return 'The temporary password must match the student’s name and random digits.';
+  if(!crypto.subtle||!window.TextEncoder)return 'Secure account creation is unavailable here. Open this page over HTTPS or localhost.';
+  const salt=hex(rnd(8));
+  let passwordHash;
+  try{
+   const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+fd.pw));
+   passwordHash=hex(new Uint8Array(digest));
+  }catch(e){return 'Could not securely create the student account. Please try again.'}
+  const student={studentId:sid,firstName:fd.firstName,middleName:fd.middleName,lastName:fd.lastName,email,yearLevel:fd.yearLevel,passwordHash,salt,role:'student',status:'verified',createdAt:new Date().toISOString()};
+  USR.push(student);
+  if(!jset(UK,USR)){USR.pop();return 'Could not save the student account.'}
+  lg('Student','Created account for '+sfull(student)+' ('+student.studentId+')');
+  AF=()=>reveal('Student account created',student,fd.pw,'Student ID','student');
+  return 0;
+ },'Create student');
+ const passwordSuffix=String(crypto.getRandomValues(new Uint32Array(1))[0]%1000000).padStart(6,'0');
+ const updatePassword=()=>{$('pw').value=studentNamePassword($('mf').elements.firstName.value,$('mf').elements.middleName.value,$('mf').elements.lastName.value,passwordSuffix)};
+ ['firstName','middleName','lastName'].forEach(name=>$('mf').elements[name].addEventListener('input',updatePassword));
+ updatePassword()}
+function studentEdit(u){form('Edit student',inp('firstName','First name',u.firstName)+inp('middleName','Middle name (optional)',u.middleName)+inp('lastName','Last name',u.lastName)+inp('email','Email',u.email,'type="email"')+'<label>Year level<select name="yearLevel"><option value="">Not set</option>'+D.years.map(y=>'<option value="'+esc(y.name)+'"'+(u.yearLevel===y.name?' selected':'')+'>'+esc(y.name)+'</option>').join('')+'</select></label>',fd=>{
+ if(!fd.firstName||!fd.lastName)return 'Enter the student’s first and last name.';
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email))return 'Enter a valid email address.';
+ if(USR.some(x=>x!==u&&String(x.email||'').trim().toLowerCase()===fd.email.toLowerCase()))return 'Another student account uses that email.';
+ if(fd.yearLevel&&!D.years.some(y=>y.name===fd.yearLevel))return 'Select a valid year level.';
+ const previous={firstName:u.firstName,middleName:u.middleName,lastName:u.lastName,email:u.email,yearLevel:u.yearLevel};
+ Object.assign(u,{firstName:fd.firstName,middleName:fd.middleName,lastName:fd.lastName,email:fd.email,yearLevel:fd.yearLevel});
+ if(!jset(UK,USR)){Object.assign(u,previous);return 'Could not save student details.'}
+ lg('Student','Updated details for '+sfull(u)+' ('+u.studentId+')');return 0
+})}
+function resetStudent(u){if(u.status==='disabled')return toast('Enable this account before resetting its password.');
+ if(!confirm('Reset the password for '+sfull(u)+'? Their current password will stop working.'))return;
+ const pw=genPw()+'!A1',salt=hex(rnd(8));
+ if(!crypto.subtle||!window.TextEncoder)return toast('Secure password reset is unavailable here. Open this page over HTTPS or localhost.');
+ crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw)).then(bytes=>{
+  const previous={salt:u.salt,passwordHash:u.passwordHash};u.salt=salt;u.passwordHash=hex(new Uint8Array(bytes));
+  if(!jset(UK,USR)){Object.assign(u,previous);return}
+  lg('Student','Reset password for '+sfull(u)+' ('+u.studentId+')');render();reveal('Password reset',u,pw,'Student ID','student')
+ }).catch(()=>toast('Could not securely reset the student password. Please try again.'))}
+function studentToggle(u){const disabling=u.status==='verified';
+ if(disabling&&!confirm('Disable access for '+sfull(u)+'? They will not be able to sign in until enabled again.'))return;
+ const previous={status:u.status,disabledFromStatus:u.disabledFromStatus};
+ if(disabling){u.disabledFromStatus=u.status;u.status='disabled'}
+ else{u.status=u.disabledFromStatus==='pending'?'pending':'verified';delete u.disabledFromStatus}
+ if(!jset(UK,USR)){Object.assign(u,previous);return}
+ lg('Student',(disabling?'Disabled ':'Enabled ')+sfull(u)+' ('+u.studentId+')');render();toast(disabling?'Student account disabled.':'Student account enabled.')
+}
+function studentApprove(u){
+ if(u.status!=='pending')return;
+ if(!confirm('Approve the registration for '+sfull(u)+'? They will be able to sign in.'))return;
+ u.status='verified';
+ if(!jset(UK,USR)){u.status='pending';return}
+ lg('Student','Approved '+sfull(u)+' ('+u.studentId+')');render();toast('Student approved. They can now sign in.')
+}
+
+/* ---- year-level management ---- */
+function yearLevels(){
+ const colors=['violet','blue','green','pink'];
+ const rows=D.years.map((y,index)=>{
+  const count=USR.filter(u=>u.yearLevel===y.name).length;
+  const color=colors[index%colors.length],ordinal=index+1;
+  return '<div class="year-level-row '+color+'"><span class="year-level-number">'+ordinal+'</span><span class="year-level-icon">'+
+   '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z"></path><path d="M6 11v5c3.6 2.6 8.4 2.6 12 0v-5M22 9v6"></path></svg></span>'+
+   '<span class="year-level-copy"><b>'+esc(y.name)+'</b><small>'+esc(y.name)+' students enrolled in the program.</small></span>'+
+   '<button class="year-level-students" data-a="ystudents" data-id="'+esc(y.id)+'" aria-label="View '+count+' students in '+esc(y.name)+'">'+
+   ic('students')+'<b>'+count+'</b><span>·</span><span>View students</span></button></div>';
+ }).join('')||'<div class="year-level-empty">No year levels. Add one to assign students.</div>';
+ return head('Year Levels','Add year levels and view students assigned to each one.','<button class="b" data-a="add">Add year level</button>')+
+ '<section class="year-level-panel"><div class="year-level-grid year-level-table-head"><span>#</span><span>Year Level</span><span>Students</span></div>'+
+ '<div class="year-level-list">'+rows+'</div><p class="year-level-note"><span class="year-level-info" aria-hidden="true">i</span><span>Year levels appear in order in the Students list and account forms.</span></p></section>';
+}
+function yearById(id){return D.years.find(y=>String(y.id)===String(id))||D.years.find(y=>y.name===id)}
+function yearLevelNew(){
+ form('Add year level',inp('name','Year level name','','maxlength="40" placeholder="e.g. 5th Year"'),fd=>{
+  const name=fd.name.trim();
+  if(!name)return 'Enter a year level name.';
+  if(D.years.some(y=>y.name.toLowerCase()===name.toLowerCase()))return 'That year level already exists.';
+  const year={id:uid(),name};D.years.push(year);
+  if(!save()){D.years.pop();return 'Could not save the year level.'}
+  lg('Year Levels','Added '+name);return 0
+ },'Add year level');
+}
+/* ---- communication ---- */
+const tbl=(h,r,e)=>'<div class="cd"><div class="tw"><table><thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+(r.map(x=>'<tr>'+x.map((c,i)=>'<td data-l="'+esc(h[i])+'">'+c+'</td>').join('')+'</tr>').join('')||'<tr><td colspan="9" class="none">'+e+'</td></tr>')+'</tbody></table></div></div>';
+const xb=(a,id)=>'<button class="b d s" data-a="'+a+'" data-id="'+esc(id)+'">Delete</button>';
+function ann(){
+ const L=(jget('bshm.ann.custom')||[]).slice().reverse();
+ const rows=L.map(a=>{
+  const author=String(a.by||'Admin').replace(/^prof\.?\s*/i,'Prof. ').trim(),initials=author.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  return '<tr><td data-l="Title"><b class="announcement-title">'+esc(a.title)+'</b></td><td data-l="Category"><span class="announcement-category">'+ic('dash')+esc(a.category||'Others')+'</span></td>'+
+   '<td data-l="By"><span class="announcement-author"><i>'+esc(initials||'AD')+'</i>'+esc(author)+'</span></td>'+
+   '<td data-l="Date"><span class="announcement-date">'+peopleIcon('calendar')+esc(dstr(a.when)||'—')+'</span></td>'+
+   '<td data-l="Action"><button class="announcement-delete" data-a="ax" data-id="'+esc(a.id)+'">'+peopleIcon('trash')+'<span>Delete</span></button></td></tr>';
+ }).join('');
+ return '<div class="announcement-page-head"><div class="announcement-title-group"><span class="announcement-title-icon">'+ic('ann')+'</span><span><h2>Announcements</h2><p>Posted to the student Announcements page and dashboard.</p></span></div>'+
+  '<div class="announcement-page-actions"><span class="announcement-count">'+ic('ann')+'<b>'+L.length+'</b> announcement'+(L.length===1?'':'s')+'</span><button class="b announcement-create" data-a="add">'+peopleIcon('plus')+'<span>New announcement</span></button></div></div>'+
+  '<section class="announcement-panel"><div class="tw"><table class="announcement-table"><thead><tr><th>Title <span>↕</span></th><th>Category <span>↕</span></th><th>By <span>↕</span></th><th>Date <span>↕</span></th><th>Action <span>↕</span></th></tr></thead><tbody>'+
+  (rows||'<tr class="announcement-empty"><td colspan="5">No announcements yet. Create one to share it with students.</td></tr>')+'</tbody></table></div></section>';
+}
+function annNew(){form('New announcement',inp('title','Title')+'<label>Category<select name="category"><option value="academic">Academic</option><option value="administrative">Administrative</option><option value="events">Events</option><option value="others">Others</option></select></label>'+inp('text','Message'),fd=>{
+ if(!fd.title||!fd.text)return 'Enter a title and a message.';const L=jget('bshm.ann.custom')||[];L.push({id:Date.now(),title:fd.title,category:fd.category,by:'Admin',when:new Date().toISOString(),text:fd.text});if(!jset('bshm.ann.custom',L))return 'Could not save.';lg('Announcement','Posted '+fd.title);return 0},'Post')}
+
+function logs(){return head('Activity Logs','Actions taken in this admin panel on this browser.')+tbl(['Date','Type','Details'],D.log.map(l=>[dstr(l.t),esc(l.a),esc(l.d)]),'No activity recorded yet.')}
+
+/* ---- homepage banners (Featured carousel on the student and teacher dashboards) ---- */
+const AUD={both:'Students & Teachers',student:'Students only',teacher:'Teachers only'};
+function ban(){return head('Homepage Banners','The Featured slides on the student and teacher dashboards. Add a photo, then choose who sees it.','<button class="b" data-a="add">Add banner</button>')+
+ '<div class="cd banner-list">'+(BNL.map((b,i)=>{const id=esc(b.id),icons={be:'<path d="m16 4 4 4M4 20l4-.8L19 8a2.1 2.1 0 0 0-3-3L5 16l-1 4Z"></path>',bup:'<path d="m6 14 6-6 6 6"></path>',bdn:'<path d="m6 10 6 6 6-6"></path>',btg:'<path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle>',bx:'<path d="M4 7h16M10 11v6M14 11v6M5 7l1 14h12l1-14M9 7V4h6v3"></path>'},bt=(a,l,c,x,label)=>'<button class="b '+(c||'o')+' s" data-a="'+a+'" data-id="'+id+'" aria-label="'+label+'" title="'+label+'"'+(x||'')+'><span class="banner-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24">'+icons[a]+'</svg></span><span>'+l+'</span></button>';
+  return '<article class="bnr"><div class="bnt" style="background:'+ACESBanners.bg(b)+'" role="img" aria-label="Preview of '+esc(b.title)+'"></div><div class="bni"><b>'+esc(b.title)+'</b><small>'+esc(b.caption||'No caption')+'</small><div class="bn-meta"><span class="pill">'+(AUD[b.audience]||AUD.student)+'</span><span class="pill'+(b.active===false?'':' a')+'">'+(b.active===false?'Hidden':'Visible')+'</span>'+(b.img?'':'<span class="pill">No photo</span>')+'</div></div><div class="ac">'+bt('be','Edit','o','','Edit banner')+bt('bup','Move up','o',i?'':' disabled','Move banner up')+bt('bdn','Move down','o',i<BNL.length-1?'':' disabled','Move banner down')+bt('btg',b.active===false?'Show':'Hide','o','','Toggle banner visibility')+bt('bx','Delete','d','','Delete banner')+'</div></article>'}).join('')||'<p class="none">No banners. The Featured section is hidden on the dashboards.</p>')+'</div>'+
+ '<p class="note">Wide photos work best (about 1200 × 350). The banner crops from the center. Students and teachers see changes right away.</p>'}
+const shrink=f=>new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{const k=Math.min(1,1200/im.width),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));const x=c.getContext('2d');x.fillStyle='#1E1B4B';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(f)});
+function bsave(fn){const snap=JSON.stringify(BNL);fn();if(!ACESBanners.save(BNL)){BNL=JSON.parse(snap);toast('Could not save. The photo may be too large for browser storage.');return false}return true}
+function banEdit(b){const o=b||{audience:'student'};let img=o.img||'',imageRevision=0;const pv=()=>{$('bp').style.background=ACESBanners.bg({img,colors:o.colors})};
+ mod('<h3>'+(b?'Edit':'Add')+' banner</h3><form class="fm banner-edit" id="mf" novalidate><div class="banner-preview"><span>Live preview</span><div class="bnt" id="bp" role="img" aria-label="Banner image preview"></div></div>'+
+  '<label>Photo<input id="bf" type="file" accept="image/png,image/jpeg,image/webp" aria-describedby="photo-hint"><small class="field-hint" id="photo-hint">PNG, JPG or WEBP · up to 8 MB. Wide images look best.</small></label><button class="b o s remove-photo" type="button" id="brm">Remove photo</button>'+
+  inp('title','Title (on the banner)',o.title,'maxlength="80"')+inp('caption','Caption (under the banner)',o.caption,'maxlength="160"')+inp('link','Link (page opened by the button)',o.link,'placeholder="courses.html"')+
+  '<label>Show to<select name="audience">'+Object.keys(AUD).map(k=>'<option value="'+k+'"'+(k===o.audience?' selected':'')+'>'+AUD[k]+'</option>').join('')+'</select></label>'+
+  '<p class="err" id="me" hidden></p><div class="ft"><button class="b o" type="button" data-close>Cancel</button><button class="b" id="banner-save" type="submit">'+(b?'Save changes':'Add banner')+'</button></div></form>');
+ pv();
+ $('bf').onchange=ev=>{const f=ev.target.files[0],revision=++imageRevision,saveButton=$('banner-save');showErr('me','');saveButton.disabled=false;if(!f)return;
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type))return showErr('me','Choose a PNG, JPG or WEBP image.');
+  if(f.size>8*1024*1024)return showErr('me','That image is over 8 MB. Choose a smaller one.');
+  saveButton.disabled=true;
+  shrink(f).then(d=>{if(revision===imageRevision){img=d;pv()}},()=>{if(revision===imageRevision)showErr('me','Could not read that image.')}).finally(()=>{if(revision===imageRevision)saveButton.disabled=false})};
+ $('brm').onclick=()=>{imageRevision++;img='';$('bf').value='';$('banner-save').disabled=false;showErr('me','');pv()};
+ $('mf').onsubmit=ev=>{ev.preventDefault();const fd={};new FormData($('mf')).forEach((v,k)=>{if(typeof v==='string')fd[k]=v.trim()});
+  if($('banner-save').disabled)return;
+  if(!fd.title)return showErr('me','Enter a title.');
+  if(fd.link&&!ACESBanners.safeLink(fd.link))return showErr('me','The link must be a page like courses.html or a web address starting with https://');
+  if(!(fd.audience in AUD))fd.audience='student';
+  const ok=bsave(()=>{if(b)Object.assign(b,fd,{img});else BNL.push(Object.assign({id:uid(),colors:'',active:true,img},fd))});
+  if(ok){lg('Banner',(b?'Updated ':'Added ')+fd.title);close();render()}}}
+
+/* ---- read-only grade monitoring (uses the teacher gradebook storage keys) ---- */
+function gradeClasses(){
+ const list=[],byCode={};
+ const shared=jget('bshm.class.all')||[];
+ shared.forEach(c=>{
+  if(!c||!c[0])return;
+  let row=byCode[c[0]];
+  if(!row){row=byCode[c[0]]={code:c[0],title:c[1]||c[0],sections:[],faculty:[]};list.push(row)}
+  if(c[2]&&!row.sections.includes(c[2]))row.sections.push(c[2]);
+  if(c[5]&&!row.faculty.includes(c[5]))row.faculty.push(c[5]);
+ });
+ D.assign.forEach(a=>{
+  if(!a.subject)return;
+  let c=byCode[a.subject];
+  if(!c){const s=D.subjects.find(x=>x.code===a.subject)||{};c=byCode[a.subject]={code:a.subject,title:s.title||a.subject,sections:[],faculty:[]};list.push(c)}
+  if(a.section&&!c.sections.includes(a.section))c.sections.push(a.section);
+  const f=byId(a.facultyId),name=f&&f.name||a.faculty;
+  if(name&&!c.faculty.includes(name))c.faculty.push(name);
+ });
+ return list;
+}
+function gradeResultRecords(){
+ const H=[],P=[];
+ for(let i=0;i<localStorage.length;i++){
+  const k=localStorage.key(i);
+  if(!k)continue;
+  if(k.indexOf('bshm.hist.')===0){const v=jget(k);if(Array.isArray(v))H.push(...v)}
+  else if(k.indexOf('bshm.poshist.')===0){const v=jget(k);if(Array.isArray(v))P.push(...v)}
+ }
+ return {H,P};
+}
+function gradeRows(code){
+ const H=gradeResultRecords(),G=jget('bshm.gb.'+code)||{},W=jget('bshm.gb.w')||{q:30,e:40,p:30};
+ const lc=s=>String(s==null?'':s).trim().toLowerCase();
+ const bounded=v=>v===''||v==null||isNaN(+v)?null:Math.max(0,Math.min(100,+v));
+ const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):null;
+ const pick=(o,keys)=>{for(const k of keys)if(o&&o[k]!=null&&o[k]!=='')return o[k];return null};
+ const posName=r=>pick(r,['student','student_id','studentName','student_name','name','user','username']);
+ const users=Array.isArray(USR)?USR:[],enrollments=jget('bshm.enrollments')||{},legacy=(jget('bshm.joined')||{})[code]||[],roster=[],seen={};
+ const full=u=>[u.firstName,u.middleName,u.lastName].filter(Boolean).join(' ').trim();
+ const resolve=(name,id)=>{
+  if(id){const byId=users.find(u=>u&&String(u.studentId)===String(id));if(byId)return byId}
+  const key=lc(name);
+  return users.find(u=>u&&[full(u),[u.firstName,u.lastName].filter(Boolean).join(' '),u.studentId,u.email].some(v=>lc(v)===key))||null;
+ };
+ const add=(name,id)=>{
+  const student=resolve(name,id),label=student?full(student):String(name||'').trim();
+  if(!label)return;
+  const accountId=student&&student.studentId?String(student.studentId):String(id||'');
+  const key=accountId?'id:'+accountId:'name:'+lc(label);
+  if(seen[key])return;
+  seen[key]=true;roster.push({name:label,id:accountId,student});
+ };
+ users.forEach(u=>{if(u&&(!u.status||u.status==='verified')&&Array.isArray(enrollments[u.studentId])&&enrollments[u.studentId].includes(code))add(full(u),u.studentId)});
+ legacy.forEach(x=>add(typeof x==='string'?x:x&&x.name,''));
+ Object.keys(G).forEach(name=>add(name,''));
+ const assessmentIds=(jget('bshm.act.custom')||[]).filter(x=>x&&x.act&&x.act.course===code).map(x=>x.act.id);
+ const posIds=(jget('bshm.pos.custom')||[]).filter(x=>x&&x.course===code).map(x=>x.id);
+ H.H.filter(r=>assessmentIds.includes(r.exam_id)).forEach(r=>add(r.student_id,r.student_account_id));
+ H.P.filter(r=>posIds.includes(r.activity_id||r.id)).forEach(r=>add(posName(r),r.student_account_id));
+ const posScore=r=>{
+  let s=pick(r,['score','percentage','percent','result','total','grade']);
+  if(s==null)return null;
+  const max=pick(r,['max','maxScore','max_score','outOf','total_items']);
+  if(max!=null&&+max>0&&+max!==100&&!isNaN(+s))s=(+s/+max)*100;
+  return bounded(s);
+ };
+ return roster.map(student=>{
+  const name=student.name;
+  const best={};
+  H.H.forEach(r=>{if(!assessmentIds.includes(r.exam_id)||(student.id&&r.student_account_id?String(r.student_account_id)!==student.id:lc(r.student_id)!==lc(name))||r.percentage==null)return;const k=r.exam_id;if(!best[k]||r.attempt_number>=best[k].attempt_number)best[k]=r});
+  const qs=[],es=[];
+  Object.keys(best).forEach(k=>{const r=best[k];(/quiz/i.test(r.exam_id+' '+r.exam_title)?qs:es).push(r.percentage)});
+  const pm={};
+  H.P.forEach(r=>{
+   if(!posIds.includes(r.activity_id||r.id)||(student.id&&r.student_account_id?String(r.student_account_id)!==student.id:lc(posName(r))!==lc(name)))return;
+   const s=posScore(r);if(s==null)return;
+   const k=r.activity_id||r.id;
+   if(!pm[k]||(+r.attempt_number||0)>=(+pm[k].n||0))pm[k]={n:r.attempt_number,s};
+  });
+  const automatic={q:avg(qs),e:avg(es),p:Object.keys(pm).length?avg(Object.keys(pm).map(k=>pm[k].s)):null};
+  const manual=G[student.id]||G[name]||{},score={q:manual.q!=null?manual.q:automatic.q,e:manual.e!=null?manual.e:automatic.e,p:manual.p!=null?manual.p:automatic.p};
+  const total=(+W.q||0)+(+W.e||0)+(+W.p||0);
+  const final=score.q==null||score.e==null||score.p==null||!total?null:Math.round((score.q*(+W.q||0)+score.e*(+W.e||0)+score.p*(+W.p||0))/total*10)/10;
+  return {name,student_account_id:student.id,q:score.q,e:score.e,p:score.p,final};
+ });
+}
+function rep(){
+ const classes=gradeClasses();
+ if(gradeClass!=='all'&&!classes.some(c=>c.code===gradeClass))gradeClass='all';
+ if(gradeYear!=='all'&&!D.years.some(y=>y.name===gradeYear))gradeYear='all';
+ const selected=gradeClass==='all'?classes:classes.filter(c=>c.code===gradeClass);
+ const rows=selected.flatMap(c=>gradeRows(c.code).map(r=>({class:c,grade:r,student:USR.find(u=>String(u.studentId)===String(r.student_account_id))||USR.find(u=>[u.studentId,u.email,sfull(u)].some(value=>String(value||'').trim().toLowerCase()===String(r.name||'').trim().toLowerCase()))})))
+  .filter(x=>gradeYear==='all'||(x.student&&x.student.yearLevel===gradeYear));
+ const finals=rows.filter(x=>x.grade.final!=null),passed=finals.filter(x=>x.grade.final>=75).length;
+ const h=['Class','Teacher','Student','Year Level','Quizzes','Exams','POS Training','Final grade','Remarks'];
+ const r=rows.map(x=>[x.class.code,x.class.faculty.join(', ')||'—',x.grade.name,x.student&&x.student.yearLevel||'—',x.grade.q==null?'—':x.grade.q,x.grade.e==null?'—':x.grade.e,x.grade.p==null?'—':x.grade.p,x.grade.final==null?'—':x.grade.final,x.grade.final==null?'Incomplete':x.grade.final>=75?'Passed':'Failed']);
+ RP={t:'Grades and Reports',h,r};
+ const options=classes.map(c=>'<option value="'+esc(c.code)+'"'+(gradeClass===c.code?' selected':'')+'>'+esc(c.code+' · '+c.title+(c.sections.length?' · '+c.sections.join(', '):''))+'</option>').join('');
+ const yearOptions=D.years.map(y=>'<option value="'+esc(y.name)+'"'+(gradeYear===y.name?' selected':'')+'>'+esc(y.name)+'</option>').join('');
+ const pageSize=7,pages=Math.max(1,Math.ceil(r.length/pageSize));reportPage=Math.min(reportPage,pages);
+ const visible=r.slice((reportPage-1)*pageSize,reportPage*pageSize);
+ const tableRows=visible.map(row=>'<tr>'+row.map((v,i)=>'<td data-l="'+esc(h[i])+'">'+(i===8?'<span class="report-remark '+(v==='Passed'?'passed':v==='Failed'?'failed':'incomplete')+'">'+(v==='Passed'?'<i>✓</i>':v==='Failed'?'<i>×</i>':'<i>•</i>')+esc(v)+'</span>':esc(v))+'</td>').join('')+'</tr>').join('');
+ const average=finals.length?Math.round(finals.reduce((a,x)=>a+x.grade.final,0)/finals.length*10)/10:'—';
+ return '<div class="report-page-head"><div class="report-title"><span class="report-title-icon">'+ic('r3')+'</span><span><h2>Grades &amp; Reports</h2><p>Monitor teacher gradebooks and student performance.</p></span></div><span class="report-actions"><button class="b o" data-a="pr">'+peopleIcon('print')+'<span>Print</span></button><button class="b" data-a="csv">'+peopleIcon('download')+'<span>Export CSV</span></button></span></div>'+
+ '<div class="report-readonly">'+peopleIcon('info')+'<p><b>Read-only monitoring:</b> teachers enter and update grades in their Gradebook. Admin changes are not made here. Grades are read from this browser’s shared LMS storage.</p></div>'+
+ '<section class="report-panel"><div class="report-filters"><label class="report-filter"><span>Class</span><span class="report-select-wrap">'+ic('years')+'<select id="gradeClass" aria-label="Filter grades by class"><option value="all"'+(gradeClass==='all'?' selected':'')+'>All classes</option>'+options+'</select></span></label><label class="report-filter"><span>Year Level</span><span class="report-select-wrap">'+ic('years')+'<select id="gradeYear" aria-label="Filter grades by year level"><option value="all"'+(gradeYear==='all'?' selected':'')+'>All year levels</option>'+yearOptions+'</select></span></label></div>'+
+ '<div class="gstats report-stats"><div class="gstat report-stat monitored"><span class="report-stat-icon">'+peopleIcon('gradeUsers')+'</span><span class="report-stat-copy"><small>Students monitored</small><b>'+rows.length+'</b><em>Across selected classes</em></span></div><div class="gstat report-stat graded"><span class="report-stat-icon">'+peopleIcon('gradeClipboard')+'</span><span class="report-stat-copy"><small>Graded</small><b>'+finals.length+'</b><em>Complete final grades</em></span></div><div class="gstat report-stat average"><span class="report-stat-icon">'+peopleIcon('gradeTrend')+'</span><span class="report-stat-copy"><small>Class average</small><b>'+average+'</b><em>Based on complete grades</em></span></div><div class="gstat report-stat passed"><span class="report-stat-icon">'+peopleIcon('gradeAward')+'</span><span class="report-stat-copy"><small>Passed</small><b>'+passed+'</b><em>'+(finals.length?Math.round(passed/finals.length*100)+'% pass rate':'No grades yet')+'</em></span></div></div>'+
+ '<section class="grade-report"><div class="tw"><table><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+tableRows+'<tr class="report-empty"'+(r.length?' hidden':'')+'><td colspan="'+h.length+'">No gradebook records found. Teacher-entered grades and completed activities will appear here.</td></tr></tbody></table></div>'+
+ '<div class="report-footer"><span class="report-info">'+peopleIcon('info')+'<span>Year levels are linked to each student account.</span></span><span class="report-showing">'+(r.length?'Showing '+((reportPage-1)*pageSize+1)+'–'+Math.min(reportPage*pageSize,r.length)+' of '+r.length+' students':'No students match the selected filters')+'</span><span class="report-pagination"><button class="report-page-button" data-a="report-page" data-step="-1" aria-label="Previous page" '+(reportPage<=1?'disabled':'')+'>‹</button><b>'+reportPage+'</b><button class="report-page-button" data-a="report-page" data-step="1" aria-label="Next page" '+(reportPage>=pages?'disabled':'')+'>›</button></span></div></section></section>';
+}
+
+function activityStudent(name,id){
+ if(id){
+  const byId=USR.find(u=>String(u.studentId)===String(id));
+  if(byId)return byId;
+ }
+ const key=String(name||'').trim().toLowerCase();
+ return USR.find(u=>{
+  const full=sfull(u).trim().toLowerCase(),firstLast=[u.firstName,u.lastName].filter(Boolean).join(' ').trim().toLowerCase();
+  return [u.studentId,u.email,full,firstLast].some(value=>String(value||'').trim().toLowerCase()===key);
+ })||null;
+}
+function adminActivities(){
+ const records=jget('bshm.act.custom'),posRecords=jget('bshm.pos.custom'),accounts=jget(KEY),items=Array.isArray(records)?records.filter(c=>c&&c.act&&c.act.id):[],posItems=Array.isArray(posRecords)?posRecords.filter(a=>a&&a.id):[],teacherAccounts=Array.isArray(accounts)?accounts:[];
+ const activities=items.map(c=>{
+  const a=c.act,history=jget('bshm.hist.'+a.id),subs=Array.isArray(history)?history.filter(r=>r&&r.status!=='IN_PROGRESS'&&r.submitted_at):[];
+  const owner=teacherAccounts.find(u=>u&&u.role==='teacher'&&String(u.id)===String(a.teacherId));
+  return {activity:a,kind:a.type||'Assessment',teacher:a.teacherName||(owner&&owner.name)||'Legacy activity',subs,pending:subs.filter(r=>(r.essay_pending||0)>0&&!r.graded_at).length};
+ }).concat(posItems.map(a=>{
+  const history=jget('bshm.poshist.'+a.id),subs=Array.isArray(history)?history.filter(r=>r&&r.submitted_at):[];
+  const owner=teacherAccounts.find(u=>u&&u.role==='teacher'&&String(u.id)===String(a.teacherId));
+  return {activity:a,kind:'POS Training',teacher:a.teacherName||(owner&&owner.name)||'Legacy activity',subs,pending:0};
+ }));
+ const submissions=activities.flatMap(x=>x.subs.map(r=>({activity:x.activity,kind:x.kind,record:r,student:activityStudent(r.student_id||r.student,r.student_account_id)})))
+  .sort((a,b)=>String(b.record.submitted_at).localeCompare(String(a.record.submitted_at)));
+ const pending=activities.reduce((n,x)=>n+x.pending,0);
+ const studentKeys=new Set();
+ (Array.isArray(USR)?USR:[]).forEach((student,index)=>{
+  if(!student)return;
+  const key=String(student.studentId||student.email||sfull(student)||'record-'+index).trim().toLowerCase();
+  if(key)studentKeys.add(key);
+ });
+ const dateKey=date=>date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+('0'+date.getDate()).slice(-2);
+ const today=new Date(),todayKey=dateKey(today),lastDay=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+ lastDay.setDate(lastDay.getDate()+7);
+ const lastKey=dateKey(lastDay);
+ const upcoming=activities.filter(item=>{
+  const activity=item.activity,value=activity.dueDate,status=String(activity.status||'').toLowerCase();
+  if(activity.published===false||activity.active===false||status==='draft'||status==='expired'||status==='archived'||typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+  const parts=value.split('-'),date=new Date(+parts[0],+parts[1]-1,+parts[2]);
+  return date.getFullYear()===+parts[0]&&date.getMonth()===+parts[1]-1&&date.getDate()===+parts[2]&&value>=todayKey&&value<=lastKey;
+ }).length;
+ const cards='<div class="gstats activity-summary"><div class="gstat"><span>Published activities</span><b>'+activities.length+'</b><small>Teacher-published assessments and POS training</small></div><div class="gstat"><span>Submissions</span><b>'+submissions.length+'</b><small>Submitted attempts across activities</small></div><div class="gstat"><span>Needs grading</span><b>'+pending+'</b><small>Essay submissions awaiting teacher review</small></div><div class="gstat"><span>Total students</span><b>'+studentKeys.size+'</b><small>Registered student accounts</small></div><div class="gstat"><span>Upcoming deadlines</span><b>'+upcoming+'</b><small>Published activities · next 7 days</small></div></div>';
+ const activityRows=activities.map(x=>'<tr><td data-l="Activity"><b>'+esc(x.activity.title||'Untitled')+'</b><small>'+esc(x.kind)+'</small></td><td data-l="Course">'+esc(x.activity.course||'—')+'</td><td data-l="Teacher">'+esc(x.teacher)+'</td><td data-l="Due">'+esc(x.activity.due||'—')+'</td><td data-l="Submissions">'+x.subs.length+'</td><td data-l="Needs grading">'+x.pending+'</td></tr>').join('');
+ const submissionRows=submissions.map(x=>{
+  const r=x.record,st=x.student,status=r.essay_pending>0&&!r.graded_at?'Needs grading':String(r.status||'Submitted');
+  const score=r.total?esc(r.score)+' / '+esc(r.total)+(r.percentage!=null?' ('+esc(r.percentage)+'%)':''):r.score!=null?esc(r.score)+'%':'—';
+  return '<tr><td data-l="Student">'+esc(st?sfull(st):r.student_id||r.student||'—')+'</td><td data-l="Year Level">'+esc(st&&st.yearLevel||'—')+'</td><td data-l="Activity">'+esc(x.activity.title||'Untitled')+'</td><td data-l="Course">'+esc(x.activity.course||'—')+'</td><td data-l="Attempt">#'+esc(r.attempt_number||1)+'</td><td data-l="Submitted">'+esc(dstr(r.submitted_at)||'—')+'</td><td data-l="Score">'+score+'</td><td data-l="Status"><span class="pill '+(status==='PASSED'?'a':status==='Needs grading'?'w':'')+'">'+esc(status)+'</span></td></tr>';
+ }).join('');
+ return head('Activities','Live view of teacher-published assessments and student submissions.')+
+ '<div class="report-readonly">'+peopleIcon('info')+'<p><b>Shared activity data:</b> teachers publish activities, students submit them, and teachers review and grade. This admin page is read-only and reflects the same browser storage.</p></div>'+
+ cards+'<section class="cd"><h3>Published activities</h3><div class="tw"><table><thead><tr><th>Activity</th><th>Course</th><th>Teacher</th><th>Due</th><th>Submissions</th><th>Needs grading</th></tr></thead><tbody>'+(activityRows||'<tr><td colspan="6" class="none">No teacher-published activities yet.</td></tr>')+'</tbody></table></div></section>'+
+ '<section class="cd"><h3>Student submissions</h3><div class="tw"><table><thead><tr><th>Student</th><th>Year Level</th><th>Activity</th><th>Course</th><th>Attempt</th><th>Submitted</th><th>Score</th><th>Status</th></tr></thead><tbody>'+(submissionRows||'<tr><td colspan="8" class="none">Student submissions will appear here.</td></tr>')+'</tbody></table></div></section>';
+}
+function adminMaterials(){
+ const records=jget('bshm.materials'),items=Array.isArray(records)?records.filter(m=>m&&m.vis==='pub').sort((a,b)=>String(b.added||'').localeCompare(String(a.added||''))):[];
+ const rows=items.map(m=>'<tr><td data-l="Material"><b>'+esc(m.title||'Untitled')+'</b><small>'+esc(m.topic||m.desc||'')+'</small></td><td data-l="Type">'+esc(m.type||'—')+'</td><td data-l="Course">'+esc(m.course||'—')+'</td><td data-l="Published">'+esc(dstr(m.added)||'—')+'</td><td data-l="Resource">'+(m.type==='link'?'External link':m.idb?'Stored file':m.data?'Embedded file':'File metadata')+'</td></tr>').join('');
+ return head('Learning Materials','Read-only view of materials published by teachers.')+
+ '<div class="report-readonly">'+peopleIcon('info')+'<p><b>Shared resource data:</b> published teacher materials appear in student Resources. Drafts are not shown here.</p></div>'+
+ '<section class="cd"><h3>Published materials <span class="muted">('+items.length+')</span></h3><div class="tw"><table><thead><tr><th>Material</th><th>Type</th><th>Course</th><th>Published</th><th>Resource</th></tr></thead><tbody>'+(rows||'<tr><td colspan="5" class="none">No teacher-published materials yet.</td></tr>')+'</tbody></table></div></section>';
+}
+
+/* ---- dashboard overview ---- */
+const dashboardActivityGroup=type=>type==='Student'?'students':type==='Faculty'?'faculty':type==='Announcement'?'announcements':'other';
+function dash(){
+ const pen=USR.filter(u=>u.status==='pending').length,off=USR.filter(u=>u.status==='disabled').length;
+ const teacherAccounts=teachers();
+ const assignments=Array.isArray(D.assign)?D.assign:[],subjects=Array.isArray(D.subjects)?D.subjects:[];
+ const announcementData=jget('bshm.ann.custom'),announcements=Array.isArray(announcementData)?announcementData:[];
+ const publishedAnnouncements=announcements.filter(a=>a&&a.title&&a.text);
+ const assignmentCount=assignments.filter(a=>a&&a.subject).length;
+ const card=(k,l,v,page,kind)=>'<button type="button" class="kc '+kind+'" data-a="page" data-page="'+page+'"><span class="ki">'+ic(k)+'</span><div><small>'+l+'</small><b>'+v+'</b></div><span class="kc-arrow" aria-hidden="true">›</span></button>';
+ const yearLevels=Array.isArray(D.years)?D.years:[];
+ const yearNames=['1st Year','2nd Year','3rd Year','4th Year'];
+ const yearDistribution=yearNames.map(name=>({name,year:yearLevels.find(year=>year.name===name),count:USR.filter(student=>student.yearLevel===name).length}));
+ const largestYearLevel=Math.max(0,...yearDistribution.map(item=>item.count));
+ const unassignedSubjects=subjects.filter(subject=>subject&&subject.code&&!assignments.some(assignment=>assignment&&assignment.subject===subject.code&&(assignment.facultyId||assignment.faculty)));
+ const academicAlerts=[];
+ if(unassignedSubjects.length)academicAlerts.push({kind:'subjects',title:unassignedSubjects.length+' subject'+(unassignedSubjects.length===1?'':'s')+' without a faculty assignment',detail:unassignedSubjects.slice(0,3).map(subject=>subject.code).join(', ')+(unassignedSubjects.length>3?' and '+(unassignedSubjects.length-3)+' more':''),page:'r3',action:'Review assignments'});
+ if(off)academicAlerts.push({kind:'students',title:off+' inactive student account'+(off===1?'':'s'),detail:'Disabled accounts cannot sign in.',page:'students',action:'Review students'});
+ const pending=USR.filter(u=>u.status==='pending').sort((a,b)=>(Date.parse(b.createdAt||b.created||'')||0)-(Date.parse(a.createdAt||a.created||'')||0)).slice(0,5);
+ const pendingRows=pending.map(u=>'<div class="pending-row">'+who(sfull(u),u.email,photoFor('student',u.studentId,sfull(u)))+'<div class="pending-actions"><span class="pending-date">'+(dstr(u.createdAt||u.created)||'Awaiting review')+'</span><button class="b s" data-a="sp" data-id="'+esc(u.studentId)+'">Approve</button></div></div>').join('');
+ const activityType=type=>type==='Announcement'?'ann':type==='Student'?'students':type==='Faculty'?'fac':'logs';
+ const activityLogs=(Array.isArray(D.log)?D.log:[]).filter(log=>log&&(dashboardActivityFilter==='all'||dashboardActivityGroup(log.a)===dashboardActivityFilter)).slice(0,5);
+ const hasActivityLogs=Array.isArray(D.log)&&D.log.some(log=>log&&log.t);
+ const logs=activityLogs.map(log=>'<div class="activity-row"><span class="activity-icon">'+ic(activityType(log.a))+'</span><div class="activity-copy"><b>'+esc(log.d)+'</b><small>'+esc(log.a)+' · '+dstr(log.t)+' · '+new Date(log.t).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})+'</small></div><span class="activity-kind '+(log.a==='Student'?'student':log.a==='Faculty'?'faculty':log.a==='Announcement'?'announcement':'system')+'">'+esc(log.a)+'</span></div>').join('');
+ const activityContent=logs||'<div class="activity-empty">No matching activity recorded yet.</div>';
+ const activitySection=hasActivityLogs?'<section class="cd activity-card"><div class="panel-heading"><div><span class="section-kicker">LATEST UPDATES</span><h3>Recent activity</h3></div><label class="activity-filter"><select id="dashboardActivityFilter" aria-label="Filter recent activity"><option value="all"'+(dashboardActivityFilter==='all'?' selected':'')+'>All activity</option><option value="students"'+(dashboardActivityFilter==='students'?' selected':'')+'>Student accounts</option><option value="faculty"'+(dashboardActivityFilter==='faculty'?' selected':'')+'>Faculty accounts</option><option value="announcements"'+(dashboardActivityFilter==='announcements'?' selected':'')+'>Announcements</option><option value="other"'+(dashboardActivityFilter==='other'?' selected':'')+'>Other system activity</option></select></label></div><div class="activity-list">'+activityContent+'</div><button class="text-link activity-log-link" data-a="page" data-page="logs">View activity log <span aria-hidden="true">→</span></button></section>':'';
+ const yearRows=yearDistribution.map(item=>{
+  const tag=item.year?'<button class="distribution-row" data-a="ystudents" data-id="'+esc(item.year.id)+'">':'<div class="distribution-row">';
+  const end=item.year?'</button>':'</div>';
+  return tag+'<span>'+esc(item.name)+'</span><span class="distribution-track"><i style="width:'+(largestYearLevel?item.count/largestYearLevel*100:0)+'%"></i></span><b>'+item.count+'</b>'+end;
+ }).join('');
+ const alertContent=academicAlerts.length?academicAlerts.map(alert=>'<article class="academic-alert '+alert.kind+'"><span class="academic-alert-icon">'+ic(alert.kind==='students'?'students':'r3')+'</span><span class="academic-alert-copy"><b>'+esc(alert.title)+'</b><small>'+esc(alert.detail)+'</small></span><button class="academic-alert-action" data-a="page" data-page="'+alert.page+'">'+esc(alert.action)+' <span aria-hidden="true">→</span></button></article>').join(''):'<div class="academic-alert-empty">'+peopleIcon('check')+'<span>No academic issues need attention right now.</span></div>';
+ const pendingSection=pen?'<section class="cd dash-focus"><div class="dash-focus-head"><div><span class="section-kicker">ACTION REQUIRED</span><h3>Pending student approvals</h3><p class="sub">'+pen+' registration'+(pen===1?'':'s')+' waiting for review</p></div><button class="b o s" data-a="page" data-page="students">View students <span aria-hidden="true">→</span></button></div><div class="pending-list">'+pendingRows+'</div>'+(pen>pending.length?'<button class="pending-more" data-a="page" data-page="students">View all '+pen+' pending registrations <span aria-hidden="true">→</span></button>':'')+'</section>':'';
+ return '<section class="dash-hero"><div class="dash-hero-copy"><span class="dash-eyebrow">ACES DINELEARN · ADMIN OVERVIEW</span><h2>Welcome back, Admin <span class="welcome-wave" aria-hidden="true">👋</span></h2><p>Manage academic records, users, and learning resources.</p><div class="hero-shortcuts"><button class="hero-shortcut" data-a="dash-add" data-kind="student">'+ic('students')+' Add student</button><button class="hero-shortcut" data-a="dash-add" data-kind="announcement">'+ic('ann')+' New announcement</button></div></div><span class="hero-orb orb-one"></span><span class="hero-orb orb-two"></span></section>'+
+ '<div class="dash-overview-head"><div><span class="section-kicker">LIVE SNAPSHOT</span><h3>Today at a glance</h3></div></div>'+
+ '<div class="kpi">'+card('students','Students',USR.length,'students','students')+card('fac','Faculty / Teachers',teacherAccounts.length,'fac','faculty')+card('r3','Class Assignments',assignmentCount,'r3','classes')+card('ann','Published Announcements',publishedAnnouncements.length,'ann','announcements')+'</div>'+
+ '<div class="admin-dash-grid"><div class="admin-dash-main">'+pendingSection+
+ '<div class="dash-insights-grid"><section class="cd distribution-card"><div class="panel-heading"><div><span class="section-kicker">ACADEMIC SNAPSHOT</span><h3>Students by year level</h3></div></div><div class="distribution-list">'+yearRows+'</div></section><section class="cd academic-alerts-card"><div class="panel-heading"><div><span class="section-kicker">ACTIONABLE ISSUES</span><h3>Academic alerts</h3></div>'+(academicAlerts.length?'<span class="alert-count">'+academicAlerts.length+'</span>':'')+'</div><div class="academic-alert-list">'+alertContent+'</div></section></div>'+
+ activitySection+'</div></div>'
+}
+const yearOptions=()=>{const current=new Date().getFullYear(),years=[];for(let y=current-3;y<=current+6;y++)years.push(y+'-'+(y+1));if(D.set.ay&&!years.includes(D.set.ay))years.push(D.set.ay);return years.sort().map(y=>'<option value="'+esc(y)+'"'+(y===D.set.ay?' selected':'')+'>'+esc(y)+'</option>').join('')};
+const settingsValues=s=>({school:String(s.school||''),address:String(s.address||''),email:String(s.email||''),phone:String(s.phone||''),department:String(s.department||''),ay:String(s.ay||''),logo:String(s.logo||''),dateFormat:String(s.dateFormat||'MMM d, yyyy')});
+const settingsDraft=()=>({school:$('settingsSchool').value.trim(),address:$('settingsAddress').value.trim(),email:$('settingsEmail').value.trim(),phone:$('settingsPhone').value.trim(),department:$('settingsDepartment').value.trim(),ay:$('settingsYear').value,logo:settingsLogoDraft,dateFormat:$('settingsDateFormat').value});
+const settingsDirty=()=>!!$('settingsForm')&&(JSON.stringify(settingsDraft())!==JSON.stringify(settingsValues(D.set))||Array.from($('adminPasswordForm').querySelectorAll('input')).some(input=>input.value.length>0));
+const settingsFeedback=(message,type)=>{const e=$('settingsFeedback');if(!e)return;e.textContent=message||'';e.className='settings-feedback'+(type?' '+type:'');e.hidden=!message};
+const updateSettingsState=()=>{const dirty=settingsDirty();$('settingsDirty').hidden=!dirty;if(!dirty)settingsFeedback('', '')};
+function sett(){settingsLogoDraft=String(D.set.logo||'');const logo=settingsLogoDraft||'assets/images/nbg%20(2).png';
+ return head('Settings','Manage school details and preferences saved in this browser.')+
+ '<section class="settings-hero"><span class="settings-hero-icon">'+ic('set')+'</span><div><span class="section-kicker">SCHOOL PROFILE</span><h3>'+esc(D.set.school||'ACES Polytechnic College, Inc.')+'</h3><p>ACES DineLearn school information and administration preferences.</p></div><span class="settings-year">'+esc(D.set.ay||'Academic year not set')+'</span></section>'+
+ '<div class="settings-layout"><section class="cd settings-form-card"><form id="settingsForm" novalidate>'+
+ '<div class="settings-title"><span class="settings-icon">'+ic('fac')+'</span><div><h3>School profile</h3><p>Official institution and department contact details.</p></div></div>'+
+ '<div class="settings-fields settings-grid">'+
+ '<label for="settingsSchool"><span>Institution name <b aria-hidden="true">*</b></span><input id="settingsSchool" name="school" value="'+esc(D.set.school)+'" maxlength="120" required autocomplete="organization" placeholder="ACES Polytechnic College, Inc."></label>'+
+ '<label for="settingsDepartment"><span>Department name <b aria-hidden="true">*</b></span><input id="settingsDepartment" name="department" value="'+esc(D.set.department)+'" maxlength="120" required placeholder="Hospitality Management Department"></label>'+
+ '<label for="settingsAddress"><span>School address</span><input id="settingsAddress" name="address" value="'+esc(D.set.address)+'" maxlength="200" autocomplete="street-address" placeholder="Street, city, province"></label>'+
+ '<label for="settingsEmail"><span>Contact email</span><input id="settingsEmail" name="email" type="email" value="'+esc(D.set.email)+'" maxlength="254" autocomplete="email" placeholder="office@example.edu.ph"></label>'+
+ '<label for="settingsPhone"><span>Contact number</span><input id="settingsPhone" name="phone" type="tel" value="'+esc(D.set.phone)+'" maxlength="24" autocomplete="tel" placeholder="+63 900 000 0000"></label>'+
+ '<div class="settings-logo-field"><span class="settings-label">School logo</span><small>Upload a PNG, JPEG, or WebP image up to 4 MB.</small><div class="settings-logo-control"><img id="settingsLogoPreview" src="'+esc(logo)+'" alt="School logo preview"><label class="settings-upload-button" for="settingsLogo"><span>Choose image</span><input id="settingsLogo" type="file" accept="image/png,image/jpeg,image/webp"></label><button class="b o s" type="button" id="settingsLogoRemove">Use default</button></div></div>'+
+ '</div><div class="settings-section-title"><h3>Academic year</h3><p>Changes take effect only after you confirm while saving. Existing student, course, grade, activity, and report records are not modified.</p></div>'+
+ '<div class="settings-fields settings-grid settings-compact-grid"><label for="settingsYear"><span>Active academic year <b aria-hidden="true">*</b></span><select id="settingsYear" name="ay" required>'+yearOptions()+'</select></label></div>'+
+ '<div class="settings-section-title"><h3>System preferences</h3><p>Date format used for dates displayed in the Admin portal.</p></div>'+
+ '<div class="settings-fields settings-grid settings-compact-grid"><label for="settingsDateFormat"><span>Date format</span><select id="settingsDateFormat" name="dateFormat">'+
+ '<option value="MMM d, yyyy"'+(D.set.dateFormat==='MMM d, yyyy'?' selected':'')+'>Oct 29, 2026</option><option value="MM/DD/YYYY"'+(D.set.dateFormat==='MM/DD/YYYY'?' selected':'')+'>10/29/2026</option><option value="DD/MM/YYYY"'+(D.set.dateFormat==='DD/MM/YYYY'?' selected':'')+'>29/10/2026</option><option value="YYYY-MM-DD"'+(D.set.dateFormat==='YYYY-MM-DD'?' selected':'')+'>2026-10-29</option></select></label></div>'+
+ '<div class="settings-save-row"><span id="settingsDirty" class="settings-dirty" hidden>You have unsaved changes.</span><span class="settings-storage-note">Saved in this browser only; not synced to a shared server.</span><button class="b" type="submit" id="settingsSave">'+ic('set')+' Save settings</button></div><p id="settingsFeedback" class="settings-feedback" role="status" aria-live="polite" hidden></p></form></section>'+
+ '<div class="settings-secondary"><section class="cd settings-form-card settings-security-card"><div class="settings-title"><span class="settings-icon">'+ic('set')+'</span><div><h3>Admin account &amp; security</h3><p>Update the password for the current local admin account.</p></div></div><p class="settings-security-note">Your new password is stored as a salted hash using the existing sign-in format. The app does not have server-side authentication.</p>'+
+ '<form id="adminPasswordForm" class="settings-fields" novalidate><label for="adminCurrentPassword"><span>Current password</span><input id="adminCurrentPassword" type="password" autocomplete="current-password" required></label><label for="adminNewPassword"><span>New password</span><small>Use at least 8 characters.</small><input id="adminNewPassword" type="password" autocomplete="new-password" minlength="8" required></label><label for="adminConfirmPassword"><span>Confirm new password</span><input id="adminConfirmPassword" type="password" autocomplete="new-password" required></label><button class="b" type="submit" id="adminPasswordSave">Update password</button><p id="adminPasswordFeedback" class="settings-feedback" role="status" aria-live="polite" hidden></p></form></section>'+
+ '<aside class="settings-aside"><span class="settings-aside-icon">'+ic('ann')+'</span><span class="section-kicker">BROWSER-LOCAL SETTINGS</span><h3>About these changes</h3><p>School details and preferences are saved in <code>bshm.db</code> in this browser. Student and Teacher portals do not currently read these profile fields, and changes are not shared across devices.</p><div class="settings-preview"><small>Active academic year</small><b>'+esc(D.set.ay||'Not set')+'</b></div></aside></div></div>'}
+
+/* ---- router ---- */
+function nav(){
+ const groups=[
+  ['Overview',['dash']],
+  ['User management',['students','fac']],
+  ['Academic management',['years','acts','materials','r3']],
+  ['Communication',['ann','ban']],
+  ['System',['logs','set']]
+ ];
+ $('nav').innerHTML=groups.map(([label,ids])=>'<div class="nav-group"><p>'+label+'</p>'+NAV.filter(i=>ids.includes(i[0])).map(i=>link(i)).join('')+'</div>').join('');
+}
+const link=i=>'<a href="#" data-n="'+i[0]+'"'+(pg===i[0]?' class="on" aria-current="page"':'')+'>'+ic(i[0])+'<span>'+i[1]+'</span></a>';
+function render(){
+ nav();
+ const titles={dash:'Admin Dashboard',students:'Students',years:'Year Levels',fac:'Faculty / Teachers',acts:'Activities',materials:'Learning Materials',r3:'Grades & Reports',logs:'Activity Logs',set:'Settings',ann:'Announcements',ban:'Homepage Banners'};
+ $('sch').textContent=titles[pg]||'Admin Dashboard';
+ $('pg').innerHTML=({dash,students:stud,years:yearLevels,fac,acts:adminActivities,materials:adminMaterials,r3:rep,logs,set:sett,ann,ban}[pg]||dash)();
+ const pendingCount=USR.filter(u=>u.status==='pending').length,badge=$('notificationCount');
+ badge.textContent=pendingCount>9?'9+':String(pendingCount);badge.hidden=!pendingCount;
+}
+const canLeaveSettings=()=>!settingsDirty()||confirm('You have unsaved Settings changes. Leave without saving?');
+const go=(p,year)=>{if(!canLeaveSettings())return false;pg=p;q='';yearFilter=p==='students'?(year||''):'';studentPage=1;facultyPage=1;menu(false);render();scrollTo(0,0)};
+window.addEventListener('beforeunload',e=>{if(settingsDirty()){e.preventDefault();e.returnValue=''}});
+const readSchoolLogo=file=>new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(new Error('The image could not be read.'));reader.onload=()=>{const image=new Image();image.onerror=()=>reject(new Error('Choose a valid PNG, JPEG, or WebP image.'));image.onload=()=>{const scale=Math.min(1,512/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));const context=canvas.getContext('2d');if(!context)return reject(new Error('Image processing is unavailable in this browser.'));try{context.drawImage(image,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/png'))}catch(error){reject(error)}};image.src=String(reader.result)};reader.readAsDataURL(file)});
+$('nav').onclick=e=>{const a=e.target.closest('[data-n]');if(a){e.preventDefault();go(a.dataset.n)}};
+$('notifications').onclick=()=>go('students');
+$('globalSearchInput').addEventListener('input',updateGlobalSearch);
+$('globalSearchInput').addEventListener('keydown',e=>{
+ if(e.key==='Escape'){$('globalSearchResults').hidden=true;$('globalSearchInput').blur()}
+ if(e.key==='Enter'){const first=$('globalSearchResults').querySelector('[data-global-page]');if(first){e.preventDefault();first.click()}}
+});
+$('globalSearchResults').onclick=e=>{
+ const item=e.target.closest('[data-global-page]');if(!item)return;
+ if(!canLeaveSettings())return;
+ const searchQuery=item.dataset.globalQuery||'';
+ pg=item.dataset.globalPage;q=searchQuery.trim().toLowerCase();yearFilter='';studentPage=1;facultyPage=1;
+ if(item.dataset.globalClass)gradeClass=item.dataset.globalClass;
+ menu(false);render();$('globalSearchInput').value='';$('globalSearchResults').hidden=true;scrollTo(0,0);
+ const filter=$('q');if(filter){filter.value=searchQuery;filter.focus()}
+};
+document.addEventListener('click',e=>{if(!e.target.closest('#globalSearch'))$('globalSearchResults').hidden=true});
+function updateGlobalSearch(){
+ const input=$('globalSearchInput'),results=$('globalSearchResults'),term=input.value.trim().toLowerCase();
+ if(!term){results.hidden=true;results.innerHTML='';return}
+ const matches=[];
+ const pages=NAV.filter(i=>(i[1]+' '+i[0]).toLowerCase().includes(term)).slice(0,3);
+ pages.forEach(i=>matches.push({page:i[0],label:i[1],detail:'Open section',kind:'Feature'}));
+ USR.filter(u=>(sfull(u)+' '+u.studentId+' '+u.email+' '+(u.yearLevel||'')).toLowerCase().includes(term)).slice(0,4).forEach(u=>matches.push({page:'students',query:sfull(u)||u.studentId,label:sfull(u)||u.studentId,detail:(u.studentId||'Student')+' · '+(u.yearLevel||'Student'),kind:'Student'}));
+ teachers().filter(a=>(a.name+' '+a.username+' '+a.email+' '+(a.empId||'')).toLowerCase().includes(term)).slice(0,4).forEach(a=>matches.push({page:'fac',query:a.name||a.username,label:a.name||a.username,detail:a.username+' · Faculty / Teacher',kind:'Faculty'}));
+ gradeClasses().filter(c=>(c.code+' '+c.title+' '+c.sections.join(' ')).toLowerCase().includes(term)).slice(0,3).forEach(c=>matches.push({page:'r3',classCode:c.code,label:c.title,detail:c.code+' · Class assignments',kind:'Subject'}));
+ const unique=matches.slice(0,7);
+ results.innerHTML=unique.length?unique.map(x=>'<button type="button" role="option" data-global-page="'+esc(x.page)+'"'+(x.query?' data-global-query="'+esc(x.query)+'"':'')+(x.classCode?' data-global-class="'+esc(x.classCode)+'"':'')+'><span class="global-result-icon">'+ic(x.kind==='Student'?'students':x.kind==='Faculty'?'fac':x.kind==='Subject'?'r3':'dash')+'</span><span><b>'+esc(x.label)+'</b><small>'+esc(x.detail)+'</small></span><em>'+esc(x.kind)+'</em></button>').join(''):'<p class="global-no-results">No students, faculty, subjects, or features match that search.</p>';
+ results.hidden=false;
+}
+$('pg').addEventListener('input',e=>{if(e.target.id==='q'){q=e.target.value.trim().toLowerCase();if(pg==='students')studentPage=1;else if(pg==='fac')facultyPage=1;refreshPeopleList()}});
+$('pg').addEventListener('input',e=>{if(e.target.closest('#settingsForm, #adminPasswordForm'))updateSettingsState()});
+$('pg').addEventListener('change',async e=>{if(e.target.id==='gradeClass'){gradeClass=e.target.value;reportPage=1;render()}if(e.target.id==='gradeYear'){gradeYear=e.target.value;reportPage=1;render()}if(e.target.id==='yearLevelFilter'){yearFilter=e.target.value;studentPage=1;render()}if(e.target.id==='dashboardActivityFilter'){dashboardActivityFilter=e.target.value;render()}
+ if(e.target.id==='settingsLogo'){const file=e.target.files&&e.target.files[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>4*1024*1024){e.target.value='';return settingsFeedback('Choose a PNG, JPEG, or WebP image smaller than 4 MB.','error')}try{settingsLogoDraft=await readSchoolLogo(file);$('settingsLogoPreview').src=settingsLogoDraft;updateSettingsState();settingsFeedback('Logo preview updated. Save settings to keep it.','success')}catch(error){e.target.value='';settingsFeedback(error.message||'The image could not be processed.','error')}return}
+ if(e.target.closest('#settingsForm'))updateSettingsState()});
+$('pg').addEventListener('submit',async e=>{if(e.target.id==='settingsForm'){e.preventDefault();return saveSettingsForm(e.target)}if(e.target.id==='adminPasswordForm'){e.preventDefault();return changeAdminPassword(e.target)}});
+$('pg').onclick=e=>{if(e.target.closest('#settingsLogoRemove')){settingsLogoDraft='';$('settingsLogo').value='';$('settingsLogoPreview').src='assets/images/nbg%20(2).png';updateSettingsState();settingsFeedback('Default school logo selected. Save settings to keep it.','success');return}const b=e.target.closest('[data-a]');if(!b)return;if(b.dataset.a==='page')return go(b.dataset.page);if(b.dataset.a==='dash-add')return b.dataset.kind==='student'?studentNew():annNew();act(b.dataset.a,b.dataset.id,b)};
+async function saveSettingsForm(form){
+ const values=settingsDraft(),button=$('settingsSave'),original=button.innerHTML;
+ settingsFeedback('','');
+ if(!values.school)return settingsFeedback('Enter the institution name.','error');
+ if(!values.department)return settingsFeedback('Enter the department name.','error');
+ if(!values.ay||!/^\d{4}-\d{4}$/.test(values.ay)||Number(values.ay.slice(5))!==Number(values.ay.slice(0,4))+1)return settingsFeedback('Choose a valid academic year.','error');
+ if(values.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))return settingsFeedback('Enter a valid contact email address.','error');
+ const phoneDigits=values.phone.replace(/\D/g,'');
+ if(values.phone&&(!/^\+?[\d\s().-]+$/.test(values.phone)||phoneDigits.length<7||phoneDigits.length>15))return settingsFeedback('Enter a valid contact number with 7 to 15 digits.','error');
+ if(values.ay!==D.set.ay&&!confirm('Change the active academic year to '+values.ay+'? This will not alter existing student, course, grade, activity, or report records.'))return settingsFeedback('Academic year change canceled. No settings were saved.','error');
+ button.disabled=true;button.textContent='Saving settings…';settingsFeedback('Saving settings…','');
+ await new Promise(resolve=>setTimeout(resolve,0));
+ const previous=D.set;D.set=Object.assign({},previous,values);
+ if(!save()){D.set=previous;button.disabled=false;button.innerHTML=original;return settingsFeedback('Settings could not be saved. Check browser storage and try again.','error')}
+ toast('Settings saved in this browser.');render();
+}
+async function changeAdminPassword(form){
+ const feedback=$('adminPasswordFeedback'),button=$('adminPasswordSave'),current=$('adminCurrentPassword').value,next=$('adminNewPassword').value,confirmPassword=$('adminConfirmPassword').value;
+ feedback.textContent='';feedback.className='settings-feedback';feedback.hidden=true;
+ if(!current||!next||!confirmPassword){feedback.textContent='Complete all password fields.';feedback.classList.add('error');feedback.hidden=false;return}
+ if(next.length<8){feedback.textContent='The new password needs at least 8 characters.';feedback.classList.add('error');feedback.hidden=false;return}
+ if(next!==confirmPassword){feedback.textContent='The new passwords do not match.';feedback.classList.add('error');feedback.hidden=false;return}
+ const credential=jget(CRED);if(!credential||!credential.hash||!credential.salt){feedback.textContent='Admin credentials are unavailable. Sign in again before changing the password.';feedback.classList.add('error');feedback.hidden=false;return}
+ button.disabled=true;const original=button.textContent;button.textContent='Updating password…';
+ try{if(await hashPw(credential.salt,current)!==credential.hash){feedback.textContent='The current password is incorrect.';feedback.classList.add('error');feedback.hidden=false;return}
+  const salt=hex(rnd(8)),hash=await hashPw(salt,next);if(!jset(CRED,Object.assign({},credential,{salt,hash}))){feedback.textContent='Password could not be saved in browser storage.';feedback.classList.add('error');feedback.hidden=false;return}
+  form.reset();updateSettingsState();feedback.textContent='Admin password updated.';feedback.classList.add('success');feedback.hidden=false;
+ }catch(error){feedback.textContent='Password could not be updated: '+(error.message||'password hashing failed.');feedback.classList.add('error');feedback.hidden=false}
+ finally{button.disabled=false;button.textContent=original}
+}
+function refreshPeopleList(){
+ const body=$('tb'),pager=$('listPager');if(!body||!pager)return;
+ const kind=pg==='students'?'students':'faculty',count=kind==='students'?filteredStudents().length:filteredFaculty().length,page=kind==='students'?studentPage:facultyPage;
+ body.innerHTML=RW();pager.outerHTML=listPager(kind,count,page);
+}
+function act(a,id,button){const t=byId(id),bn=BNL.find(x=>x.id===id);
+ const year=yearById(id);
+ if(a==='list-reset'){q='';yearFilter='';studentPage=1;facultyPage=1;return render()}
+ if(a==='list-page'){if(button.dataset.kind==='students')studentPage=Math.max(1,Math.min(pageCount(filteredStudents().length),studentPage+Number(button.dataset.step)));else facultyPage=Math.max(1,Math.min(pageCount(filteredFaculty().length),facultyPage+Number(button.dataset.step)));return refreshPeopleList()}
+ if(a==='report-page'){const total=Math.max(1,Math.ceil((RP&&RP.r.length||0)/7));reportPage=Math.max(1,Math.min(total,reportPage+Number(button.dataset.step)));return render()}
+ if(a==='ystudents'&&year)return go('students',year.name);
+ if(a==='year-all'){yearFilter='';q='';return render()}
+ if(a==='add'&&pg==='ban'){if(BNL.length>=8)return toast('You can keep up to 8 banners.');return banEdit()}
+ const student=studentById(id);
+ if(a==='sp'&&student)return studentApprove(student);
+ if(a==='se'&&student)return studentEdit(student);
+ if(a==='sr'&&student)return resetStudent(student);
+ if(a==='st'&&student)return studentToggle(student);
+ if(a==='be'&&bn)return banEdit(bn);
+ if((a==='bup'||a==='bdn')&&bn){const i=BNL.indexOf(bn),j=a==='bup'?i-1:i+1;if(j<0||j>=BNL.length)return;if(bsave(()=>{BNL[i]=BNL[j];BNL[j]=bn}))render();return}
+ if(a==='btg'&&bn){const off=bn.active!==false;if(bsave(()=>{bn.active=!off})){lg('Banner',(off?'Hid ':'Showed ')+bn.title);render();toast(off?'Banner hidden.':'Banner visible.')}return}
+ if(a==='bx'&&bn){if(!confirm('Delete the banner "'+bn.title+'"? This cannot be undone.'))return;if(bsave(()=>{BNL=BNL.filter(x=>x!==bn)})){lg('Banner','Deleted '+bn.title);render();toast('Banner deleted.')}return}
+ if(a==='ax'){if(!confirm('Delete this announcement?'))return;jset('bshm.ann.custom',(jget('bshm.ann.custom')||[]).filter(m=>String(m.id)!==id));lg('Announcement','Deleted');return render()}
+ if(a==='add')return pg==='fac'?facNew():pg==='students'?studentNew():pg==='years'?yearLevelNew():pg==='ann'?annNew():0;
+ if(a==='fe'&&t)return facEdit(t);
+ if(a==='rp'&&t){if(!confirm('Reset the password for '+t.name+'? Their current password will stop working.'))return;
+  const pw=genPw(),salt=hex(rnd(8));return hashPw(salt,pw).then(h=>{const p=[t.salt,t.hash,t.mustChange];t.salt=salt;t.hash=h;t.mustChange=true;if(!saveAcc()){[t.salt,t.hash,t.mustChange]=p;return}lg('Faculty','Password reset for '+t.name);render();reveal('Password reset',t,pw)})}
+ if(a==='tg'&&t){const off=t.status!=='disabled';if(off&&!confirm('Disable '+t.name+'? They cannot sign in until you enable the account again.'))return;
+  t.status=off?'disabled':'active';if(!saveAcc()){t.status=off?'active':'disabled';return}lg('Faculty',(off?'Disabled ':'Enabled ')+t.name);render();return toast(off?'Account disabled.':'Account enabled.')}
+ if(a==='fx'&&t){if(!confirm('Delete the account for '+t.name+'? This cannot be undone.'))return;D.assign=D.assign.filter(x=>x.facultyId!==t.id);save();const i=ACC.indexOf(t);ACC.splice(i,1);if(!saveAcc()){ACC.splice(i,0,t);return}lg('Faculty','Deleted '+t.name);render();return toast('Account deleted.')}
+ if(a==='pr')return print();
+ if(a==='csv'){const c=[RP.h].concat(RP.r).map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n'),l=document.createElement('a');
+  l.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));l.download=RP.t.replace(/ /g,'-').toLowerCase()+'.csv';l.click()}}
+window.addEventListener('storage',e=>{const k=e.key||'',grades=/^bshm\.gb\./.test(k)||/^bshm\.(hist|poshist)\./.test(k),activities=k==='bshm.act.custom'||k==='bshm.pos.custom'||/^bshm\.(hist|poshist)\./.test(k),shared=k==='bshm.materials'||k==='bshm.ann.custom'||k==='bshm.class.all',photo=k==='bshm.directory'||/^bshm\.teacher\.profile(\.|$)/.test(k)||/^bshm\.student\.profile\./.test(k);if(e.key===KEY||e.key===DBK||e.key===UK||e.key===ACESBanners.KEY||grades||activities||shared||photo){if(settingsDirty()&&!confirm('Data changed in another tab. Discard unsaved Settings changes and reload?')){toast('Settings changes are still unsaved.');return}load();render()}});
+
+/* ---- admin sign-in gate ---- */
+function start(){$('gate').hidden=true;$('app').hidden=false;load();syncClasses();$('dt').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});render()}
+function gate(){const c=jget(CRED),first=!(c&&c.hash),passwordToggle=$('toggleAdminPassword');
+ $('gt').textContent=first?'Set up admin access':'Admin sign-in';$('gp').textContent=first?'First time here. Choose a password for the admin account.':'';
+ $('gpw').autocomplete=first?'new-password':'current-password';
+ passwordToggle.onclick=()=>{const input=$('gpw'),show=input.type==='password';input.type=show?'text':'password';passwordToggle.setAttribute('aria-label',show?'Hide password':'Show password');passwordToggle.setAttribute('aria-pressed',show?'true':'false');passwordToggle.innerHTML=show?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18"></path><path d="M10.6 6.2A10.8 10.8 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16 16 0 0 1-3 3.7"></path><path d="M6.2 6.3C3.8 7.8 2.5 12 2.5 12s3.4 6 9.5 6c1.2 0 2.3-.2 3.2-.6"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>'};
+ $('gcw').hidden=!first;$('gb').textContent=first?'Save and continue':'Sign in';
+ $('gf').onsubmit=ev=>{ev.preventDefault();showErr('gerr','');const pw=$('gpw').value,ok=()=>{try{sessionStorage.setItem(SESS,'1')}catch(e){}start()};
+  if(first){if(pw.length<8)return showErr('gerr','Use at least 8 characters.');if(pw!==$('gpw2').value)return showErr('gerr','The two passwords do not match.');
+   const salt=hex(rnd(8));hashPw(salt,pw).then(h=>{if(jset(CRED,{user:'admin',salt,hash:h}))ok()})}
+  else hashPw(c.salt,pw).then(h=>{if(h!==c.hash){showErr('gerr','Wrong password.');return}ok()})};
+ $('gpw').focus()}
+$('out').onclick=()=>{try{sessionStorage.removeItem(SESS)}catch(e){}location.reload()};
+let s=false;try{s=sessionStorage.getItem(SESS)==='1'&&!!(jget(CRED)&&jget(CRED).hash)}catch(e){}
+s?start():gate();
+})();
+</script>
+</body></html>
